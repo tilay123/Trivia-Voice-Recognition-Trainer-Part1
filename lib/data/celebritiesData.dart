@@ -22,6 +22,7 @@ final SubCategory singer =
     wrongAnswer2: "Shawn Mendes",
     wrongAnswer3: "Ed Sheeran",
   ),
+
   Question(
     questionUrl: "https://firebasestorage.googleapis.com/v0/b/voicely-trivia.appspot.com/o/Celebraties%2FSingers%2FBeyonce%CC%81.m4a?alt=media&token=858612e2-453e-441e-b7e9-7370ea8f8515",
     correctAnswer: "Beyoncé",
@@ -43,14 +44,14 @@ final SubCategory singer =
         wrongAnswer2: "Ed Sheeran",
         wrongAnswer3: "Lil Wayne",
       ),
-      Question(
-        questionUrl: "Question URL",
-        correctAnswer: "Correct Answer",
-        wrongAnswer1: "Wrong Answer 1",
-        wrongAnswer2: "Wrong Answer 2",
-        wrongAnswer3: "Wrong Answer 3",
-      ),
-
+//      Question(
+//        questionUrl: "Question URL",
+//        correctAnswer: "Correct Answer",
+//        wrongAnswer1: "Wrong Answer 1",
+//        wrongAnswer2: "Wrong Answer 2",
+//        wrongAnswer3: "Wrong Answer 3",
+//      ),
+//
 
 
 ]);

@@ -55,7 +55,7 @@ class HomeBottomNavigation extends StatelessWidget {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AnswerSelectionPage()));
+                          builder: (context) => AnswerSelectionPage(null)));
                 },
               ),
             ),
@@ -67,28 +67,28 @@ class HomeBottomNavigation extends StatelessWidget {
           forViewAllPage: categories.data[0],
         ),
         ScrollableRow(
-          subCategory: celebrities,
+          subCategories: celebrities,
         ),
         BigCategoryText(
           title: "TV Shows",
           forViewAllPage: categories.data[1],
         ),
         ScrollableRow(
-          subCategory: tvShows,
+          subCategories: tvShows,
         ),
         BigCategoryText(
           title: "Animated TV Shows",
           forViewAllPage: categories.data[2],
         ),
         ScrollableRow(
-          subCategory: animatedTvShows,
+          subCategories: animatedTvShows,
         ),
         BigCategoryText(
           title: "Movies",
           forViewAllPage: categories.data[3],
         ),
         ScrollableRow(
-          subCategory: movies,
+          subCategories: movies,
         ),
         SliverToBoxAdapter(
           child: SizedBox(
@@ -123,25 +123,6 @@ class BigCategoryText extends StatelessWidget {
               style: TextStyle(
                   fontSize: 20, color: color2, fontWeight: FontWeight.bold),
             ),
-//            GestureDetector(
-//              onTap: () {},
-//              child: Text(
-//                "View All",
-//                style: TextStyle(
-//                    fontSize: 15,
-//                    color: Colors.blueAccent,
-//                    fontWeight: FontWeight.bold),
-//              ),
-//            ),
-//            AnimatedButton(
-//              height: 30,
-//
-//                color: color1,
-//                child: Text(
-//                  _title,
-//                  style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold)),
-//
-//            enabled: false,),
 
             AnimatedButton(
               height: 30,
@@ -168,27 +149,30 @@ class BigCategoryText extends StatelessWidget {
 
 // Horizontal scrollable view
 class ScrollableRow extends StatelessWidget {
-  ScrollableRow({this.subCategory});
-  final List<SubCategory> subCategory;
+  ScrollableRow({this.subCategories});
+  final List<SubCategory> subCategories;
 
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: GestureDetector(
-        onTap: () => Navigator.push(context,
-            MaterialPageRoute(builder: (context) => AnswerSelectionPage())),
-        child: Container(
-          height: 150,
-          // color: Colors.red,
-          child: ListView.builder(
-              // row can't be greater than 5
-              itemCount: subCategory?.length == null
-                  ? 5
-                  : (subCategory.length > 5 ? 5 : subCategory.length),
-              scrollDirection: Axis.horizontal,
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Container(
+      child: Container(
+        height: 150,
+        // color: Colors.red,
+        child: ListView.builder(
+            // row can't be greater than 5
+            itemCount: subCategories?.length == null
+                ? 5
+                : (subCategories.length > 5 ? 5 : subCategories.length),
+            scrollDirection: Axis.horizontal,
+            physics: BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AnswerSelectionPage(subCategories[index])));
+
+                },
+                child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 10),
                   padding: EdgeInsets.all(10),
                   //  padding: EdgeInsets.all(10),
@@ -199,19 +183,19 @@ class ScrollableRow extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
 
-                  child: subCategory?.length == null
+                  child: subCategories?.length == null
                       ? null
                       : Center(
                           child: Text(
-                          subCategory[index].subCategoryName,
+                            subCategories[index].subCategoryName,
                           style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         )),
-                );
-              }),
-        ),
+                ),
+              );
+            }),
       ),
     );
   }

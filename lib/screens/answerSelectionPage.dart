@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animated_button/animated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_countdown/circular_countdown.dart';
@@ -5,14 +7,34 @@ import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:provider/provider.dart';
 import 'package:voicelytrivia/data/celebritiesData.dart';
 import 'package:voicelytrivia/model/dataProvider.dart';
+import 'package:voicelytrivia/model/question.dart';
+import 'package:voicelytrivia/model/subCategory.dart';
 
 
 class AnswerSelectionPage extends StatefulWidget {
+
+  AnswerSelectionPage(this.questionsList);
+  final SubCategory questionsList;
   @override
   _AnswerSelectionPageState createState() => _AnswerSelectionPageState();
 }
 
 class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
+
+  Question _question;
+  List<String> _multipleChoices;
+  String _correctAnswer;
+
+  void getMultipleChoice(){
+     _question = widget.questionsList.shuffle()[0];
+    Random random = Random();
+
+    _multipleChoices = [_question.correctAnswer,_question.wrongAnswer1,_question.wrongAnswer2,_question.wrongAnswer3];
+    _correctAnswer = _multipleChoices[0];
+    _multipleChoices.shuffle(random);
+
+  }
+
   //PageController _pageController = PageController(initialPage: 0);
 
   final assetsAudioPlayer = AssetsAudioPlayer();
@@ -21,7 +43,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
   void play()async{
     try {
       await assetsAudioPlayer.open(
-        Audio.network("https://firebasestorage.googleapis.com/v0/b/voicely-trivia.appspot.com/o/singers%2FNee%20Kannulu%20Full%20Video%20Song%20(4K)%20Savaari%20Songs%20Shekar%20Chandra%20Nandu%2C%20Priyanka%20Sharma.mp3?alt=media&token=b71e8f85-89e9-4b53-b84f-005b9e271125"),
+        Audio.network(_question.questionUrl),
       );
     } catch (t) {
       //mp3 unreachable
@@ -31,7 +53,10 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    getMultipleChoice();
     play();
+
+
   }
 
   @override
@@ -42,13 +67,30 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
    assetsAudioPlayer.dispose();
   }
 
+  void checkUserAnswer(BuildContext context, String submittedAnswerChoice){
+
+   // print(submittedAnswerChoice);
+
+    if (submittedAnswerChoice == _correctAnswer){
+      print(submittedAnswerChoice);
+
+
+
+    } else{
+      print("Wrong answer$submittedAnswerChoice");
+    }
+
+
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
 //    print("Wrong Answer: ${singer.subCategories[0].getWrongAnswer()}");
 //    print("Wrong Answer: ${singer.subCategories[0].getWrongAnswer()}");
 //    print("Wrong Answer: ${singer.subCategories[0].getWrongAnswer()}");
-    print("Correct Answer: ${singer.questionList[0].correctAnswer}");
+  //  print("Correct Answer: ${singer.questionList[0].correctAnswer}");
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -134,18 +176,17 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                 decoration: BoxDecoration(
                     color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(15)),
+
+                child: Center(child: Container(padding: EdgeInsets.all(10), child: Text("Listen to the audio clip and determine who the speaker is.", style: TextStyle(fontSize: 15, fontWeight:FontWeight.w700 ),))),
               ),
 
               Center(
                 child: AnimatedButton(
-                  child: Text("Hello1"),
+                  child: Text(_multipleChoices[0]),
                   color: Colors.grey[100],
                   width: MediaQuery.of(context).size.width - 60,
                   onPressed: ()  {
-
-
-
-
+                    checkUserAnswer(context, _multipleChoices[0]);
                   },
                 ),
               ),
@@ -154,10 +195,13 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
               ),
               Center(
                 child: AnimatedButton(
-                  child: Text("Hello2"),
+                  child: Text(_multipleChoices[1]),
                   color: Colors.grey[100],
                   width: MediaQuery.of(context).size.width - 60,
-                  onPressed: () {},
+                  onPressed: () {
+
+                    checkUserAnswer(context, _multipleChoices[1]);
+                  },
                 ),
               ),
               SizedBox(
@@ -165,10 +209,13 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
               ),
               Center(
                 child: AnimatedButton(
-                  child: Text("Hello3"),
+                  child: Text(_multipleChoices[2]),
                   color: Colors.grey[100],
                   width: MediaQuery.of(context).size.width - 60,
-                  onPressed: () {},
+                  onPressed: () {
+
+                    checkUserAnswer(context, _multipleChoices[2]);
+                  },
                 ),
               ),
               SizedBox(
@@ -176,10 +223,12 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
               ),
               Center(
                 child: AnimatedButton(
-                  child: Text("Hello4"),
+                  child: Text(_multipleChoices[3]),
                   color: Colors.grey[100],
                   width: MediaQuery.of(context).size.width - 60,
-                  onPressed: () {},
+                  onPressed: () {
+                    checkUserAnswer(context, _multipleChoices[3]);
+                  },
                 ),
               ),
             ],
