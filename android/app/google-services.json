@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "377718733289",
+    "firebase_url": "https://voicely-trivia.firebaseio.com",
+    "project_id": "voicely-trivia",
+    "storage_bucket": "voicely-trivia.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:377718733289:android:3a6d4dfc7c93e436c13378",
+        "android_client_info": {
+          "package_name": "com.til.voicelytrivia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "377718733289-drfabb7ma1nh6krs4guep3ktdveacuei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJYit44KMqZcQcRjUnoXwuQcIS8odQd74"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "377718733289-drfabb7ma1nh6krs4guep3ktdveacuei.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "377718733289-d509lrlc824eetgt50u0fotf16532duc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.til.voicelytrivia"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
