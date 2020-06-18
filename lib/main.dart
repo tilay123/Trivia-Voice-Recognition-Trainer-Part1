@@ -36,10 +36,10 @@ class _TriviaVoiceState extends State<TriviaVoice> {
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: bodies.elementAt(Provider.of<DataKeeper>(context).getCurrentIndex),
+        body: bodies.elementAt(Provider.of<DataKeeper>(context).getHomePageCurrentIndex),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: color1,
-          currentIndex: Provider.of<DataKeeper>(context).getCurrentIndex,
+          currentIndex: Provider.of<DataKeeper>(context).getHomePageCurrentIndex,
           onTap: (index) {
 
               Provider.of<DataKeeper>(context,listen: false).setCurrentIndex(index);

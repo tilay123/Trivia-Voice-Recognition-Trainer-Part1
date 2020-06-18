@@ -44,7 +44,7 @@ class CoinHolder extends StatelessWidget {
                   // width: 120,
                   height: 40,
                   child: Text(
-                    "121",
+                    "${Provider.of<DataKeeper>(context).getCoin}",
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.white,
@@ -117,7 +117,7 @@ class DiamondHolder extends StatelessWidget {
                   // width: 120,
                   height: 40,
                   child: Text(
-                    "1218475",
+                      "${Provider.of<DataKeeper>(context).getDiamond}",
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.white,
