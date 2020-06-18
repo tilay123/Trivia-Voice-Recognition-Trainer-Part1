@@ -12,6 +12,7 @@ class DataKeeper extends ChangeNotifier {
   }
   void addCoin(int amount){
      _coin += amount;
+     notifyListeners();
   }
 
   int get getDiamond{

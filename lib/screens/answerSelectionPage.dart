@@ -59,6 +59,8 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
     super.initState();
     getMultipleChoice();
     play();
+
+    print(" ---------Correct Ans:$_correctAnswer");
   }
 
   void stopAudio(){
@@ -77,7 +79,7 @@ stopAudio();
     // print(submittedAnswerChoice);
 
     stopAudio();
-    print("submittedAnswerChoice---------$submittedAnswerChoice ---------Correct Ans:$_correctAnswer");
+
 
     if (submittedAnswerChoice == _correctAnswer){
   //    print(submittedAnswerChoice);
@@ -104,6 +106,8 @@ stopAudio();
         builder: (context, BoxConstraints constraint){
           print(constraint.maxWidth);
           return AnimatedButton(width: constraint.maxWidth - 10, child: Text("OK"), onPressed: (){
+
+            Provider.of<DataKeeper>(context,listen: false).addCoin(5);
             Navigator.pop(context);
             Navigator.pop(context);
 

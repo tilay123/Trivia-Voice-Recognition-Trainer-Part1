@@ -3,9 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:animated_button/animated_button.dart';
 import 'package:voicelytrivia/model/dataProvider.dart';
 
-
-
-
 class CoinHolder extends StatelessWidget {
   const CoinHolder({
     Key key,
@@ -117,7 +114,7 @@ class DiamondHolder extends StatelessWidget {
                   // width: 120,
                   height: 40,
                   child: Text(
-                      "${Provider.of<DataKeeper>(context).getDiamond}",
+                    "${Provider.of<DataKeeper>(context,listen: false).getDiamond}",
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.white,
