@@ -19,7 +19,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
   void play()async{
     try {
       await assetsAudioPlayer.open(
-        Audio.network("https://firebasestorage.googleapis.com/v0/b/trivia-voice-b2eec.appspot.com/o/Singers%2FjustinBiber.m4a?alt=media&token=15006c4b-dee0-4937-bfbd-7fad6706921a"),
+        Audio.network("https://firebasestorage.googleapis.com/v0/b/voicely-trivia.appspot.com/o/singers%2FNee%20Kannulu%20Full%20Video%20Song%20(4K)%20Savaari%20Songs%20Shekar%20Chandra%20Nandu%2C%20Priyanka%20Sharma.mp3?alt=media&token=b71e8f85-89e9-4b53-b84f-005b9e271125"),
       );
     } catch (t) {
       //mp3 unreachable
@@ -32,6 +32,13 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
     play();
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    assetsAudioPlayer.stop();
+    assetsAudioPlayer.dispose();
+  }
 
 
   @override
