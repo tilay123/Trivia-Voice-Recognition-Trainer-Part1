@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
 class DataKeeper extends ChangeNotifier {
   int _currentIndex = 0;
@@ -6,6 +7,7 @@ class DataKeeper extends ChangeNotifier {
   int get getCurrentIndex {
     return _currentIndex;
   }
+
 
   void setCurrentIndex(int x) {
     _currentIndex = x;
@@ -21,4 +23,8 @@ class DataKeeper extends ChangeNotifier {
     _centerText = num;
     notifyListeners();
   }
+
+
+
+
 }

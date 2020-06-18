@@ -2,7 +2,9 @@ import 'package:animated_button/animated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_countdown/circular_countdown.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:provider/provider.dart';
 import 'package:voicelytrivia/data/celebritiesData.dart';
+import 'package:voicelytrivia/model/dataProvider.dart';
 
 
 class AnswerSelectionPage extends StatefulWidget {
@@ -13,8 +15,8 @@ class AnswerSelectionPage extends StatefulWidget {
 class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
   //PageController _pageController = PageController(initialPage: 0);
 
-  int centeredTextTime;
   final assetsAudioPlayer = AssetsAudioPlayer();
+  int centeredTextTime;
 
   void play()async{
     try {
@@ -36,8 +38,8 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    assetsAudioPlayer.stop();
-    assetsAudioPlayer.dispose();
+   assetsAudioPlayer.stop();
+   assetsAudioPlayer.dispose();
   }
 
 
