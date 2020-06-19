@@ -7,6 +7,8 @@ abstract class DatabaseHelper {
   static const DIAMOND = "DIAMOND";
   static const ID = "ID";
   static const TABLE = "gameData";
+  static const COIN_ID = 1;
+  static const DIAMOND_ID = 1;
 
   static Future<sql.Database> databaseInit() async {
     final dbPath = await sql.getDatabasesPath();
@@ -33,7 +35,7 @@ abstract class DatabaseHelper {
     database.insert(TABLE, {
       "$COIN": 20,
       "$DIAMOND": 5,
-
+      "id": COIN_ID,
     });
 
     print("QUERY ${await database.query(TABLE)}");
@@ -49,10 +51,17 @@ abstract class DatabaseHelper {
 
 //    Map<String,dynamic > rowToUpdate = (await database.query(TABLE))[0];
 
+    Map<String, dynamic>
+        rowToUpdate; // creating new row to put it in existing database as an update
+
     if (currency == COIN) {
-      database.update(TABLE, {});
+      rowToUpdate = {"$COIN": num};
+      database
+          .update(TABLE, rowToUpdate, where: "id = ?", whereArgs: [COIN_ID]);
     } else if (currency == DIAMOND) {
-      database.update(TABLE, {}, where: "$COIN = ?", whereArgs: [num]);
+      rowToUpdate = {"$COIN": num};
+      database
+          .update(TABLE, rowToUpdate, where: "id = ?", whereArgs: [DIAMOND_ID]);
     }
   }
 }
