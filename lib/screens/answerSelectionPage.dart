@@ -63,7 +63,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
     print(" ---------Correct Ans:$_correctAnswer");
   }
 
-  void stopAudio(){
+  void stopAudio() {
     assetsAudioPlayer.stop();
     assetsAudioPlayer.dispose();
   }
@@ -72,7 +72,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-stopAudio();
+    stopAudio();
   }
 
   void checkUserAnswer(BuildContext context, String submittedAnswerChoice) {
@@ -80,53 +80,64 @@ stopAudio();
 
     stopAudio();
 
+    if (submittedAnswerChoice == _correctAnswer) {
+      //    print(submittedAnswerChoice);
 
-    if (submittedAnswerChoice == _correctAnswer){
-  //    print(submittedAnswerChoice);
-
-    AwesomeDialog(
-
-      animType: AnimType.SCALE,
-
-      context: context,
-      title: "Correct",
-      dialogType: DialogType.SUCCES,
-      dismissOnTouchOutside: false,
-      customHeader: Container(
-        decoration: BoxDecoration(color: Colors.transparent),
-        child: Icon(
-          Icons.check,
-          color: Colors.green,
-          size: 100,
+      AwesomeDialog(
+        animType: AnimType.SCALE,
+        context: context,
+        title: "Correct",
+        dialogType: DialogType.SUCCES,
+        dismissOnTouchOutside: false,
+        customHeader: Container(
+          decoration: BoxDecoration(color: Colors.transparent),
+          child: Icon(
+            Icons.check,
+            color: Colors.green,
+            size: 100,
+          ),
         ),
-      ),
+        body: Container(
+          height: 80,
+        //  color: Co,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
 
-      body: Container(height: 300,color: Colors.lightBlue,),
-      btnOk: LayoutBuilder(
-        builder: (context, BoxConstraints constraint){
-          print(constraint.maxWidth);
-          return AnimatedButton(width: constraint.maxWidth - 10, child: Text("OK"), onPressed: (){
+              Text("+5", style: TextStyle(fontSize: 30, color: Colors.green, fontWeight: FontWeight.bold),),
+              Image(
+                height: 40,
+                width: 40,
+                image: AssetImage("asset/coin-01.png"),
+                fit: BoxFit.cover,
+              ),
+            ],
+          ),
+        ),
+        btnOk: LayoutBuilder(
+          builder: (context, BoxConstraints constraint) {
+            print(constraint.maxWidth);
+            return AnimatedButton(
+              width: constraint.maxWidth - 10,
+              child: Text("OK"),
+              onPressed: () {
+                Provider.of<DataKeeper>(context, listen: false).addCoin(5);
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              color: Colors.green,
+            );
+          },
 
-            Provider.of<DataKeeper>(context,listen: false).addCoin(5);
-            Navigator.pop(context);
-            Navigator.pop(context);
-
-          }, color: Colors.green,);
-        },
-          
-          
-   //   btnCancel: AnimatedButton(width: -60,child: Text("OK"), onPressed: (){}, color: Colors.green,)
-    ),
-
-    ).show();
-
-    } else{
+          //   btnCancel: AnimatedButton(width: -60,child: Text("OK"), onPressed: (){}, color: Colors.green,)
+        ),
+      ).show();
+    } else {
       print("Wrong answer$submittedAnswerChoice");
 
       AwesomeDialog(
-
         context: context,
-
         title: "Wrong",
         dialogType: DialogType.ERROR,
         dismissOnTouchOutside: false,
@@ -138,22 +149,41 @@ stopAudio();
             size: 100,
           ),
         ),
+        body: Container(
+          height: 80,
+          //  color: Co,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
 
-        body: Container(height: 300,color: Colors.lightBlue,),
+              Text("+1", style: TextStyle(fontSize: 30, color: Colors.green, fontWeight: FontWeight.bold),),
+              Image(
+                height: 40,
+                width: 40,
+                image: AssetImage("asset/coin-01.png"),
+                fit: BoxFit.cover,
+              ),
+            ],
+          ),
+        ),
         btnOk: LayoutBuilder(
-          builder: (context, BoxConstraints constraint){
+          builder: (context, BoxConstraints constraint) {
             print(constraint.maxWidth);
-            return AnimatedButton(width: constraint.maxWidth - 10, child: Text("OK"), onPressed: (){
-              Navigator.pop(context);
-              Navigator.pop(context);
-
-            }, color: Colors.green,);
+            return AnimatedButton(
+              width: constraint.maxWidth - 10,
+              child: Text("OK"),
+              onPressed: () {
+                Provider.of<DataKeeper>(context,listen: false).addCoin(1);
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              color: Colors.green,
+            );
           },
-
 
           //   btnCancel: AnimatedButton(width: -60,child: Text("OK"), onPressed: (){}, color: Colors.green,)
         ),
-
       ).show();
     }
   }
