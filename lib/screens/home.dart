@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:voicelytrivia/data/animatedTvShows.dart';
 import 'package:voicelytrivia/data/movies.dart';
@@ -52,10 +54,16 @@ class HomeBottomNavigation extends StatelessWidget {
                   ),
                 ),
                 onPressed: () {
+                  Random random = Random();
+
+                  int index = random.nextInt(categories.data.length);
+
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AnswerSelectionPage(null)));
+                          builder: (context) => AnswerSelectionPage(categories
+                                  .data[index][
+                              random.nextInt(categories.data[index].length)])));
                 },
               ),
             ),
@@ -100,10 +108,6 @@ class HomeBottomNavigation extends StatelessWidget {
   }
 }
 
-
-
-
-
 class BigCategoryText extends StatelessWidget {
   BigCategoryText({this.title, this.forViewAllPage});
   final String title;
@@ -123,7 +127,6 @@ class BigCategoryText extends StatelessWidget {
               style: TextStyle(
                   fontSize: 20, color: color2, fontWeight: FontWeight.bold),
             ),
-
             AnimatedButton(
               height: 30,
               width: 80,
@@ -167,10 +170,12 @@ class ScrollableRow extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               return GestureDetector(
-                onTap: (){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AnswerSelectionPage(subCategories[index])));
-
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              AnswerSelectionPage(subCategories[index])));
                 },
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 10),
@@ -187,7 +192,7 @@ class ScrollableRow extends StatelessWidget {
                       ? null
                       : Center(
                           child: Text(
-                            subCategories[index].subCategoryName,
+                          subCategories[index].subCategoryName,
                           style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,

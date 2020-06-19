@@ -99,13 +99,18 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
         ),
         body: Container(
           height: 80,
-        //  color: Co,
+          //  color: Co,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-
-              Text("+5", style: TextStyle(fontSize: 30, color: Colors.green, fontWeight: FontWeight.bold),),
+              Text(
+                "+5",
+                style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold),
+              ),
               Image(
                 height: 40,
                 width: 40,
@@ -156,8 +161,13 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-
-              Text("+1", style: TextStyle(fontSize: 30, color: Colors.green, fontWeight: FontWeight.bold),),
+              Text(
+                "+1",
+                style: TextStyle(
+                    fontSize: 30,
+                    color: Colors.green,
+                    fontWeight: FontWeight.bold),
+              ),
               Image(
                 height: 40,
                 width: 40,
@@ -174,7 +184,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
               width: constraint.maxWidth - 10,
               child: Text("OK"),
               onPressed: () {
-                Provider.of<DataKeeper>(context,listen: false).addCoin(1);
+                Provider.of<DataKeeper>(context, listen: false).addCoin(1);
                 Navigator.pop(context);
                 Navigator.pop(context);
               },
