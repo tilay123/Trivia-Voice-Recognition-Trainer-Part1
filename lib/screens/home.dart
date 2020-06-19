@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:voicelytrivia/data/animatedTvShows.dart';
 import 'package:voicelytrivia/data/movies.dart';
 
@@ -13,6 +14,7 @@ import 'package:voicelytrivia/screens/answerSelectionPage.dart';
 import 'package:voicelytrivia/screens/viewAllPage.dart';
 import 'package:voicelytrivia/data/celebritiesData.dart';
 import 'package:voicelytrivia/helpers/helperCurrencyUI.dart';
+import 'package:voicelytrivia/model/dataProvider.dart';
 
 class HomeBottomNavigation extends StatelessWidget {
   const HomeBottomNavigation({
@@ -21,89 +23,95 @@ class HomeBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          // expandedHeight: 100,
-          backgroundColor: Color(0xff4281A4),
+    return FutureBuilder(
+      future: Provider.of<DataKeeper>(context, listen: false).fetchAndSetGameCurrency(),
+      builder: (context, snapshot){
+
+        return CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              // expandedHeight: 100,
+              backgroundColor: Color(0xff4281A4),
 //          title: Text("Home"),
 
-          actions: <Widget>[
-            CoinHolder(),
-            DiamondHolder(),
+              actions: <Widget>[
+                CoinHolder(),
+                DiamondHolder(),
 //TODO COIN DATA
-          ],
-        ),
-        //  SliverToBoxAdapter(child: SizedBox(height: 10,),),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: Center(
-              child: AnimatedButton(
+              ],
+            ),
+            //  SliverToBoxAdapter(child: SizedBox(height: 10,),),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                child: Center(
+                  child: AnimatedButton(
 //              height: 30,
-                width: 300,
-                color: Colors.green,
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    "Play Randomly",
-                    style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                onPressed: () {
-                  Random random = Random();
+                    width: 300,
+                    color: Colors.green,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        "Play Randomly",
+                        style: TextStyle(
+                            fontSize: 30,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    onPressed: () {
+                      Random random = Random();
 
-                  int index = random.nextInt(categories.data.length);
+                      int index = random.nextInt(categories.data.length);
 
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AnswerSelectionPage(categories
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AnswerSelectionPage(categories
                                   .data[index][
                               random.nextInt(categories.data[index].length)])));
-                },
+                    },
+                  ),
+                ),
               ),
             ),
-          ),
-        ),
 
-        BigCategoryText(
-          title: "Celebrities",
-          forViewAllPage: categories.data[0],
-        ),
-        ScrollableRow(
-          subCategories: celebrities,
-        ),
-        BigCategoryText(
-          title: "TV Shows",
-          forViewAllPage: categories.data[1],
-        ),
-        ScrollableRow(
-          subCategories: tvShows,
-        ),
-        BigCategoryText(
-          title: "Animated TV Shows",
-          forViewAllPage: categories.data[2],
-        ),
-        ScrollableRow(
-          subCategories: animatedTvShows,
-        ),
-        BigCategoryText(
-          title: "Movies",
-          forViewAllPage: categories.data[3],
-        ),
-        ScrollableRow(
-          subCategories: movies,
-        ),
-        SliverToBoxAdapter(
-          child: SizedBox(
-            height: 10,
-          ),
-        )
-      ],
+            BigCategoryText(
+              title: "Celebrities",
+              forViewAllPage: categories.data[0],
+            ),
+            ScrollableRow(
+              subCategories: celebrities,
+            ),
+            BigCategoryText(
+              title: "TV Shows",
+              forViewAllPage: categories.data[1],
+            ),
+            ScrollableRow(
+              subCategories: tvShows,
+            ),
+            BigCategoryText(
+              title: "Animated TV Shows",
+              forViewAllPage: categories.data[2],
+            ),
+            ScrollableRow(
+              subCategories: animatedTvShows,
+            ),
+            BigCategoryText(
+              title: "Movies",
+              forViewAllPage: categories.data[3],
+            ),
+            ScrollableRow(
+              subCategories: movies,
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 10,
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 }
