@@ -1,9 +1,15 @@
+import 'dart:math';
+
 import 'package:animated_button/animated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:voicelytrivia/model/constants.dart';
 import 'package:voicelytrivia/helpers/helperCurrencyUI.dart';
 
 class ShopBottomNavigation extends StatelessWidget {
+  List<String> coinNames = ["oneCoin-02.png","twoCoin-05.png","threeCoin-07.png","coinPack-03.png","coinPile-06.png","diamond-04.png","twoDiamond-08.png","threeDiamond-09.png","fourDiamond-10.png"];
+  List<double> coinPrices = [0.99,4.99,9.99,24.99,99.99, 2.99,4.99,24.99,99.99];
+  List<int> coinAmount = [1000,5500,11000,29000, 150000, 3,5,32,140];
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -24,16 +30,25 @@ class ShopBottomNavigation extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
+                    Image(
+                      height: 80,
+                      width: 80,
+                      image: AssetImage("asset/${coinNames[index]}"),
+                      fit: BoxFit.contain,
+                    ),
+
                     Expanded(
                       child: Text(
-                        "The Family ",
+                        "${coinAmount[index]} Coins"
+                        ,
+                        style: TextStyle(fontSize: 20),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     AnimatedButton(
                       height: 50,
                       width: 80,
-                      child: Text("\$${.99 + index}"),
+                      child: Text("\$${coinPrices[index]}", style: TextStyle(color: Colors.white),),
                       color: Colors.green,
                       onPressed: () {},
                     ),
@@ -43,7 +58,7 @@ class ShopBottomNavigation extends StatelessWidget {
             ),
           );
         },
-        itemCount: 10,
+        itemCount: coinNames.length,
       ),
     );
   }
