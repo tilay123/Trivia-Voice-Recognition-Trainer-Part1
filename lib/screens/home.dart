@@ -24,9 +24,9 @@ class HomeBottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Provider.of<DataKeeper>(context, listen: false).fetchAndSetGameCurrency(),
-      builder: (context, snapshot){
-
+      future: Provider.of<DataKeeper>(context, listen: false)
+          .fetchAndSetGameCurrency(),
+      builder: (context, snapshot) {
         return CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
@@ -67,9 +67,9 @@ class HomeBottomNavigation extends StatelessWidget {
                       Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AnswerSelectionPage(categories
-                                  .data[index][
-                              random.nextInt(categories.data[index].length)])));
+                              builder: (context) => AnswerSelectionPage(
+                                  categories.data[index][random.nextInt(
+                                      categories.data[index].length)])));
                     },
                   ),
                 ),
@@ -199,12 +199,25 @@ class ScrollableRow extends StatelessWidget {
                   child: subCategories?.length == null
                       ? null
                       : Center(
-                          child: Text(
-                          subCategories[index].subCategoryName,
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                          child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Text(
+                              subCategories[index].subCategoryName,
+                              style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(Icons.lock,color: Colors.orange,),
+                                Text("Cost: 500 coins"),
+                              ],
+                            ),
+                          ],
                         )),
                 ),
               );
