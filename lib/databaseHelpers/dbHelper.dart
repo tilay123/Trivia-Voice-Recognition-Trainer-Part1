@@ -15,11 +15,12 @@ abstract class DatabaseHelper {
 
     return await sql.openDatabase(join(dbPath, "dataKeeper.db"),
         onCreate: (database, version) async {
-      print("Creating Database");
-      return await database
-          .execute("CREATE TABLE gameData($ID INTEGER PRIMARY KEY AUTOINCREMENT"
-              ", $COIN INT, $DIAMOND INT)");
-    }, version: 1);
+          print("Creating Database");
+          return await database
+              .execute(
+              "CREATE TABLE gameData($ID INTEGER PRIMARY KEY AUTOINCREMENT"
+                  ", $COIN INT, $DIAMOND INT)");
+        }, version: 1);
   }
 
 //  static void insert(String tableName, Map<String, Object> data) async {
@@ -52,7 +53,7 @@ abstract class DatabaseHelper {
 //    Map<String,dynamic > rowToUpdate = (await database.query(TABLE))[0];
 
     Map<String, dynamic>
-        rowToUpdate; // creating new row to put it in existing database as an update
+    rowToUpdate; // creating new row to put it in existing database as an update
 
     if (currency == COIN) {
       rowToUpdate = {"$COIN": num};
@@ -65,3 +66,4 @@ abstract class DatabaseHelper {
     }
   }
 }
+
