@@ -1,0 +1,1 @@
+enum Currency { COIN, DIAMOND }

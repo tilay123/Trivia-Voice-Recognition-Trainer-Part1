@@ -1,3 +1,5 @@
+import 'package:voicelytrivia/model/currency.dart';
+
 import 'question.dart';
 import 'subCategoryType.dart';
 import 'dart:math';
@@ -7,6 +9,10 @@ class SubCategory {
   String subCategoryName; // Singer, Movie names,
   List<Question> questionList;
   String title; //
+  bool purchased;
+  int price;
+  Currency currency;
+
 
 
   List<Question> shuffle(){
