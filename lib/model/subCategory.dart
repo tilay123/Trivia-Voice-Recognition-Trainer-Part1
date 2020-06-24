@@ -5,10 +5,14 @@ import 'subCategoryType.dart';
 import 'dart:math';
 
 class SubCategory {
-  SubCategory({this.subCategoryName, this.questionList});
+  SubCategory(
+      {this.subCategoryName,
+      this.questionList,
+      this.price,
+      this.currency,
+      this.purchased});
   String subCategoryName; // Singer, Movie names,
   List<Question> questionList;
-  String bubCategoryName; //
   bool purchased = false;
   int price = 500;
   Currency currency = Currency.COIN;

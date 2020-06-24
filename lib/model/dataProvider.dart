@@ -67,7 +67,7 @@ class DataKeeper extends ChangeNotifier {
          notifyListeners();
     } else {
 
-      print("data null creating row...");
+      print("data not null fetching row...");
       //getting purchased data from database
       for (int outer = 0; outer < categories.data.length; outer++) {
         int tempLength = categories.data[outer].length;
@@ -78,7 +78,7 @@ class DataKeeper extends ChangeNotifier {
           bool didPurchase =
           await DatabaseHelper.getPurchasedDataFor(temp.subCategoryName);
           categories.data[outer][j].purchased = didPurchase;
-          print("working on setting up purchased to true or false ");
+         // print("working on setting up purchased to true or false ");
         }
       }
 

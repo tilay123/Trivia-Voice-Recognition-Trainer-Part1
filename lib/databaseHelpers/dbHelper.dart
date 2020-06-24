@@ -50,7 +50,7 @@ abstract class DatabaseHelper {
       "id": CURRENCY_ID,
     });
 
-     createNewPurchasedDataRow();
+    createNewPurchasedDataRow();
 
 //    print("QUERY ${await database.query(TABLE)}");
 //    print("QUERY ${await database.query(PURCHASE_DATA)}");
@@ -75,8 +75,8 @@ abstract class DatabaseHelper {
   static Future<List<Map<String, Object>>> getData() async {
     sql.Database database = await databaseInit();
 
-    print("QUERY1 ${await database.query(TABLE)}");
-    print("QUERY2 ${await database.query(PURCHASE_DATA_TABLE)}");
+    //  print("QUERY1 ${await database.query(TABLE)}");
+    //  print("QUERY2 ${await database.query(PURCHASE_DATA_TABLE)}");
     return await database.query(TABLE, columns: [COIN, DIAMOND]);
   }
 
@@ -90,7 +90,7 @@ abstract class DatabaseHelper {
         where: "$CONTAINER_NAME = ?",
         whereArgs: [subCategoryName]);
 
-    print("Length:${data.length} data: ${data[0]["$PURCHASED"] == 1}");
+    //  print("Length:${data.length} data: ${data[0]["$PURCHASED"] == 1}");
 
     return data[0]["$PURCHASED"] == 1;
   }

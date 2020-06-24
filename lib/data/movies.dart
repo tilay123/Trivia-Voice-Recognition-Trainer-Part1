@@ -4,12 +4,12 @@ import 'package:voicelytrivia/model/subCategory.dart';
 //List<String> celebrities = [];
 List<SubCategory> movies = [
   forrestGump,
-  theShawshankRedemption,
   harryPotter,
   theGodfather,
   pulpFiction,
   onward,
-  robinHood
+  robinHood,
+  theShawshankRedemption,
 ];
 
 //1

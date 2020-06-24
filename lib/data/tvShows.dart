@@ -1,3 +1,4 @@
+import 'package:voicelytrivia/model/currency.dart';
 import 'package:voicelytrivia/model/question.dart';
 import 'package:voicelytrivia/model/subCategory.dart';
 
@@ -13,7 +14,7 @@ List<SubCategory> tvShows = [
 
 //1
 final SubCategory theAmericans =
-    new SubCategory(subCategoryName: "The Americans", questionList: [
+    new SubCategory(subCategoryName: "The Americans", currency:Currency.COIN,questionList: [
   Question(
     questionUrl: "Question URL",
     correctAnswer: "Correct Answer",

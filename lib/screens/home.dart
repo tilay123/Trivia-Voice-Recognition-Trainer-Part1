@@ -9,6 +9,7 @@ import 'package:voicelytrivia/data/parentData.dart';
 import 'package:voicelytrivia/data/tvShows.dart';
 import 'package:voicelytrivia/model/constants.dart';
 import 'package:animated_button/animated_button.dart';
+import 'package:voicelytrivia/model/currency.dart';
 import 'package:voicelytrivia/model/subCategory.dart';
 import 'package:voicelytrivia/screens/answerSelectionPage.dart';
 import 'package:voicelytrivia/screens/viewAllPage.dart';
@@ -27,7 +28,7 @@ class HomeBottomNavigation extends StatelessWidget {
       future: Provider.of<DataKeeper>(context, listen: false)
           .fetchAndSetGameCurrency(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting ){
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(child: CircularProgressIndicator());
         }
 
@@ -174,6 +175,7 @@ class ScrollableRow extends StatelessWidget {
         height: 150,
         // color: Colors.red,
         child: ListView.builder(
+
             // row can't be greater than 5
             itemCount: subCategories?.length == null
                 ? 5
@@ -181,51 +183,97 @@ class ScrollableRow extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) {
+              SubCategory currentSubCategory = subCategories[index];
               return GestureDetector(
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              AnswerSelectionPage(subCategories[index])));
+                              AnswerSelectionPage(currentSubCategory)));
                 },
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 10),
-                  padding: EdgeInsets.all(10),
+                  padding:
+                      EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 3),
                   //  padding: EdgeInsets.all(10),
                   width: 180,
                   decoration: BoxDecoration(
                     //color: GradientL
-                    gradient: LinearGradient(colors: [color2, color4]),
+                    gradient: LinearGradient(colors: [Color(0xff4568DC), Color(0xffB06AB3)]),
                     borderRadius: BorderRadius.circular(10),
                   ),
 
-                  child: subCategories?.length == null
+                  child: subCategories?.length == 0
                       ? null
                       : Center(
                           child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
-                              subCategories[index].subCategoryName,
+                              currentSubCategory.subCategoryName,
                               style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
                             ),
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(Icons.lock,color: Colors.orange,),
-                                Text("Cost: 500 coins"),
-                              ],
-                            ),
+                            Text("Cost: 500 coins"),
+                            currentSubCategory.purchased == true
+                                ? AnimatedButton(
+                              color: Colors.green[500],
+                                    width: 160,
+                                    height: 40,
+                                    child: Text(
+                                      "PLAY",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  )
+                                : BuyButton(
+                                    currentSubCategory: currentSubCategory)
                           ],
                         )),
                 ),
               );
             }),
+      ),
+    );
+  }
+}
+
+class BuyButton extends StatelessWidget {
+  const BuyButton({
+    Key key,
+    @required this.currentSubCategory,
+  }) : super(key: key);
+
+  final SubCategory currentSubCategory;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedButton(
+
+      // will br great disabled button color 0xff82c4c3
+      color: currentSubCategory.currency == Currency.COIN? Color(0xff53b8b8): Color(0xff22a1e0),
+      width: 160,
+      height: 40,
+      onPressed: () {},
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            "${currentSubCategory.price == null ? 500 : currentSubCategory.price}",
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+          Image(
+            height: 30,
+            width: 30,
+            image: AssetImage(currentSubCategory.currency == Currency.COIN
+                ? "asset/coin-01.png"
+                : "asset/diamond-04.png"),
+          ),
+        ],
       ),
     );
   }
