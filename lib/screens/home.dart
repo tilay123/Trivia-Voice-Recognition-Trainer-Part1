@@ -184,57 +184,55 @@ class ScrollableRow extends StatelessWidget {
             physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               SubCategory currentSubCategory = subCategories[index];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              AnswerSelectionPage(currentSubCategory)));
-                },
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  padding:
-                      EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 3),
-                  //  padding: EdgeInsets.all(10),
-                  width: 180,
-                  decoration: BoxDecoration(
-                    //color: GradientL
-                    gradient: LinearGradient(colors: [Color(0xff4568DC), Color(0xffB06AB3)]),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-
-                  child: subCategories?.length == 0
-                      ? null
-                      : Center(
-                          child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              currentSubCategory.subCategoryName,
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                            Text("Cost: 500 coins"),
-                            currentSubCategory.purchased == true
-                                ? AnimatedButton(
-                              color: Colors.green[500],
-                                    width: 160,
-                                    height: 40,
-                                    child: Text(
-                                      "PLAY",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  )
-                                : BuyButton(
-                                    currentSubCategory: currentSubCategory)
-                          ],
-                        )),
+              return Container(
+                margin: EdgeInsets.symmetric(horizontal: 10),
+                padding:
+                    EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 3),
+                //  padding: EdgeInsets.all(10),
+                width: 180,
+                decoration: BoxDecoration(
+                  //color: GradientL
+                  gradient: LinearGradient(colors: [Color(0xff4568DC), Color(0xffB06AB3)]),
+                  borderRadius: BorderRadius.circular(10),
                 ),
+
+                child: subCategories?.length == 0
+                    ? null
+                    : Center(
+                        child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            currentSubCategory.subCategoryName,
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                          Text("Cost: 500 coins"),
+                          currentSubCategory.purchased == true
+                              ? AnimatedButton(
+                            onPressed: (){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AnswerSelectionPage(currentSubCategory)));
+                            },
+                            color: Colors.green[500],
+                                  width: 160,
+                                  height: 40,
+                                  child: Text(
+                                    "PLAY",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              : BuyButton(
+                                  currentSubCategory: currentSubCategory)
+                        ],
+                      )),
               );
             }),
       ),
