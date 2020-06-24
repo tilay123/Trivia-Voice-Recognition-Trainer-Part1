@@ -27,6 +27,10 @@ class HomeBottomNavigation extends StatelessWidget {
       future: Provider.of<DataKeeper>(context, listen: false)
           .fetchAndSetGameCurrency(),
       builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting ){
+          return Center(child: CircularProgressIndicator());
+        }
+
         return CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(

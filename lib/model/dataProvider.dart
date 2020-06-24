@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:voicelytrivia/data/parentData.dart';
 import 'package:voicelytrivia/databaseHelpers/dbHelper.dart';
+import 'package:voicelytrivia/model/subCategory.dart';
 
 class DataKeeper extends ChangeNotifier {
   int _currentIndex = 0;
@@ -60,10 +62,28 @@ class DataKeeper extends ChangeNotifier {
 //    }).toList());
 
     if (gameData.length == 0) {
-      print("data null creating row...");
       DatabaseHelper.createNewRow();
-      //   notifyListeners();
+
+         notifyListeners();
     } else {
+
+      print("data null creating row...");
+      //getting purchased data from database
+      for (int outer = 0; outer < categories.data.length; outer++) {
+        int tempLength = categories.data[outer].length;
+        for (int j = 0; j < tempLength; j++) {
+          SubCategory temp = categories.data[outer][j];
+          // print("Tempp: $temp");
+
+          bool didPurchase =
+          await DatabaseHelper.getPurchasedDataFor(temp.subCategoryName);
+          categories.data[outer][j].purchased = didPurchase;
+          print("working on setting up purchased to true or false ");
+        }
+      }
+
+
+
       gameData[0].forEach((key, value) {
         if (key == DatabaseHelper.COIN) {
           _coin = value;
@@ -71,6 +91,9 @@ class DataKeeper extends ChangeNotifier {
           _diamond = value;
         }
       });
+
+
+
     }
   }
 }
