@@ -192,7 +192,8 @@ class ScrollableRow extends StatelessWidget {
                 width: 180,
                 decoration: BoxDecoration(
                   //color: GradientL
-                  gradient: LinearGradient(colors: [Color(0xff4568DC), Color(0xffB06AB3)]),
+                  gradient: LinearGradient(
+                      colors: [Color(0xff4568DC), Color(0xffB06AB3)]),
                   borderRadius: BorderRadius.circular(10),
                 ),
 
@@ -212,14 +213,15 @@ class ScrollableRow extends StatelessWidget {
                           Text("Cost: 500 coins"),
                           currentSubCategory.purchased == true
                               ? AnimatedButton(
-                            onPressed: (){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          AnswerSelectionPage(currentSubCategory)));
-                            },
-                            color: Colors.green[500],
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                AnswerSelectionPage(
+                                                    currentSubCategory)));
+                                  },
+                                  color: Colors.green[500],
                                   width: 160,
                                   height: 40,
                                   child: Text(
@@ -250,10 +252,31 @@ class BuyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedButton(
+    int currentCoins = Provider.of<DataKeeper>(context, listen: false).getCoin;
+    int currentDiamonds =
+        Provider.of<DataKeeper>(context, listen: false).getDiamond;
 
+    Color getColor() {
+      print("$currentCoins and $currentDiamonds");
+      if (currentSubCategory.currency == Currency.COIN &&
+              currentCoins < (currentSubCategory.price ?? 500) ||
+          currentSubCategory.currency == Currency.DIAMOND &&
+              currentDiamonds < (currentSubCategory.price ?? 500))
+        return Colors.grey[400];
+      else if (currentSubCategory.currency == Currency.COIN) {
+        return Color(0xff53b8b8);
+      } else if (currentSubCategory.currency == Currency.DIAMOND) {
+        // must be Diamond
+        return Color(0xff22a1e0);
+      }
+      // todo there's null currency
+      return Colors.grey[400];
+    }
+
+    return AnimatedButton(
       // will br great disabled button color 0xff82c4c3
-      color: currentSubCategory.currency == Currency.COIN? Color(0xff53b8b8): Color(0xff22a1e0),
+      //  color: currentSubCategory.currency == Currency.COIN? Color(0xff53b8b8): Color(0xff22a1e0),
+      color: getColor(),
       width: 160,
       height: 40,
       onPressed: () {},
