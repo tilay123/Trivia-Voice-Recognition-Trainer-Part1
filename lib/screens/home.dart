@@ -24,6 +24,7 @@ class HomeBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return FutureBuilder(
       future: Provider.of<DataKeeper>(context, listen: false)
           .fetchAndSetGameCurrency(),
@@ -32,6 +33,10 @@ class HomeBottomNavigation extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
 
+//        // todo change this initial addition
+//        Provider.of<DataKeeper>(context, listen: false).addCoin(1000);
+//        Provider.of<DataKeeper>(context, listen: false).addDiamond(1000);
+//
         return CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
@@ -203,12 +208,16 @@ class ScrollableRow extends StatelessWidget {
                         child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(
-                            currentSubCategory.subCategoryName,
-                            style: TextStyle(
-                                fontSize: 25,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                currentSubCategory.subCategoryName,
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ),
                           ),
                           Text("Cost: 500 coins"),
                           currentSubCategory.purchased == true

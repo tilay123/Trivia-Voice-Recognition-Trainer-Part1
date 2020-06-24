@@ -40,7 +40,7 @@ final SubCategory theAmericans =
 
 //2
 final SubCategory gameOfThrones =
-    new SubCategory(subCategoryName: "Game of Thrones", questionList: [
+    new SubCategory(subCategoryName: "Game of Thrones", price: 1200,currency: Currency.DIAMOND, questionList: [
   Question(
     questionUrl: "Question URL",
     correctAnswer: "Correct Answer",
