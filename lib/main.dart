@@ -32,7 +32,8 @@ class _TriviaVoiceState extends State<TriviaVoice> {
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Color(0xff4281A4),
-        scaffoldBackgroundColor: Color(0xffE4DFDA),
+      //  scaffoldBackgroundColor: Color(0xffE4DFDA),
+          scaffoldBackgroundColor: Color(0xffe1d3b3),
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(

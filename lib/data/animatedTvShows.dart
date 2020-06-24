@@ -1,3 +1,4 @@
+import 'package:voicelytrivia/model/currency.dart';
 import 'package:voicelytrivia/model/question.dart';
 import 'package:voicelytrivia/model/subCategory.dart';
 
@@ -14,7 +15,7 @@ List<SubCategory> animatedTvShows = [
 
 //1
 final SubCategory familyGuy =
-    new SubCategory(subCategoryName: "Family Guy", questionList: [
+    new SubCategory(subCategoryName: "Family Guy", currency: Currency.COIN,price: 700, questionList: [
   Question(
     questionUrl: "Question URL",
     correctAnswer: "Correct Answer",

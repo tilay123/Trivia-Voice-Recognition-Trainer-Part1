@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:voicelytrivia/model/currency.dart';
 
 import 'question.dart';
@@ -6,10 +7,10 @@ import 'dart:math';
 
 class SubCategory {
   SubCategory(
-      {this.subCategoryName,
-      this.questionList,
-      this.price,
-      this.currency,
+      {@required this.subCategoryName,
+      @required this.questionList,
+      @required this.price,
+      @required this.currency,
       this.purchased});
   String subCategoryName; // Singer, Movie names,
   List<Question> questionList;

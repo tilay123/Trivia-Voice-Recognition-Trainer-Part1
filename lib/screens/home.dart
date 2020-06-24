@@ -219,7 +219,7 @@ class ScrollableRow extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Text("Cost: 500 coins"),
+                          Text("0/5, left: 5",style: TextStyle(color: Colors.white),),
                           currentSubCategory.purchased == true
                               ? AnimatedButton(
                                   onPressed: () {
