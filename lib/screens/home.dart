@@ -269,48 +269,74 @@ class BuyButton extends StatefulWidget {
 
 class _BuyButtonState extends State<BuyButton> {
   void showPopup(BuildContext context, SubCategory data) {
-//    AwesomeDialog(
-//        context: context,
-//        dialogType: DialogType.INFO,
-//        btnOk: Center(
-//          child: AnimatedButton(
-//            child: Text("PLAY"),
-//            onPressed: () {
-//              // Provider.of<DataKeeper>(context, listen: false).addCoin(100);
-//              Navigator.pop(context);
-//            },
-//          ),
-//        ),
-//        body: Container(
-//          height: 100,
-//          color: Colors.purple,
-//        )).show();
-    AwesomeDialog(
-        context: context,
-        dialogType: DialogType.WARNING,
-        btnOk: Center(
-          child: AnimatedButton(
-            child: Text("CONFIRM"),
-            onPressed: () {
-              Provider.of<DataKeeper>(context, listen: false).addCoin(-data.price);
-              Navigator.pop(context);
-              Random random = Random();
+    bool canPurchase =
+        Provider.of<DataKeeper>(context,listen: false).canPurchase(widget.currentSubCategory);
 
-              int index = random.nextInt(categories.data.length);
-
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => AnswerSelectionPage(categories
-                              .data[index]
-                          [random.nextInt(categories.data[index].length)])));
-            },
+    if (!canPurchase) {
+      AwesomeDialog(
+          context: context,
+          dialogType: DialogType.INFO,
+          btnOk: Center(
+            child: AnimatedButton(
+              child: Text("OK"),
+              onPressed: () {
+                // Provider.of<DataKeeper>(context, listen: false).addCoin(100);
+                Navigator.pop(context);
+              },
+            ),
           ),
-        ),
-        body: Container(
-          height: 100,
-          color: Colors.purple,
-        )).show();
+          body: Container(
+            height: 100,
+            color: Colors.purple,
+            child: Text(
+              "Not Enough coin",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )).show();
+    } else {
+      AwesomeDialog(
+          context: context,
+          dialogType: DialogType.WARNING,
+          btnOk: Center(
+            child: AnimatedButton(
+              child: Text("CONFIRM"),
+              onPressed: () async {
+                bool successPurchase;
+
+                if (data.currency == Currency.COIN) {
+                  successPurchase =
+                      await Provider.of<DataKeeper>(context, listen: false)
+                          .addCoin(-data.price);
+                } else if (data.currency == Currency.DIAMOND) {
+                  successPurchase =
+                      await Provider.of<DataKeeper>(context, listen: false)
+                          .addDiamond(-data.price);
+                }
+                Navigator.pop(context);
+                if (successPurchase) {
+                  setState(() {
+                    print("Purchased");
+                    data.purchased = true;
+                  });
+                  Random random = Random();
+
+                  int index = random.nextInt(categories.data.length);
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AnswerSelectionPage(categories
+                                  .data[index][
+                              random.nextInt(categories.data[index].length)])));
+                }
+              },
+            ),
+          ),
+          body: Container(
+            height: 100,
+            color: Colors.purple,
+          )).show();
+    }
   }
 
   @override
@@ -320,13 +346,13 @@ class _BuyButtonState extends State<BuyButton> {
         Provider.of<DataKeeper>(context, listen: false).getDiamond;
 
     Color getColor() {
+      bool canPurchase = Provider.of<DataKeeper>(context)
+          .canPurchase(widget.currentSubCategory);
+
       print("$currentCoins and $currentDiamonds");
-      if (widget.currentSubCategory.currency == Currency.COIN &&
-              currentCoins < (widget.currentSubCategory.price ?? 500) ||
-          widget.currentSubCategory.currency == Currency.DIAMOND &&
-              currentDiamonds < (widget.currentSubCategory.price ?? 500))
+      if (!canPurchase) {
         return Colors.grey[400];
-      else if (widget.currentSubCategory.currency == Currency.COIN) {
+      } else if (widget.currentSubCategory.currency == Currency.COIN) {
         return Color(0xff53b8b8);
       } else if (widget.currentSubCategory.currency == Currency.DIAMOND) {
         // must be Diamond

@@ -14,7 +14,7 @@ List<SubCategory> tvShows = [
 
 //1
 final SubCategory theAmericans =
-    new SubCategory(subCategoryName: "The Americans", currency:Currency.COIN, price: 100,questionList: [
+    new SubCategory(subCategoryName: "The Americans", currency:Currency.COIN, price: 200,questionList: [
   Question(
     questionUrl: "Question URL",
     correctAnswer: "Correct Answer",

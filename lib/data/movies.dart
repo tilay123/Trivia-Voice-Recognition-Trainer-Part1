@@ -17,7 +17,7 @@ List<SubCategory> movies = [
 final SubCategory forrestGump = new SubCategory(
     subCategoryName: "Forrest Gump",
     currency: Currency.COIN,
-    price: 100,
+    price: 200,
     questionList: [
       Question(
         questionUrl: "Question URL",
@@ -46,7 +46,7 @@ final SubCategory forrestGump = new SubCategory(
 final SubCategory theShawshankRedemption = new SubCategory(
     subCategoryName: "The Shawshank Redemption",
     currency: Currency.COIN,
-    price: 150,
+    price: 250,
     questionList: [
       Question(
         questionUrl: "Question URL",

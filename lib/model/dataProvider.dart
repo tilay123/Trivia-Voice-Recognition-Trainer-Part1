@@ -5,6 +5,8 @@ import 'package:voicelytrivia/data/parentData.dart';
 import 'package:voicelytrivia/databaseHelpers/dbHelper.dart';
 import 'package:voicelytrivia/model/subCategory.dart';
 
+import 'currency.dart';
+
 class DataKeeper extends ChangeNotifier {
   int _currentIndex = 0;
 
@@ -15,7 +17,7 @@ class DataKeeper extends ChangeNotifier {
     return _coin;
   }
 
-  Future<void> addCoin(int amount) async {
+  Future<bool> addCoin(int amount) async {
     if (_coin + amount < 0) {
       return false;
     }
@@ -28,6 +30,19 @@ class DataKeeper extends ChangeNotifier {
 
   int get getDiamond {
     return _diamond;
+  }
+
+  bool canPurchase(SubCategory data) {
+    if (data.currency == Currency.COIN && getCoin > data.price ||
+        data.currency == Currency.DIAMOND && getDiamond > data.price) {
+      return true;
+    }
+
+    return false;
+  }
+
+  void haveSuccessfullyPurchased(){
+
   }
 
   Future<bool> addDiamond(int amount) async {
@@ -61,10 +76,8 @@ class DataKeeper extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> buy() async {}
-
   Future<void> fetchAndSetGameCurrency() async {
-    List<Map<String, Object>> gameData = await DatabaseHelper.getData();
+    List<Map<String, Object>> gameData = await DatabaseHelper.getCurrencyData();
 
     print("Game data  $gameData ${gameData.length}");
 //    print(   gameData.map((element) {

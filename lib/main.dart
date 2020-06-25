@@ -18,10 +18,7 @@ class TriviaVoice extends StatefulWidget {
 }
 
 class _TriviaVoiceState extends State<TriviaVoice> {
-
-
-
- // int _currentIndex = 0;
+  // int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     List<Widget> bodies = [
@@ -32,18 +29,20 @@ class _TriviaVoiceState extends State<TriviaVoice> {
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Color(0xff4281A4),
-      //  scaffoldBackgroundColor: Color(0xffE4DFDA),
-          scaffoldBackgroundColor: Color(0xffe1d3b3),
+        //  scaffoldBackgroundColor: Color(0xffE4DFDA),
+        scaffoldBackgroundColor: Color(0xffe1d3b3),
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: bodies.elementAt(Provider.of<DataKeeper>(context).getHomePageCurrentIndex),
+        body: bodies.elementAt(
+            Provider.of<DataKeeper>(context).getHomePageCurrentIndex),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: color1,
-          currentIndex: Provider.of<DataKeeper>(context).getHomePageCurrentIndex,
+          currentIndex:
+              Provider.of<DataKeeper>(context).getHomePageCurrentIndex,
           onTap: (index) {
-
-              Provider.of<DataKeeper>(context,listen: false).setCurrentIndex(index);
+            Provider.of<DataKeeper>(context, listen: false)
+                .setCurrentIndex(index);
           },
           items: [
             BottomNavigationBarItem(
@@ -67,6 +66,19 @@ class _TriviaVoiceState extends State<TriviaVoice> {
                 )),
           ],
         ),
+        floatingActionButton: GestureDetector(
+          onTap: (){
+            Provider.of<DataKeeper>(context,listen: false).addCoin(50);
+          },
+          child: Container(
+            height: 50,
+            width: 50,
+            decoration:
+                BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+            child: Center(child: Text("+50 Coin")),
+          ),
+        ),
+
       ),
     );
   }

@@ -16,8 +16,8 @@ List<SubCategory> animatedTvShows = [
 //1
 final SubCategory familyGuy = new SubCategory(
     subCategoryName: "Family Guy",
-    currency: Currency.COIN,
-    price: 100,
+    currency: Currency.DIAMOND,
+    price: 4,
     questionList: [
       Question(
         questionUrl: "Question URL",

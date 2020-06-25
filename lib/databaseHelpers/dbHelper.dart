@@ -72,7 +72,7 @@ abstract class DatabaseHelper {
     }
   }
 
-  static Future<List<Map<String, Object>>> getData() async {
+  static Future<List<Map<String, Object>>> getCurrencyData() async {
     sql.Database database = await databaseInit();
 
     //  print("QUERY1 ${await database.query(TABLE)}");
