@@ -95,7 +95,7 @@ abstract class DatabaseHelper {
     return data[0]["$PURCHASED"] == 1;
   }
 
-  static Future<void> addCurrency(String currency, int num) async {
+  static Future<void> replaceCurrency(String currency, int num) async {
     sql.Database database = await databaseInit();
 
 //    Map<String,dynamic > rowToUpdate = (await database.query(TABLE))[0];

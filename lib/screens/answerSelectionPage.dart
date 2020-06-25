@@ -182,6 +182,8 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
     }
   }
 
+  bool finishedAnswering = false;
+
   @override
   Widget build(BuildContext context) {
 //    print("Wrong Answer: ${singer.subCategories[0].getWrongAnswer()}");
@@ -206,30 +208,34 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                       height: 200,
                       child: Stack(
                         children: <Widget>[
-                          Center(
-                            child: TimeCircularCountdown(
-                              //strokeWidth: 5,
-                              unit: CountdownUnit.second,
-                              countdownTotal: 20,
-                              strokeWidth: 30,
-                              onUpdated: (unit, remainingTime) {
-                                setState(() {
-                                  print(remainingTime);
-                                  // print("Hi");
+                          if (!finishedAnswering)
+                            Center(
+                              child: TimeCircularCountdown(
+                                //strokeWidth: 5,
+                                unit: CountdownUnit.second,
+                                countdownTotal: 20,
+                                strokeWidth: 30,
+                                onUpdated: (unit, remainingTime) {
+                                  if (!finishedAnswering) {
+                                    setState(() {
+                                      print(remainingTime);
 
-                                  centeredTextTime = remainingTime;
-                                });
-                              },
-                              onFinished: () {
-                                setState(() {
-                                  centeredTextTime = 0;
-                                });
-                                print('Countdown finished');
-                              },
-                              diameter: 200,
-                              countdownTotalColor: Colors.red,
+                                      centeredTextTime = remainingTime;
+                                    });
+                                  }
+                                },
+                                onFinished: () {
+                                  setState(() {
+                                    finishedAnswering = true;
+                                    centeredTextTime = 0;
+                                  });
+                                  print('Countdown finished');
+                                },
+
+                                diameter: 200,
+                                countdownTotalColor: Colors.red,
+                              ),
                             ),
-                          ),
 //                        Positioned(
 //                            left: 93,
 //                            top: 25,
@@ -240,7 +246,9 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
 
                           Center(
                             child: Icon(
-                              Icons.pause,
+                              finishedAnswering
+                                  ? Icons.play_arrow
+                                  : Icons.pause,
                               size: 150,
                             ),
                           ),
@@ -289,6 +297,9 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                   color: Colors.grey[100],
                   width: MediaQuery.of(context).size.width - 60,
                   onPressed: () {
+                    setState(() {
+                      finishedAnswering = true;
+                    });
                     checkUserAnswer(context, _multipleChoices[0]);
                   },
                 ),
@@ -302,6 +313,9 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                   color: Colors.grey[100],
                   width: MediaQuery.of(context).size.width - 60,
                   onPressed: () {
+                    setState(() {
+                      finishedAnswering = true;
+                    });
                     checkUserAnswer(context, _multipleChoices[1]);
                   },
                 ),
@@ -315,6 +329,9 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                   color: Colors.grey[100],
                   width: MediaQuery.of(context).size.width - 60,
                   onPressed: () {
+                    setState(() {
+                      finishedAnswering = true;
+                    });
                     checkUserAnswer(context, _multipleChoices[2]);
                   },
                 ),
@@ -328,6 +345,9 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                   color: Colors.grey[100],
                   width: MediaQuery.of(context).size.width - 60,
                   onPressed: () {
+                    setState(() {
+                      finishedAnswering = true;
+                    });
                     checkUserAnswer(context, _multipleChoices[3]);
                   },
                 ),

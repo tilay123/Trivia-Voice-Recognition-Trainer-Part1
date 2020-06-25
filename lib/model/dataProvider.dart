@@ -15,23 +15,31 @@ class DataKeeper extends ChangeNotifier {
     return _coin;
   }
 
-  void addCoin(int amount) async {
+  Future<void> addCoin(int amount) async {
+    if (_coin + amount < 0) {
+      return false;
+    }
     _coin += amount;
     notifyListeners();
     //  DatabaseHelper.update("gameData", {"coin": _coin});
-    await DatabaseHelper.addCurrency(DatabaseHelper.COIN, _coin);
+    await DatabaseHelper.replaceCurrency(DatabaseHelper.COIN, _coin);
+    return true;
   }
 
   int get getDiamond {
     return _diamond;
   }
 
-  void addDiamond(int amount) async {
+  Future<bool> addDiamond(int amount) async {
+    if (_diamond + amount < 0) {
+      return false;
+    }
     _diamond += amount;
 
     //   DatabaseHelper.update("gameData", {"diamond": _diamond});
-    await DatabaseHelper.addCurrency(DatabaseHelper.DIAMOND, _diamond);
+    await DatabaseHelper.replaceCurrency(DatabaseHelper.DIAMOND, _diamond);
     notifyListeners();
+    return true;
   }
 
   int get getHomePageCurrentIndex {
@@ -53,11 +61,7 @@ class DataKeeper extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> buy() async{
-
-  }
-
-
+  Future<void> buy() async {}
 
   Future<void> fetchAndSetGameCurrency() async {
     List<Map<String, Object>> gameData = await DatabaseHelper.getData();
