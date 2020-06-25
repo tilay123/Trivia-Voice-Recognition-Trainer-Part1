@@ -7,9 +7,10 @@ import 'package:voicelytrivia/model/subCategoryType.dart';
 //List<String> celebrities = [];
 List<SubCategory> celebrities = [
   singer,
+  motivators,
   billionaire,
   presidents,
-  motivators,
+
   actorsOrActresses,
 ];
 
@@ -122,7 +123,7 @@ final SubCategory presidents = new SubCategory(
 final SubCategory motivators = new SubCategory(
     subCategoryName: "Motivators",
     currency: Currency.DIAMOND,
-    price: 2,
+    price: 4,
     questionList: [
       Question(
         questionUrl: "Question URL",

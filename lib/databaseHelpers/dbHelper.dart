@@ -45,7 +45,7 @@ abstract class DatabaseHelper {
     sql.Database database = await databaseInit();
 
     database.insert(TABLE, {
-      "$COIN": 20,
+      "$COIN": 100,
       "$DIAMOND": 5,
       "id": CURRENCY_ID,
     });
@@ -54,6 +54,15 @@ abstract class DatabaseHelper {
 
 //    print("QUERY ${await database.query(TABLE)}");
 //    print("QUERY ${await database.query(PURCHASE_DATA)}");
+  }
+
+  static Future<void> updateOnSuccessfulPurchase(String subCategoryName) async {
+    sql.Database database = await databaseInit();
+
+    Map<String, Object> dataToUpdate = {"$PURCHASED": 1};
+
+    await database.update(PURCHASE_DATA_TABLE, dataToUpdate,
+        where: "$CONTAINER_NAME = ?", whereArgs: [subCategoryName]);
   }
 
   static Future<void> createNewPurchasedDataRow() async {

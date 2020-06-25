@@ -33,16 +33,17 @@ class DataKeeper extends ChangeNotifier {
   }
 
   bool canPurchase(SubCategory data) {
-    if (data.currency == Currency.COIN && getCoin > data.price ||
-        data.currency == Currency.DIAMOND && getDiamond > data.price) {
+    if (data.currency == Currency.COIN && getCoin >= data.price ||
+        data.currency == Currency.DIAMOND && getDiamond >= data.price) {
       return true;
     }
 
     return false;
   }
 
-  void haveSuccessfullyPurchased(){
-
+  Future<void> updatePurchaseDatabase(String subcategoryName) async {
+    await DatabaseHelper.updateOnSuccessfulPurchase(subcategoryName);
+    notifyListeners();
   }
 
   Future<bool> addDiamond(int amount) async {

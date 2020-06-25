@@ -93,6 +93,7 @@ class HomeBottomNavigation extends StatelessWidget {
             ),
             ScrollableRow(
               subCategories: celebrities,
+              parentIndex: 0,
             ),
             BigCategoryText(
               title: "TV Shows",
@@ -100,6 +101,7 @@ class HomeBottomNavigation extends StatelessWidget {
             ),
             ScrollableRow(
               subCategories: tvShows,
+              parentIndex: 1,
             ),
             BigCategoryText(
               title: "Animated TV Shows",
@@ -107,6 +109,7 @@ class HomeBottomNavigation extends StatelessWidget {
             ),
             ScrollableRow(
               subCategories: animatedTvShows,
+              parentIndex: 2,
             ),
             BigCategoryText(
               title: "Movies",
@@ -114,6 +117,7 @@ class HomeBottomNavigation extends StatelessWidget {
             ),
             ScrollableRow(
               subCategories: movies,
+              parentIndex: 3,
             ),
             SliverToBoxAdapter(
               child: SizedBox(
@@ -171,8 +175,9 @@ class BigCategoryText extends StatelessWidget {
 
 // Horizontal scrollable view
 class ScrollableRow extends StatelessWidget {
-  ScrollableRow({this.subCategories});
+  ScrollableRow({this.subCategories, this.parentIndex});
   final List<SubCategory> subCategories;
+  final parentIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +250,8 @@ class ScrollableRow extends StatelessWidget {
                                   ),
                                 )
                               : BuyButton(
-                                  currentSubCategory: currentSubCategory)
+                                  currentSubCategory: currentSubCategory,
+                                  indexes: [parentIndex, index]),
                         ],
                       )),
               );
@@ -259,8 +265,10 @@ class BuyButton extends StatefulWidget {
   const BuyButton({
     Key key,
     @required this.currentSubCategory,
+    @required this.indexes,
   }) : super(key: key);
 
+  final List indexes;
   final SubCategory currentSubCategory;
 
   @override
@@ -268,9 +276,10 @@ class BuyButton extends StatefulWidget {
 }
 
 class _BuyButtonState extends State<BuyButton> {
-  void showPopup(BuildContext context, SubCategory data) {
-    bool canPurchase =
-        Provider.of<DataKeeper>(context,listen: false).canPurchase(widget.currentSubCategory);
+  void showPopup(BuildContext context, SubCategory data, List indexes ) {
+    // todo change original data
+    bool canPurchase = Provider.of<DataKeeper>(context, listen: false)
+        .canPurchase(widget.currentSubCategory);
 
     if (!canPurchase) {
       AwesomeDialog(
@@ -297,40 +306,68 @@ class _BuyButtonState extends State<BuyButton> {
       AwesomeDialog(
           context: context,
           dialogType: DialogType.WARNING,
-          btnOk: Center(
-            child: AnimatedButton(
-              child: Text("CONFIRM"),
-              onPressed: () async {
-                bool successPurchase;
+          btnOk: LayoutBuilder(
+            builder: (context, constraints) {
+              return Center(
+                child: AnimatedButton(
+                  color: Colors.green,
+                  width: constraints.maxWidth - 5,
+                  child: Text("CONFIRM"),
+                  onPressed: () async {
+                    bool successPurchase;
 
-                if (data.currency == Currency.COIN) {
-                  successPurchase =
-                      await Provider.of<DataKeeper>(context, listen: false)
-                          .addCoin(-data.price);
-                } else if (data.currency == Currency.DIAMOND) {
-                  successPurchase =
-                      await Provider.of<DataKeeper>(context, listen: false)
-                          .addDiamond(-data.price);
-                }
-                Navigator.pop(context);
-                if (successPurchase) {
-                  setState(() {
-                    print("Purchased");
-                    data.purchased = true;
-                  });
-                  Random random = Random();
+                    if (data.currency == Currency.COIN) {
+                      successPurchase =
+                          await Provider.of<DataKeeper>(context, listen: false)
+                              .addCoin(-data.price);
+                    } else if (data.currency == Currency.DIAMOND) {
+                      successPurchase =
+                          await Provider.of<DataKeeper>(context, listen: false)
+                              .addDiamond(-data.price);
+                    }
 
-                  int index = random.nextInt(categories.data.length);
+                    if (successPurchase) {
+                      setState(() {
+                        print("Purchased");
+                      //  data.purchased = true; // can't change the copy of the original data.
+                        categories.data[indexes[0]][indexes[1]].purchased = true;
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AnswerSelectionPage(categories
-                                  .data[index][
-                              random.nextInt(categories.data[index].length)])));
-                }
-              },
-            ),
+                      });
+
+                      Navigator.pop(context);
+
+                      await Provider.of<DataKeeper>(context,listen: false)
+                          .updatePurchaseDatabase(
+                              widget.currentSubCategory.subCategoryName);
+                      Random random = Random();
+
+                      int index = random.nextInt(categories.data.length);
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AnswerSelectionPage(
+                                  categories.data[index][random.nextInt(
+                                      categories.data[index].length)])));
+                    }
+                  },
+                ),
+              );
+            },
+          ),
+          btnCancel: LayoutBuilder(
+            builder: (context, constraints) {
+              return Center(
+                child: AnimatedButton(
+                  color: Colors.red,
+                  width: constraints.maxWidth - 5,
+                  child: Text("CANCEL"),
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
+                ),
+              );
+            },
           ),
           body: Container(
             height: 100,
@@ -346,7 +383,7 @@ class _BuyButtonState extends State<BuyButton> {
         Provider.of<DataKeeper>(context, listen: false).getDiamond;
 
     Color getColor() {
-      bool canPurchase = Provider.of<DataKeeper>(context)
+      bool canPurchase = Provider.of<DataKeeper>(context,listen: false)
           .canPurchase(widget.currentSubCategory);
 
       print("$currentCoins and $currentDiamonds");
@@ -369,7 +406,7 @@ class _BuyButtonState extends State<BuyButton> {
       width: 160,
       height: 40,
       onPressed: () {
-        showPopup(context, widget.currentSubCategory);
+        showPopup(context, widget.currentSubCategory, widget.indexes);
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
