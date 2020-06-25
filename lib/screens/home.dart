@@ -1,6 +1,8 @@
 import 'dart:math';
 
+import 'package:awesome_dialog/awesome_dialog.dart' hide AnimatedButton;
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:voicelytrivia/data/animatedTvShows.dart';
 import 'package:voicelytrivia/data/movies.dart';
@@ -253,13 +255,63 @@ class ScrollableRow extends StatelessWidget {
   }
 }
 
-class BuyButton extends StatelessWidget {
+class BuyButton extends StatefulWidget {
   const BuyButton({
     Key key,
     @required this.currentSubCategory,
   }) : super(key: key);
 
   final SubCategory currentSubCategory;
+
+  @override
+  _BuyButtonState createState() => _BuyButtonState();
+}
+
+class _BuyButtonState extends State<BuyButton> {
+  void showPopup(BuildContext context, SubCategory data) {
+//    AwesomeDialog(
+//        context: context,
+//        dialogType: DialogType.INFO,
+//        btnOk: Center(
+//          child: AnimatedButton(
+//            child: Text("PLAY"),
+//            onPressed: () {
+//              // Provider.of<DataKeeper>(context, listen: false).addCoin(100);
+//              Navigator.pop(context);
+//            },
+//          ),
+//        ),
+//        body: Container(
+//          height: 100,
+//          color: Colors.purple,
+//        )).show();
+    AwesomeDialog(
+        context: context,
+        dialogType: DialogType.WARNING,
+        btnOk: Center(
+          child: AnimatedButton(
+            child: Text("CONFIRM"),
+            onPressed: () {
+              Provider.of<DataKeeper>(context, listen: false).addCoin(-data.price);
+              Navigator.pop(context);
+              Random random = Random();
+
+              int index = random.nextInt(categories.data.length);
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => AnswerSelectionPage(categories
+                              .data[index]
+                          [random.nextInt(categories.data[index].length)])));
+            },
+          ),
+        ),
+        body: Container(
+          height: 100,
+          color: Colors.purple,
+        )).show();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -269,14 +321,14 @@ class BuyButton extends StatelessWidget {
 
     Color getColor() {
       print("$currentCoins and $currentDiamonds");
-      if (currentSubCategory.currency == Currency.COIN &&
-              currentCoins < (currentSubCategory.price ?? 500) ||
-          currentSubCategory.currency == Currency.DIAMOND &&
-              currentDiamonds < (currentSubCategory.price ?? 500))
+      if (widget.currentSubCategory.currency == Currency.COIN &&
+              currentCoins < (widget.currentSubCategory.price ?? 500) ||
+          widget.currentSubCategory.currency == Currency.DIAMOND &&
+              currentDiamonds < (widget.currentSubCategory.price ?? 500))
         return Colors.grey[400];
-      else if (currentSubCategory.currency == Currency.COIN) {
+      else if (widget.currentSubCategory.currency == Currency.COIN) {
         return Color(0xff53b8b8);
-      } else if (currentSubCategory.currency == Currency.DIAMOND) {
+      } else if (widget.currentSubCategory.currency == Currency.DIAMOND) {
         // must be Diamond
         return Color(0xff22a1e0);
       }
@@ -291,21 +343,22 @@ class BuyButton extends StatelessWidget {
       width: 160,
       height: 40,
       onPressed: () {
-        Provider.of<DataKeeper>(context, listen: false).addCoin(100);
+        showPopup(context, widget.currentSubCategory);
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            "${currentSubCategory.price == null ? 500 : currentSubCategory.price}",
+            "${widget.currentSubCategory.price == null ? 500 : widget.currentSubCategory.price}",
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           Image(
             height: 30,
             width: 30,
-            image: AssetImage(currentSubCategory.currency == Currency.COIN
-                ? "asset/coin-01.png"
-                : "asset/diamond-04.png"),
+            image: AssetImage(
+                widget.currentSubCategory.currency == Currency.COIN
+                    ? "asset/coin-01.png"
+                    : "asset/diamond-04.png"),
           ),
         ],
       ),

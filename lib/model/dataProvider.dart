@@ -53,6 +53,12 @@ class DataKeeper extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> buy() async{
+
+  }
+
+
+
   Future<void> fetchAndSetGameCurrency() async {
     List<Map<String, Object>> gameData = await DatabaseHelper.getData();
 
@@ -64,9 +70,8 @@ class DataKeeper extends ChangeNotifier {
     if (gameData.length == 0) {
       DatabaseHelper.createNewRow();
 
-         notifyListeners();
+      notifyListeners();
     } else {
-
       print("data not null fetching row...");
       //getting purchased data from database
       for (int outer = 0; outer < categories.data.length; outer++) {
@@ -76,13 +81,11 @@ class DataKeeper extends ChangeNotifier {
           // print("Tempp: $temp");
 
           bool didPurchase =
-          await DatabaseHelper.getPurchasedDataFor(temp.subCategoryName);
+              await DatabaseHelper.getPurchasedDataFor(temp.subCategoryName);
           categories.data[outer][j].purchased = didPurchase;
-         // print("working on setting up purchased to true or false ");
+          // print("working on setting up purchased to true or false ");
         }
       }
-
-
 
       gameData[0].forEach((key, value) {
         if (key == DatabaseHelper.COIN) {
@@ -91,9 +94,6 @@ class DataKeeper extends ChangeNotifier {
           _diamond = value;
         }
       });
-
-
-
     }
   }
 }

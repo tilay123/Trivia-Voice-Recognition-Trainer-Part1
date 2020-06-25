@@ -84,19 +84,11 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
       //    print(submittedAnswerChoice);
 
       AwesomeDialog(
-        animType: AnimType.SCALE,
+        //    animType: AnimType.SCALE,
         context: context,
-        title: "Correct",
+        //    title: "Correct",
         dialogType: DialogType.SUCCES,
         dismissOnTouchOutside: false,
-        customHeader: Container(
-          decoration: BoxDecoration(color: Colors.transparent),
-          child: Icon(
-            Icons.check,
-            color: Colors.green,
-            size: 100,
-          ),
-        ),
         body: Container(
           height: 80,
           //  color: Co,
@@ -145,15 +137,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
         context: context,
         title: "Wrong",
         dialogType: DialogType.ERROR,
-        dismissOnTouchOutside: false,
-        customHeader: Container(
-          decoration: BoxDecoration(color: Colors.transparent),
-          child: Icon(
-            Icons.close,
-            color: Colors.red,
-            size: 100,
-          ),
-        ),
+        //  dismissOnTouchOutside: false,
         body: Container(
           height: 80,
           //  color: Co,
