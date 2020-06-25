@@ -352,13 +352,39 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                   },
                 ),
               ),
+              SizedBox(height: 100,),
             ],
           ),
         ),
       ),
       bottomSheet: Container(
+        padding: EdgeInsets.all(5),
         height: 80,
-        color: Colors.red,
+        color: Theme.of(context).scaffoldBackgroundColor,
+        //color: Colors.grey[400],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            AnimatedButton(
+              child: Text("Replay"),
+              width: 100,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            AnimatedButton(
+              child: Text("remove option"),
+              width: 100,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            AnimatedButton(
+              child: Text("Skip"),
+              width: 100,
+            ),
+          ],
+        ),
       ),
     );
   }

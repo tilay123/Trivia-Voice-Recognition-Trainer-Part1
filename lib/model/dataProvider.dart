@@ -41,6 +41,25 @@ class DataKeeper extends ChangeNotifier {
     return false;
   }
 
+  Color getColor({@required BuildContext context, @required SubCategory currentSubCategory}) {
+    bool canPurchase = this.canPurchase(currentSubCategory);
+
+    //print("$currentCoins and $currentDiamonds");
+    if (!canPurchase) {
+      return Colors.grey[400];
+    } else if (currentSubCategory.currency == Currency.COIN) {
+      return Color(0xff53b8b8);
+    } else if (currentSubCategory.currency == Currency.DIAMOND) {
+      // must be Diamond
+      return Color(0xff22a1e0);
+    }
+    // todo there's null currency
+    return Colors.grey[400];
+  }
+
+
+
+
   Future<void> updatePurchaseDatabase(String subcategoryName) async {
     await DatabaseHelper.updateOnSuccessfulPurchase(subcategoryName);
     notifyListeners();

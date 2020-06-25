@@ -396,7 +396,7 @@ class _BuyButtonState extends State<BuyButton> {
             },
           ),
           body: Container(
-            height: 100,
+           // height: 140,
             // color: Colors.purple,
             padding: EdgeInsets.all(5),
             child: Column(
@@ -444,27 +444,13 @@ class _BuyButtonState extends State<BuyButton> {
     int currentDiamonds =
         Provider.of<DataKeeper>(context, listen: false).getDiamond;
 
-    Color getColor() {
-      bool canPurchase = Provider.of<DataKeeper>(context, listen: false)
-          .canPurchase(widget.currentSubCategory);
+// todo removed color from here
 
-      print("$currentCoins and $currentDiamonds");
-      if (!canPurchase) {
-        return Colors.grey[400];
-      } else if (widget.currentSubCategory.currency == Currency.COIN) {
-        return Color(0xff53b8b8);
-      } else if (widget.currentSubCategory.currency == Currency.DIAMOND) {
-        // must be Diamond
-        return Color(0xff22a1e0);
-      }
-      // todo there's null currency
-      return Colors.grey[400];
-    }
 
     return AnimatedButton(
       // will br great disabled button color 0xff82c4c3
       //  color: currentSubCategory.currency == Currency.COIN? Color(0xff53b8b8): Color(0xff22a1e0),
-      color: getColor(),
+      color: Provider.of<DataKeeper>(context).getColor(context: context, currentSubCategory: widget.currentSubCategory),
       width: 160,
       height: 40,
       onPressed: () {

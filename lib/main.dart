@@ -68,16 +68,16 @@ class _TriviaVoiceState extends State<TriviaVoice> {
         ),
         floatingActionButton: GestureDetector(
           onTap: (){
-            Provider.of<DataKeeper>(context,listen: false).addCoin(50);
-            //Provider.of<DataKeeper>(context,listen: false).addDiamond(1);
+            //Provider.of<DataKeeper>(context,listen: false).addCoin(50);
+            Provider.of<DataKeeper>(context,listen: false).addDiamond(1);
           },
           child: Container(
             height: 50,
             width: 50,
             decoration:
                 BoxDecoration(color: Colors.green, shape: BoxShape.circle),
-            child: Center(child: Text("+50 Coin")),
-           // child: Center(child: Text("+1 Diamond")),
+            //child: Center(child: Text("+50 Coin")),
+           child: Center(child: Text("+1 Diamond")),
           ),
         ),
 

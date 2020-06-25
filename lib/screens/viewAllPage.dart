@@ -1,6 +1,9 @@
 import 'package:animated_button/animated_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:voicelytrivia/model/constants.dart';
+import 'package:voicelytrivia/model/currency.dart';
+import 'package:voicelytrivia/model/dataProvider.dart';
 import 'package:voicelytrivia/model/subCategory.dart';
 import 'package:voicelytrivia/helpers/helperCurrencyUI.dart';
 
@@ -18,6 +21,7 @@ class ViewAllPage extends StatelessWidget {
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
+          SubCategory currentSubCategory = subCategoryList[index];
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Container(
@@ -30,15 +34,32 @@ class ViewAllPage extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        "${subCategoryList[index].subCategoryName}",
+                        "${currentSubCategory.subCategoryName}",
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     AnimatedButton(
                       height: 50,
-                      width: 80,
-                      child: Text("Play"),
-                      color: Colors.green,
+                      width: 90,
+
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "${currentSubCategory.price == null ? 500 : currentSubCategory.price}",
+                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          ),
+                          Image(
+                            height: 25,
+                            width: 25,
+                            image: AssetImage(
+                                currentSubCategory.currency == Currency.COIN
+                                    ? "asset/coin-01.png"
+                                    : "asset/diamond-04.png"),
+                          ),
+                        ],
+                      ),
+                      color: Provider.of<DataKeeper>(context).getColor(context: context, currentSubCategory: currentSubCategory),
                       onPressed: () {},
                     ),
                   ],
