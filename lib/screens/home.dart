@@ -276,7 +276,7 @@ class BuyButton extends StatefulWidget {
 }
 
 class _BuyButtonState extends State<BuyButton> {
-  void showPopup(BuildContext context, SubCategory data, List indexes ) {
+  void showPopup(BuildContext context, SubCategory data, List indexes) {
     // todo change original data
     bool canPurchase = Provider.of<DataKeeper>(context, listen: false)
         .canPurchase(widget.currentSubCategory);
@@ -295,11 +295,37 @@ class _BuyButtonState extends State<BuyButton> {
             ),
           ),
           body: Container(
-            height: 100,
-            color: Colors.purple,
-            child: Text(
-              "Not Enough coin",
-              style: TextStyle(color: Colors.white, fontSize: 20),
+            height: 150,
+            // color: Colors.purple,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      "Not Enough ",
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Image(
+                      height: 30,
+                      width: 30,
+                      image: AssetImage(
+                          widget.currentSubCategory.currency == Currency.COIN
+                              ? "asset/coin-01.png"
+                              : "asset/diamond-04.png"),
+                      fit: BoxFit.cover,
+                    ),
+                  ],
+                ),
+                Container(
+                  height: 120,
+                  color: Colors.blue,
+                )
+              ],
             ),
           )).show();
     } else {
@@ -312,7 +338,7 @@ class _BuyButtonState extends State<BuyButton> {
                 child: AnimatedButton(
                   color: Colors.green,
                   width: constraints.maxWidth - 5,
-                  child: Text("CONFIRM"),
+                  child: Text("Yes"),
                   onPressed: () async {
                     bool successPurchase;
 
@@ -329,14 +355,14 @@ class _BuyButtonState extends State<BuyButton> {
                     if (successPurchase) {
                       setState(() {
                         print("Purchased");
-                      //  data.purchased = true; // can't change the copy of the original data.
-                        categories.data[indexes[0]][indexes[1]].purchased = true;
-
+                        //  data.purchased = true; // can't change the copy of the original data.
+                        categories.data[indexes[0]][indexes[1]].purchased =
+                            true;
                       });
 
                       Navigator.pop(context);
 
-                      await Provider.of<DataKeeper>(context,listen: false)
+                      await Provider.of<DataKeeper>(context, listen: false)
                           .updatePurchaseDatabase(
                               widget.currentSubCategory.subCategoryName);
                       Random random = Random();
@@ -371,7 +397,43 @@ class _BuyButtonState extends State<BuyButton> {
           ),
           body: Container(
             height: 100,
-            color: Colors.purple,
+            // color: Colors.purple,
+            padding: EdgeInsets.all(5),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Center(
+                  child: Text(
+                    "Are you sure you want to buy \"${data.subCategoryName}\"?",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(height: 10,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("${data.price}",style: TextStyle(
+                        fontSize: 25,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold)),
+                    Image(
+                      height: 30,
+                      width: 30,
+                      image: AssetImage(
+                          widget.currentSubCategory.currency == Currency.COIN
+                              ? "asset/coin-01.png"
+                              : "asset/diamond-04.png"),
+                      fit: BoxFit.cover,
+                    ),
+                  ],
+                ),
+
+              ],
+            ),
           )).show();
     }
   }
@@ -383,7 +445,7 @@ class _BuyButtonState extends State<BuyButton> {
         Provider.of<DataKeeper>(context, listen: false).getDiamond;
 
     Color getColor() {
-      bool canPurchase = Provider.of<DataKeeper>(context,listen: false)
+      bool canPurchase = Provider.of<DataKeeper>(context, listen: false)
           .canPurchase(widget.currentSubCategory);
 
       print("$currentCoins and $currentDiamonds");

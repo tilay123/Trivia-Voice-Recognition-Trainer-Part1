@@ -194,7 +194,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.all(20),
+          margin: EdgeInsets.only(left: 20, right: 20, bottom: 5, top: 10),
           //color: Colors.red,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -205,7 +205,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     SizedBox(
-                      height: 200,
+                      height: 150,
                       child: Stack(
                         children: <Widget>[
                           if (!finishedAnswering)
@@ -232,7 +232,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                                   print('Countdown finished');
                                 },
 
-                                diameter: 200,
+                                diameter: 100,
                                 countdownTotalColor: Colors.red,
                               ),
                             ),
@@ -249,7 +249,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                               finishedAnswering
                                   ? Icons.play_arrow
                                   : Icons.pause,
-                              size: 150,
+                              size: 30,
                             ),
                           ),
                         ],
@@ -257,7 +257,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                     ),
                     Text(
                       "Time Remaining: ${centeredTextTime.toString()}''",
-                      style: TextStyle(fontSize: 30),
+                      style: TextStyle(fontSize: 20),
                     ),
                   ],
                 ),
@@ -355,6 +355,10 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
             ],
           ),
         ),
+      ),
+      bottomSheet: Container(
+        height: 80,
+        color: Colors.red,
       ),
     );
   }
