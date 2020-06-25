@@ -64,7 +64,7 @@ final SubCategory singer = new SubCategory(
 
 //
 final SubCategory billionaire = new SubCategory(
-    price: 3,
+    price: 5,
     currency: Currency.DIAMOND,
     subCategoryName: "Billionaires",
     questionList: [

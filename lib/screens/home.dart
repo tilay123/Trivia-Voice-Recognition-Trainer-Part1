@@ -24,7 +24,6 @@ class HomeBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder(
       future: Provider.of<DataKeeper>(context, listen: false)
           .fetchAndSetGameCurrency(),
@@ -136,7 +135,7 @@ class BigCategoryText extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: EdgeInsets.only(left: 10, top:15, right: 10,bottom: 3),
+        padding: EdgeInsets.only(left: 10, top: 15, right: 10, bottom: 3),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
@@ -219,7 +218,10 @@ class ScrollableRow extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Text("0/5, left: 5",style: TextStyle(color: Colors.white),),
+                          Text(
+                            "0/5, left: 5",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           currentSubCategory.purchased == true
                               ? AnimatedButton(
                                   onPressed: () {
@@ -288,7 +290,9 @@ class BuyButton extends StatelessWidget {
       color: getColor(),
       width: 160,
       height: 40,
-      onPressed: () {},
+      onPressed: () {
+        Provider.of<DataKeeper>(context, listen: false).addCoin(100);
+      },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[

@@ -191,8 +191,8 @@ final SubCategory robinHood = new SubCategory(
 
 final SubCategory harryPotter = new SubCategory(
     subCategoryName: "Harry Potter",
-    currency: Currency.COIN,
-    price: 500,
+    currency: Currency.DIAMOND,
+    price: 1,
     questionList: [
       Question(
         questionUrl: "Question URL",
