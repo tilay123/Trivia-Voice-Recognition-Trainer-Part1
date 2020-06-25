@@ -16,8 +16,7 @@ List<SubCategory> celebrities = [
 // Hello man
 final SubCategory singer = new SubCategory(
     subCategoryName: "Singers",
-    price: 300,
-    purchased: true,
+    price: 100,
     currency: Currency.COIN,
     questionList: [
       Question(
@@ -65,9 +64,8 @@ final SubCategory singer = new SubCategory(
 
 //
 final SubCategory billionaire = new SubCategory(
-    price: 1000,
+    price: 3,
     currency: Currency.DIAMOND,
-    purchased: true,
     subCategoryName: "Billionaires",
     questionList: [
       Question(
@@ -93,58 +91,65 @@ final SubCategory billionaire = new SubCategory(
       ),
     ]);
 
-final SubCategory presidents =
-    new SubCategory(subCategoryName: "Presidents", questionList: [
-  Question(
-    questionUrl: "Question URL",
-    correctAnswer: "Correct Answer",
-    wrongAnswer1: "Wrong Answer 1",
-    wrongAnswer2: "Wrong Answer 2",
-    wrongAnswer3: "Wrong Answer 3",
-  ),
-  Question(
-    questionUrl: "Question URL-2",
-    correctAnswer: "Correct Answer-2",
-    wrongAnswer1: "Wrong Answer 1",
-    wrongAnswer2: "Wrong Answer 2",
-    wrongAnswer3: "Wrong Answer 3",
-  ),
-  Question(
-    questionUrl: "Question URL3",
-    correctAnswer: "Correct Answer3",
-    wrongAnswer1: "Wrong Answer 1",
-    wrongAnswer2: "Wrong Answer 2",
-    wrongAnswer3: "Wrong Answer 3",
-  ),
-]);
+final SubCategory presidents = new SubCategory(
+    subCategoryName: "Politicians",
+    currency: Currency.COIN,
+    price: 200,
+    questionList: [
+      Question(
+        questionUrl: "Question URL",
+        correctAnswer: "Correct Answer",
+        wrongAnswer1: "Wrong Answer 1",
+        wrongAnswer2: "Wrong Answer 2",
+        wrongAnswer3: "Wrong Answer 3",
+      ),
+      Question(
+        questionUrl: "Question URL-2",
+        correctAnswer: "Correct Answer-2",
+        wrongAnswer1: "Wrong Answer 1",
+        wrongAnswer2: "Wrong Answer 2",
+        wrongAnswer3: "Wrong Answer 3",
+      ),
+      Question(
+        questionUrl: "Question URL3",
+        correctAnswer: "Correct Answer3",
+        wrongAnswer1: "Wrong Answer 1",
+        wrongAnswer2: "Wrong Answer 2",
+        wrongAnswer3: "Wrong Answer 3",
+      ),
+    ]);
 
-final SubCategory motivators =
-    new SubCategory(subCategoryName: "Motivators", questionList: [
-  Question(
-    questionUrl: "Question URL",
-    correctAnswer: "Correct Answer",
-    wrongAnswer1: "Wrong Answer 1",
-    wrongAnswer2: "Wrong Answer 2",
-    wrongAnswer3: "Wrong Answer 3",
-  ),
-  Question(
-    questionUrl: "Question URL-2",
-    correctAnswer: "Correct Answer-2",
-    wrongAnswer1: "Wrong Answer 1",
-    wrongAnswer2: "Wrong Answer 2",
-    wrongAnswer3: "Wrong Answer 3",
-  ),
-  Question(
-    questionUrl: "Question URL3",
-    correctAnswer: "Correct Answer3",
-    wrongAnswer1: "Wrong Answer 1",
-    wrongAnswer2: "Wrong Answer 2",
-    wrongAnswer3: "Wrong Answer 3",
-  ),
-]);
+final SubCategory motivators = new SubCategory(
+    subCategoryName: "Motivators",
+    currency: Currency.DIAMOND,
+    price: 2,
+    questionList: [
+      Question(
+        questionUrl: "Question URL",
+        correctAnswer: "Correct Answer",
+        wrongAnswer1: "Wrong Answer 1",
+        wrongAnswer2: "Wrong Answer 2",
+        wrongAnswer3: "Wrong Answer 3",
+      ),
+      Question(
+        questionUrl: "Question URL-2",
+        correctAnswer: "Correct Answer-2",
+        wrongAnswer1: "Wrong Answer 1",
+        wrongAnswer2: "Wrong Answer 2",
+        wrongAnswer3: "Wrong Answer 3",
+      ),
+      Question(
+        questionUrl: "Question URL3",
+        correctAnswer: "Correct Answer3",
+        wrongAnswer1: "Wrong Answer 1",
+        wrongAnswer2: "Wrong Answer 2",
+        wrongAnswer3: "Wrong Answer 3",
+      ),
+    ]);
 
 final SubCategory actorsOrActresses = new SubCategory(
-    price: 400,
+    price: 250,
+    currency: Currency.COIN,
     subCategoryName: "Actors or Actresses",
     questionList: [
       Question(

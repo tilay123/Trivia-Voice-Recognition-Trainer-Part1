@@ -14,7 +14,7 @@ List<SubCategory> tvShows = [
 
 //1
 final SubCategory theAmericans =
-    new SubCategory(subCategoryName: "The Americans", currency:Currency.COIN,questionList: [
+    new SubCategory(subCategoryName: "The Americans", currency:Currency.COIN, price: 100,questionList: [
   Question(
     questionUrl: "Question URL",
     correctAnswer: "Correct Answer",
@@ -40,7 +40,7 @@ final SubCategory theAmericans =
 
 //2
 final SubCategory gameOfThrones =
-    new SubCategory(subCategoryName: "Game of Thrones", price: 1200,currency: Currency.DIAMOND, questionList: [
+    new SubCategory(subCategoryName: "Game of Thrones", price: 1,currency: Currency.DIAMOND, questionList: [
   Question(
     questionUrl: "Question URL",
     correctAnswer: "Correct Answer",
@@ -66,7 +66,7 @@ final SubCategory gameOfThrones =
 
 //3
 final SubCategory theBigBangTheory =
-    new SubCategory(subCategoryName: "The Big Bang Theory", questionList: [
+    new SubCategory(subCategoryName: "The Big Bang Theory", currency: Currency.COIN,price: 250,questionList: [
   Question(
     questionUrl: "Question URL",
     correctAnswer: "Correct Answer",
@@ -92,7 +92,7 @@ final SubCategory theBigBangTheory =
 
 //4
 final SubCategory theWalkingDead =
-    new SubCategory(subCategoryName: "The Walking Dead", questionList: [
+    new SubCategory(subCategoryName: "The Walking Dead",currency: Currency.COIN,price: 400, questionList: [
   Question(
     questionUrl: "Question URL",
     correctAnswer: "Correct Answer",
@@ -118,7 +118,7 @@ final SubCategory theWalkingDead =
 
 //5
 final SubCategory scandal =
-    new SubCategory(subCategoryName: "Scandal", questionList: [
+    new SubCategory(subCategoryName: "Scandal", currency: Currency.COIN,price: 300,questionList: [
   Question(
     questionUrl: "Question URL",
     correctAnswer: "Correct Answer",
@@ -144,7 +144,7 @@ final SubCategory scandal =
 
 //6
 final SubCategory arrestedDevelopment =
-    new SubCategory(subCategoryName: "Arrested Development", questionList: [
+    new SubCategory(subCategoryName: "Arrested Development",currency: Currency.COIN,price: 150, questionList: [
   Question(
     questionUrl: "Question URL",
     correctAnswer: "Correct Answer",

@@ -136,7 +136,7 @@ class BigCategoryText extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.only(left: 10, top:15, right: 10,bottom: 3),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
