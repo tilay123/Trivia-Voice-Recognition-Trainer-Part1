@@ -136,6 +136,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
       AwesomeDialog(
         context: context,
         title: "Wrong",
+        dismissOnTouchOutside: false,
         dialogType: DialogType.ERROR,
         //  dismissOnTouchOutside: false,
         body: Container(
@@ -275,8 +276,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
 //              ),
 //            ),
               Container(
-                margin:
-                    EdgeInsets.only(top: 20, left: 10, right: 10, bottom: 10),
+                margin: EdgeInsets.all(10),
                 height: 80,
                 decoration: BoxDecoration(
                     color: Colors.grey[200],
@@ -368,7 +368,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             AnimatedButton(
-              onPressed: (){},
+              onPressed: () {},
               child: Text("Restart"),
               width: 100,
             ),
@@ -376,41 +376,67 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
               width: 10,
             ),
             AnimatedButton(
-              onPressed: (){},
-              child: Text("Blast"),
+              color: Colors.grey,
+              onPressed: () {},
+              child: Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.check,
+                    color: Colors.red,
+                  ),
+                  Text("Blast"),
+                ],
+              ),
               width: 100,
             ),
             SizedBox(
               width: 10,
             ),
             AnimatedButton(
-              onPressed: (){},
+              onPressed: () {},
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Text("+10 sec"),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
-
                     children: <Widget>[
-                      Text("400",
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold)),
-                      Image(
-                        height: 20,
-                        width: 20,
-                        image: AssetImage("asset/coin-01.png"),
-                        fit: BoxFit.cover,
+                      Icon(
+                        Icons.check,
+                        color: Colors.green[700],
+                      ),
+                      Text(
+                        "Cheat",
+                        style: TextStyle(color: Colors.white),
                       ),
                     ],
+                  ),
+                  Center(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text("400",
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold)),
+                        Image(
+                          height: 20,
+                          width: 20,
+                          image: AssetImage("asset/coin-01.png"),
+                          fit: BoxFit.cover,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
               width: 100,
-              height: 50,
+              //   height: 50,
+              color: Provider.of<DataKeeper>(context).getColor(
+                  context: context, currentSubCategory: widget.questionsList),
             ),
           ],
         ),

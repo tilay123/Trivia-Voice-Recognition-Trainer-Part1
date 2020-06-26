@@ -231,7 +231,7 @@ class ScrollableRow extends StatelessWidget {
                                   children: <Widget>[
                                     Expanded(
                                       child: Container(
-                                       // color: Colors.red,
+                                        // color: Colors.red,
                                         child: Center(
                                           child: Text(
                                             currentSubCategory.subCategoryName,
