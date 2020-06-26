@@ -6,4 +6,4 @@ import 'movies.dart';
 import 'tvShows.dart';
 
 Category categories =
-    Category(data: [animatedTvShows, celebrities, movies, tvShows]);
+    Category(data: [celebrities,tvShows, animatedTvShows, movies, ]);

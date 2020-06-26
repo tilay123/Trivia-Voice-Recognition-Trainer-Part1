@@ -87,6 +87,7 @@ class HomeBottomNavigation extends StatelessWidget {
             BigCategoryText(
               title: "Celebrities",
               forViewAllPage: categories.data[0],
+              parentIndex: 0,
             ),
             ScrollableRow(
               subCategories: celebrities,
@@ -95,6 +96,7 @@ class HomeBottomNavigation extends StatelessWidget {
             BigCategoryText(
               title: "TV Shows",
               forViewAllPage: categories.data[1],
+              parentIndex: 1,
             ),
             ScrollableRow(
               subCategories: tvShows,
@@ -103,6 +105,7 @@ class HomeBottomNavigation extends StatelessWidget {
             BigCategoryText(
               title: "Animated TV Shows",
               forViewAllPage: categories.data[2],
+              parentIndex: 2,
             ),
             ScrollableRow(
               subCategories: animatedTvShows,
@@ -111,6 +114,7 @@ class HomeBottomNavigation extends StatelessWidget {
             BigCategoryText(
               title: "Movies",
               forViewAllPage: categories.data[3],
+              parentIndex: 3,
             ),
             ScrollableRow(
               subCategories: movies,
@@ -129,9 +133,9 @@ class HomeBottomNavigation extends StatelessWidget {
 }
 
 class BigCategoryText extends StatelessWidget {
-  BigCategoryText({this.title, this.forViewAllPage});
+  BigCategoryText({this.title, this.forViewAllPage, this.parentIndex});
   final String title;
-
+  final parentIndex;
   final List<SubCategory> forViewAllPage;
 
   @override
@@ -160,7 +164,8 @@ class BigCategoryText extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ViewAllPage(forViewAllPage)));
+                        // todo implement this for popup
+                        builder: (context) => ViewAllPage(forViewAllPage, parentIndex: parentIndex,)));
               },
             ),
           ],
@@ -273,8 +278,6 @@ class BuyButton extends StatefulWidget {
 }
 
 class _BuyButtonState extends State<BuyButton> {
-  // todo add validator popup
-
   @override
   Widget build(BuildContext context) {
     int currentCoins = Provider.of<DataKeeper>(context, listen: false).getCoin;

@@ -1,16 +1,24 @@
 import 'package:animated_button/animated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:voicelytrivia/data/parentData.dart';
+import 'package:voicelytrivia/helpers/popUps.dart';
 import 'package:voicelytrivia/model/constants.dart';
 import 'package:voicelytrivia/model/currency.dart';
 import 'package:voicelytrivia/model/dataProvider.dart';
 import 'package:voicelytrivia/model/subCategory.dart';
 import 'package:voicelytrivia/helpers/helperCurrencyUI.dart';
 
-class ViewAllPage extends StatelessWidget {
-  ViewAllPage(this.subCategoryList);
+class ViewAllPage extends StatefulWidget {
+  ViewAllPage(this.subCategoryList,{this.parentIndex});
   final List<SubCategory> subCategoryList;
+  final parentIndex;
 
+  @override
+  _ViewAllPageState createState() => _ViewAllPageState();
+}
+
+class _ViewAllPageState extends State<ViewAllPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -21,7 +29,7 @@ class ViewAllPage extends StatelessWidget {
       ),
       body: ListView.builder(
         itemBuilder: (context, index) {
-          SubCategory currentSubCategory = subCategoryList[index];
+          SubCategory currentSubCategory = widget.subCategoryList[index];
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Container(
@@ -60,7 +68,16 @@ class ViewAllPage extends StatelessWidget {
                         ],
                       ),
                       color: Provider.of<DataKeeper>(context).getColor(context: context, currentSubCategory: currentSubCategory),
-                      onPressed: () {},
+                      onPressed: () {
+
+                        showValidatorPopup(context, currentSubCategory, [widget.parentIndex,index], setStateFunction: (){
+                          setState(() {
+                            //  data.purchased = true; // can't change the copy of the original data.
+                            categories.data[widget.parentIndex][index].purchased =
+                            true;
+                          });
+                        });
+                      },
                     ),
                   ],
                 ),
@@ -68,7 +85,7 @@ class ViewAllPage extends StatelessWidget {
             ),
           );
         },
-        itemCount: subCategoryList.length,
+        itemCount: widget.subCategoryList.length,
       ),
     );
   }
