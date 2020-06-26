@@ -165,7 +165,10 @@ class BigCategoryText extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         // todo implement this for popup
-                        builder: (context) => ViewAllPage(forViewAllPage, parentIndex: parentIndex,)));
+                        builder: (context) => ViewAllPage(
+                              forViewAllPage,
+                              parentIndex: parentIndex,
+                            )));
               },
             ),
           ],
@@ -185,7 +188,7 @@ class ScrollableRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Container(
-        height: 150,
+        height: 160,
         // color: Colors.red,
         child: ListView.builder(
 
@@ -202,7 +205,7 @@ class ScrollableRow extends StatelessWidget {
                 padding:
                     EdgeInsets.only(left: 10, top: 10, right: 10, bottom: 3),
                 //  padding: EdgeInsets.all(10),
-                width: 180,
+                width: 200,
                 decoration: BoxDecoration(
                   //color: GradientL
                   gradient: LinearGradient(
@@ -216,14 +219,32 @@ class ScrollableRow extends StatelessWidget {
                         child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
+                          if (parentIndex > 0)
+                            Text(
+                              "Identify characters from:",
+                              style: TextStyle(color: Colors.white),
+                            ),
                           Expanded(
                             child: Center(
-                              child: Text(
-                                currentSubCategory.subCategoryName,
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
+                              child: Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Container(
+                                       // color: Colors.red,
+                                        child: Center(
+                                          child: Text(
+                                            currentSubCategory.subCategoryName,
+                                            style: TextStyle(
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -242,7 +263,7 @@ class ScrollableRow extends StatelessWidget {
                                                     currentSubCategory)));
                                   },
                                   color: Colors.green[500],
-                                  width: 160,
+                                  width: 180,
                                   height: 40,
                                   child: Text(
                                     "PLAY",
@@ -289,7 +310,7 @@ class _BuyButtonState extends State<BuyButton> {
       //  color: currentSubCategory.currency == Currency.COIN? Color(0xff53b8b8): Color(0xff22a1e0),
       color: Provider.of<DataKeeper>(context).getColor(
           context: context, currentSubCategory: widget.currentSubCategory),
-      width: 160,
+      width: 180,
       height: 40,
       onPressed: () {
         //  showVPopup(context, widget.currentSubCategory, widget.indexes,);

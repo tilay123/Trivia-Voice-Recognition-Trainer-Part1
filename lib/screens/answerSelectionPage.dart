@@ -352,7 +352,9 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                   },
                 ),
               ),
-              SizedBox(height: 100,),
+              SizedBox(
+                height: 100,
+              ),
             ],
           ),
         ),
@@ -366,22 +368,49 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             AnimatedButton(
-              child: Text("Replay"),
+              onPressed: (){},
+              child: Text("Restart"),
               width: 100,
             ),
             SizedBox(
               width: 10,
             ),
             AnimatedButton(
-              child: Text("remove option"),
+              onPressed: (){},
+              child: Text("Blast"),
               width: 100,
             ),
             SizedBox(
               width: 10,
             ),
             AnimatedButton(
-              child: Text("Skip"),
+              onPressed: (){},
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text("+10 sec"),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: <Widget>[
+                      Text("400",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                      Image(
+                        height: 20,
+                        width: 20,
+                        image: AssetImage("asset/coin-01.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
               width: 100,
+              height: 50,
             ),
           ],
         ),
