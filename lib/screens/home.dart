@@ -235,6 +235,7 @@ class ScrollableRow extends StatelessWidget {
                                         child: Center(
                                           child: Text(
                                             currentSubCategory.subCategoryName,
+                                            textAlign: TextAlign.center,
                                             style: TextStyle(
                                                 fontSize: 25,
                                                 fontWeight: FontWeight.bold,
