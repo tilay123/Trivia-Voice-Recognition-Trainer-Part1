@@ -6,6 +6,7 @@ import 'package:circular_countdown/circular_countdown.dart';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:provider/provider.dart';
 import 'package:voicelytrivia/data/celebritiesData.dart';
+import 'package:voicelytrivia/model/currency.dart';
 import 'package:voicelytrivia/model/dataProvider.dart';
 import 'package:voicelytrivia/model/question.dart';
 import 'package:voicelytrivia/model/subCategory.dart';
@@ -55,7 +56,6 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getMultipleChoice();
     play();
@@ -368,23 +368,27 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             AnimatedButton(
+              // todo change questionsList price
+              color: Provider.of<DataKeeper>(context).getColor(
+                  context: context, currentSubCategory: widget.questionsList),
               onPressed: () {},
-              child: Text("Restart"),
-              width: 100,
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            AnimatedButton(
-              color: Colors.grey,
-              onPressed: () {},
-              child: Row(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Icon(
-                    Icons.check,
-                    color: Colors.red,
+                  Row(
+                    children: <Widget>[
+                      Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      ),
+                      Text(
+                        "-2 Options",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
                   ),
-                  Text("Blast"),
+                  Price(Currency.COIN,400),
                 ],
               ),
               width: 100,
@@ -412,25 +416,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                       ),
                     ],
                   ),
-                  Center(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text("400",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold)),
-                        Image(
-                          height: 20,
-                          width: 20,
-                          image: AssetImage("asset/coin-01.png"),
-                          fit: BoxFit.cover,
-                        ),
-                      ],
-                    ),
-                  ),
+                  Price(Currency.DIAMOND,1),
                 ],
               ),
               width: 100,
@@ -440,6 +426,37 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class Price extends StatelessWidget {
+  const Price(this.currency,this.price);
+
+  final currency;
+  final price;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text("$price",
+              style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold)),
+          Image(
+            height: 20,
+            width: 20,
+            image: AssetImage(currency == Currency.COIN? "asset/coin-01.png"
+                : "asset/diamond-04.png"),
+            fit: BoxFit.cover,
+          ),
+        ],
       ),
     );
   }

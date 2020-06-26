@@ -12,7 +12,7 @@ import 'package:voicelytrivia/screens/answerSelectionPage.dart';
 
 void showValidatorPopup(
     BuildContext context, SubCategory currentSubCategory, List indexes,{Function setStateFunction}) {
-  // todo change original data
+
   bool canPurchase = Provider.of<DataKeeper>(context, listen: false)
       .canPurchase(currentSubCategory);
 

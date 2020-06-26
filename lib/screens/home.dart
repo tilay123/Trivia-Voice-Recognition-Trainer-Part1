@@ -45,7 +45,6 @@ class HomeBottomNavigation extends StatelessWidget {
               actions: <Widget>[
                 CoinHolder(),
                 DiamondHolder(),
-//TODO COIN DATA
               ],
             ),
             //  SliverToBoxAdapter(child: SizedBox(height: 10,),),
@@ -160,7 +159,6 @@ class BigCategoryText extends StatelessWidget {
                 style: TextStyle(fontSize: 15, color: Colors.white),
               ),
               onPressed: () {
-                // todo viewAll Page
                 Navigator.push(
                     context,
                     MaterialPageRoute(

@@ -53,7 +53,6 @@ class DataKeeper extends ChangeNotifier {
       // must be Diamond
       return Color(0xff22a1e0);
     }
-    // todo there's null currency
     return Colors.grey[400];
   }
 
