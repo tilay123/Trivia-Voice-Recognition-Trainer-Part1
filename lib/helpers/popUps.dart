@@ -11,8 +11,8 @@ import 'dart:math';
 import 'package:voicelytrivia/screens/answerSelectionPage.dart';
 
 void showValidatorPopup(
-    BuildContext context, SubCategory currentSubCategory, List indexes,{Function setStateFunction}) {
-
+    BuildContext context, SubCategory currentSubCategory, List indexes,
+    {Function setStateFunction}) {
   bool canPurchase = Provider.of<DataKeeper>(context, listen: false)
       .canPurchase(currentSubCategory);
 
@@ -57,9 +57,19 @@ void showValidatorPopup(
                 ],
               ),
               Container(
-                height: 120,
-                color: Colors.blue,
-              )
+                  height: 120,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.all(5),
+                        width: 200,
+
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Theme.of(context).scaffoldBackgroundColor,),
+                      );
+                    },
+                    itemCount: 3,
+                  ))
             ],
           ),
         )).show();
@@ -88,8 +98,7 @@ void showValidatorPopup(
                   }
 
                   if (successPurchase) {
-
-                    if (setStateFunction != null){
+                    if (setStateFunction != null) {
                       setStateFunction();
                     }
 
