@@ -1,8 +1,8 @@
+import 'dart:io';
 import 'dart:math';
 
-import 'package:awesome_dialog/awesome_dialog.dart' hide AnimatedButton;
+//import 'package:awesome_dialog/awesome_dialog.dart' hide AnimatedButton;
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:voicelytrivia/data/animatedTvShows.dart';
 import 'package:voicelytrivia/data/movies.dart';
@@ -19,6 +19,7 @@ import 'package:voicelytrivia/data/celebritiesData.dart';
 import 'package:voicelytrivia/helpers/helperCurrencyUI.dart';
 import 'package:voicelytrivia/model/dataProvider.dart';
 import 'package:voicelytrivia/helpers/popUps.dart';
+import 'package:countdown_flutter/countdown_flutter.dart';
 
 class HomeBottomNavigation extends StatelessWidget {
   const HomeBottomNavigation({
@@ -247,10 +248,33 @@ class ScrollableRow extends StatelessWidget {
                               ),
                             ),
                           ),
-                          Text(
-                            "0/5, left: 5",
-                            style: TextStyle(color: Colors.white),
-                          ),
+                          currentSubCategory.startTime != null
+                              ? CountdownFormatted(
+                                  duration: Provider.of<DataKeeper>(context)
+                                      .getDuration(currentSubCategory),
+                                  builder:
+                                      (BuildContext context, String remaining) {
+                                    DateTime endTime = currentSubCategory
+                                        .startTime
+                                        .add(Duration(hours: 2));
+                                    if (DateTime.now().isBefore(endTime)) {
+                                      //print(DateTime.now().difference(currentSubCategory.startTime));
+
+                                      return Text(
+                                          "${endTime.difference(DateTime.now())}",
+                                          style:
+                                              TextStyle(color: Colors.white));
+                                    } // todo change remaining time vv
+                                    return Text(
+                                      remaining,
+                                      style: TextStyle(color: Colors.white),
+                                    );
+                                  },
+                                )
+                              : Text(
+                                  "0/5, left: 5",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                           currentSubCategory.purchased == true
                               ? AnimatedButton(
                                   onPressed: () {

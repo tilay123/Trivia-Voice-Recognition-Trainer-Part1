@@ -3,6 +3,8 @@ PODS:
     - Flutter
   - assets_audio_player_web (0.0.1):
     - Flutter
+  - countdown_flutter (0.0.1):
+    - Flutter
   - Firebase/Analytics (6.27.0):
     - Firebase/Core
   - Firebase/Core (6.27.0):
@@ -85,6 +87,7 @@ PODS:
 DEPENDENCIES:
   - assets_audio_player (from `.symlinks/plugins/assets_audio_player/ios`)
   - assets_audio_player_web (from `.symlinks/plugins/assets_audio_player_web/ios`)
+  - countdown_flutter (from `.symlinks/plugins/countdown_flutter/ios`)
   - Firebase/Analytics
   - Flutter (from `Flutter`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
@@ -112,6 +115,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/assets_audio_player/ios"
   assets_audio_player_web:
     :path: ".symlinks/plugins/assets_audio_player_web/ios"
+  countdown_flutter:
+    :path: ".symlinks/plugins/countdown_flutter/ios"
   Flutter:
     :path: Flutter
   path_provider:
@@ -126,6 +131,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   assets_audio_player: 1f5d855ea3e0484357e2efb0cb703b17959e6170
   assets_audio_player_web: 19826380c44375761aa0b9053665c1e3fbc3b86b
+  countdown_flutter: 423a4cc24614ccb078c2ce4ac6739b1d85cbe98b
   Firebase: fc4cbf6f1592636431821ef9a3c557e4dfd9f268
   FirebaseAnalytics: 0ea640473474f036cabbc2576e20c2d63671c92f
   FirebaseCore: feda061cb1ee6d8ad4824f4a4a8ffbcfe284f595

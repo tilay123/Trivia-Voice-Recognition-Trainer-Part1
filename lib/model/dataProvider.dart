@@ -41,7 +41,9 @@ class DataKeeper extends ChangeNotifier {
     return false;
   }
 
-  Color getColor({@required BuildContext context, @required SubCategory currentSubCategory}) {
+  Color getColor(
+      {@required BuildContext context,
+      @required SubCategory currentSubCategory}) {
     bool canPurchase = this.canPurchase(currentSubCategory);
 
     //print("$currentCoins and $currentDiamonds");
@@ -56,8 +58,16 @@ class DataKeeper extends ChangeNotifier {
     return Colors.grey[400];
   }
 
+  Duration getDuration(SubCategory currentSubCategory) {
+    DateTime endTime = currentSubCategory.startTime.add(Duration(hours: 2));
 
+    if (DateTime.now().isBefore(endTime)) {
+      //print(DateTime.now().difference(currentSubCategory.startTime));
 
+      return endTime.difference(DateTime.now());
+    }
+    return Duration(seconds: 10);
+  }
 
   Future<void> updatePurchaseDatabase(String subcategoryName) async {
     await DatabaseHelper.updateOnSuccessfulPurchase(subcategoryName);

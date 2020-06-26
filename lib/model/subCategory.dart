@@ -11,12 +11,14 @@ class SubCategory {
       @required this.questionList,
       @required this.price,
       @required this.currency,
-      this.purchased});
+      this.purchased,
+      this.startTime});
   String subCategoryName; // Singer, Movie names,
   List<Question> questionList;
   bool purchased = false;
   int price = 500;
   Currency currency = Currency.COIN;
+  DateTime startTime;
 
   List<Question> shuffle() {
     var random = new Random();
