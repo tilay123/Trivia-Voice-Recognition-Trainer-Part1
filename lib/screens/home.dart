@@ -18,6 +18,7 @@ import 'package:voicelytrivia/screens/viewAllPage.dart';
 import 'package:voicelytrivia/data/celebritiesData.dart';
 import 'package:voicelytrivia/helpers/helperCurrencyUI.dart';
 import 'package:voicelytrivia/model/dataProvider.dart';
+import 'package:voicelytrivia/helpers/popUps.dart';
 
 class HomeBottomNavigation extends StatelessWidget {
   const HomeBottomNavigation({
@@ -34,10 +35,6 @@ class HomeBottomNavigation extends StatelessWidget {
           return Center(child: CircularProgressIndicator());
         }
 
-//        // todo change this initial addition
-//        Provider.of<DataKeeper>(context, listen: false).addCoin(1000);
-//        Provider.of<DataKeeper>(context, listen: false).addDiamond(1000);
-//
         return CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
@@ -276,167 +273,7 @@ class BuyButton extends StatefulWidget {
 }
 
 class _BuyButtonState extends State<BuyButton> {
-  void showPopup(BuildContext context, SubCategory data, List indexes) {
-    // todo change original data
-    bool canPurchase = Provider.of<DataKeeper>(context, listen: false)
-        .canPurchase(widget.currentSubCategory);
-
-    if (!canPurchase) {
-      AwesomeDialog(
-          context: context,
-          dialogType: DialogType.INFO,
-          btnOk: Center(
-            child: AnimatedButton(
-              child: Text("OK"),
-              onPressed: () {
-                // Provider.of<DataKeeper>(context, listen: false).addCoin(100);
-                Navigator.pop(context);
-              },
-            ),
-          ),
-          body: Container(
-            height: 150,
-            // color: Colors.purple,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "Not Enough ",
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    Image(
-                      height: 30,
-                      width: 30,
-                      image: AssetImage(
-                          widget.currentSubCategory.currency == Currency.COIN
-                              ? "asset/coin-01.png"
-                              : "asset/diamond-04.png"),
-                      fit: BoxFit.cover,
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 120,
-                  color: Colors.blue,
-                )
-              ],
-            ),
-          )).show();
-    } else {
-      AwesomeDialog(
-          context: context,
-          dialogType: DialogType.WARNING,
-          btnOk: LayoutBuilder(
-            builder: (context, constraints) {
-              return Center(
-                child: AnimatedButton(
-                  color: Colors.green,
-                  width: constraints.maxWidth - 5,
-                  child: Text("Yes"),
-                  onPressed: () async {
-                    bool successPurchase;
-
-                    if (data.currency == Currency.COIN) {
-                      successPurchase =
-                          await Provider.of<DataKeeper>(context, listen: false)
-                              .addCoin(-data.price);
-                    } else if (data.currency == Currency.DIAMOND) {
-                      successPurchase =
-                          await Provider.of<DataKeeper>(context, listen: false)
-                              .addDiamond(-data.price);
-                    }
-
-                    if (successPurchase) {
-                      setState(() {
-                        print("Purchased");
-                        //  data.purchased = true; // can't change the copy of the original data.
-                        categories.data[indexes[0]][indexes[1]].purchased =
-                            true;
-                      });
-
-                      Navigator.pop(context);
-
-                      await Provider.of<DataKeeper>(context, listen: false)
-                          .updatePurchaseDatabase(
-                              widget.currentSubCategory.subCategoryName);
-                      Random random = Random();
-
-                      int index = random.nextInt(categories.data.length);
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AnswerSelectionPage(
-                                  categories.data[index][random.nextInt(
-                                      categories.data[index].length)])));
-                    }
-                  },
-                ),
-              );
-            },
-          ),
-          btnCancel: LayoutBuilder(
-            builder: (context, constraints) {
-              return Center(
-                child: AnimatedButton(
-                  color: Colors.red,
-                  width: constraints.maxWidth - 5,
-                  child: Text("CANCEL"),
-                  onPressed: () async {
-                    Navigator.pop(context);
-                  },
-                ),
-              );
-            },
-          ),
-          body: Container(
-           // height: 140,
-            // color: Colors.purple,
-            padding: EdgeInsets.all(5),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Center(
-                  child: Text(
-                    "Are you sure you want to buy \"${data.subCategoryName}\"?",
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(height: 10,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text("${data.price}",style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold)),
-                    Image(
-                      height: 30,
-                      width: 30,
-                      image: AssetImage(
-                          widget.currentSubCategory.currency == Currency.COIN
-                              ? "asset/coin-01.png"
-                              : "asset/diamond-04.png"),
-                      fit: BoxFit.cover,
-                    ),
-                  ],
-                ),
-
-              ],
-            ),
-          )).show();
-    }
-  }
+  // todo add validator popup
 
   @override
   Widget build(BuildContext context) {
@@ -444,17 +281,24 @@ class _BuyButtonState extends State<BuyButton> {
     int currentDiamonds =
         Provider.of<DataKeeper>(context, listen: false).getDiamond;
 
-// todo removed color from here
-
-
     return AnimatedButton(
       // will br great disabled button color 0xff82c4c3
       //  color: currentSubCategory.currency == Currency.COIN? Color(0xff53b8b8): Color(0xff22a1e0),
-      color: Provider.of<DataKeeper>(context).getColor(context: context, currentSubCategory: widget.currentSubCategory),
+      color: Provider.of<DataKeeper>(context).getColor(
+          context: context, currentSubCategory: widget.currentSubCategory),
       width: 160,
       height: 40,
       onPressed: () {
-        showPopup(context, widget.currentSubCategory, widget.indexes);
+        //  showVPopup(context, widget.currentSubCategory, widget.indexes,);
+
+        showValidatorPopup(context, widget.currentSubCategory, widget.indexes,
+            setStateFunction: () {
+          setState(() {
+            //  data.purchased = true; // can't change the copy of the original data.
+            categories.data[widget.indexes[0]][widget.indexes[1]].purchased =
+                true;
+          });
+        });
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
