@@ -28,19 +28,19 @@ class HomeBottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
-    print(now);
-    DateTime earlier = now.subtract(Duration(hours: 2));
-    print(now);
-    Duration difference = earlier.difference(now);
-    //   print("Difference: ${difference}");
-
-    List aList = [];
-    aList.add(true);
-    aList.add(9090);
-    aList.forEach((element) {
-
-      print(element.runtimeType);});
+//    DateTime now = DateTime.now();
+//    print(now);
+//    DateTime earlier = now.subtract(Duration(hours: 2));
+//    print(now);
+//    Duration difference = earlier.difference(now);
+//    //   print("Difference: ${difference}");
+//
+//    List aList = [];
+//    aList.add(true);
+//    aList.add(9090);
+//    aList.forEach((element) {
+//
+//      print(element.runtimeType);});
 
     return FutureBuilder(
       future: Provider.of<DataKeeper>(context, listen: false)

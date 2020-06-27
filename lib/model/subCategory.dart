@@ -13,7 +13,8 @@ class SubCategory {
       @required this.currency,
       this.purchased,
       this.startTime,
-      this.remainingPlay});
+      this.remainingPlay
+      });
   String subCategoryName; // Singer, Movie names,
   List<Question> questionList;
   bool purchased = false;

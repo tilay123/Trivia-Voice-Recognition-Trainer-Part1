@@ -12,9 +12,19 @@ class DataKeeper extends ChangeNotifier {
 
   int _coin = 0;
   int _diamond = 0;
+  int _totalWin = 0;
+  int _totalLoses = 0;
+
 
   int get getCoin {
     return _coin;
+  }
+
+  int get totalWins {
+    return _totalWin;
+  }
+  int get totalLoses {
+    return _totalLoses;
   }
 
   Future<bool> addCoin(int amount) async {
@@ -115,10 +125,12 @@ class DataKeeper extends ChangeNotifier {
 
     if (gameData.length == 0) {
       DatabaseHelper.createNewRow();
-
       notifyListeners();
+
     } else {
       print("data not null fetching row...");
+      _coin = gameData[0]["${DatabaseHelper.COIN}"];
+      _diamond = gameData[0]["${DatabaseHelper.DIAMOND}"];
       //getting purchased data from database
       for (int outer = 0; outer < categories.data.length; outer++) {
         int tempLength = categories.data[outer].length;
@@ -137,13 +149,16 @@ class DataKeeper extends ChangeNotifier {
         }
       }
 
-      gameData[0].forEach((key, value) {
-        if (key == DatabaseHelper.COIN) {
-          _coin = value;
-        } else if (key == DatabaseHelper.DIAMOND) {
-          _diamond = value;
-        }
-      });
+      print("GAME_DATA: $gameData");
+//      gameData[0].forEach((key, value) {
+//        if (key == DatabaseHelper.COIN) {
+//          _coin = value;
+//        } else if (key == DatabaseHelper.DIAMOND) {
+//          _diamond = value;
+//        }
+//      });
+
+    //  notifyListeners();
     }
   }
 }

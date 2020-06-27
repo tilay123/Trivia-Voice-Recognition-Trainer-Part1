@@ -16,6 +16,8 @@ abstract class DatabaseHelper {
   static const START_TIME = "startTime";
   static const CONTAINER_NAME = "containerName";
   static const REMAINING_PLAY = "canPlayThisManyTimes";
+  static const TOTAL_WINS = "totalWins";
+  static const TOTAL_LOSES = "totalLoses";
 
   static Future<sql.Database> databaseInit() async {
     final dbPath = await sql.getDatabasesPath();
@@ -25,7 +27,7 @@ abstract class DatabaseHelper {
       print("Creating Database");
 
       await database.execute("CREATE TABLE $TABLE(id INTEGER PRIMARY KEY"
-          ", $COIN INT, $DIAMOND INT)");
+          ", $COIN INT, $DIAMOND INT, $TOTAL_WINS INT, $TOTAL_LOSES INT)");
 
       await database.execute(// 0 FOR FALSE AND 1 FOR TRUE
           "CREATE TABLE $PURCHASE_DATA_TABLE(id INTEGER PRIMARY KEY AUTOINCREMENT"
@@ -49,6 +51,8 @@ abstract class DatabaseHelper {
       "$COIN": 100,
       "$DIAMOND": 5,
       "id": CURRENCY_ID,
+      "$TOTAL_WINS" : 0,
+      "$TOTAL_LOSES": 0,
     });
 
     _createNewPurchasedDataRow();
