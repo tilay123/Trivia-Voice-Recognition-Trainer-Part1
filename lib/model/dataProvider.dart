@@ -124,12 +124,16 @@ class DataKeeper extends ChangeNotifier {
         int tempLength = categories.data[outer].length;
         for (int j = 0; j < tempLength; j++) {
           SubCategory temp = categories.data[outer][j];
-          // print("Tempp: $temp");
 
-          bool didPurchase =
+          List listOfData =
               await DatabaseHelper.getPurchasedDataFor(temp.subCategoryName);
-          categories.data[outer][j].purchased = didPurchase;
+
+
+          categories.data[outer][j].purchased =  listOfData[0];
+          categories.data[outer][j].startTime =  DateTime.parse(listOfData[1]);
+          categories.data[outer][j].remainingPlay =  listOfData[2];
           // print("working on setting up purchased to true or false ");
+          print("List OF List $listOfData");
         }
       }
 

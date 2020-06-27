@@ -13,8 +13,9 @@ abstract class DatabaseHelper {
   static const PURCHASE_DATA_TABLE = "purchasedDataTable";
   static const CURRENCY_ID = 1;
   static const PURCHASED = "purchased";
-  static const TIME_REMAINING = "timeRemaining";
+  static const START_TIME = "startTime";
   static const CONTAINER_NAME = "containerName";
+  static const REMAINING_PLAY = "canPlayThisManyTimes";
 
   static Future<sql.Database> databaseInit() async {
     final dbPath = await sql.getDatabasesPath();
@@ -28,7 +29,7 @@ abstract class DatabaseHelper {
 
       await database.execute(// 0 FOR FALSE AND 1 FOR TRUE
           "CREATE TABLE $PURCHASE_DATA_TABLE(id INTEGER PRIMARY KEY AUTOINCREMENT"
-          ",$CONTAINER_NAME TEXT, $PURCHASED INT, $TIME_REMAINING TEXT)");
+          ",$CONTAINER_NAME TEXT, $PURCHASED INT, $START_TIME TEXT, $REMAINING_PLAY INT)");
 
       return database;
     }, version: 1);
@@ -50,10 +51,26 @@ abstract class DatabaseHelper {
       "id": CURRENCY_ID,
     });
 
-    createNewPurchasedDataRow();
+    _createNewPurchasedDataRow();
 
 //    print("QUERY ${await database.query(TABLE)}");
 //    print("QUERY ${await database.query(PURCHASE_DATA)}");
+  }
+
+  static Future<void> _createNewPurchasedDataRow() async {
+    sql.Database database = await databaseInit();
+
+    for (int i = 0; i < categories.data.length; i++) {
+      int tempLength = categories.data[i].length;
+      for (int j = 0; j < tempLength; j++) {
+        SubCategory temp = categories.data[i][j];
+        database.insert(PURCHASE_DATA_TABLE, {
+          "$PURCHASED": temp.purchased == true ? 1 : 0,
+          //        "START_TIME": "Nothing yet",
+          "$CONTAINER_NAME": temp.subCategoryName,
+        });
+      }
+    }
   }
 
   static Future<void> updateOnSuccessfulPurchase(String subCategoryName) async {
@@ -65,22 +82,6 @@ abstract class DatabaseHelper {
         where: "$CONTAINER_NAME = ?", whereArgs: [subCategoryName]);
   }
 
-  static Future<void> createNewPurchasedDataRow() async {
-    sql.Database database = await databaseInit();
-
-    for (int i = 0; i < categories.data.length; i++) {
-      int tempLength = categories.data[i].length;
-      for (int j = 0; j < tempLength; j++) {
-        SubCategory temp = categories.data[i][j];
-        database.insert(PURCHASE_DATA_TABLE, {
-          "$PURCHASED": temp.purchased == true ? 1 : 0,
-          "$TIME_REMAINING": "Nothing yet",
-          "$CONTAINER_NAME": temp.subCategoryName,
-        });
-      }
-    }
-  }
-
   static Future<List<Map<String, Object>>> getCurrencyData() async {
     sql.Database database = await databaseInit();
 
@@ -89,19 +90,29 @@ abstract class DatabaseHelper {
     return await database.query(TABLE, columns: [COIN, DIAMOND]);
   }
 
-  static Future<bool> getPurchasedDataFor(String subCategoryName) async {
+  static Future<List> getPurchasedDataFor(String subCategoryName) async {
     sql.Database database = await databaseInit();
 
     List<Map<String, Object>> data = await database.query(PURCHASE_DATA_TABLE,
         columns: [
           PURCHASED,
+          START_TIME,
+          REMAINING_PLAY,
         ],
         where: "$CONTAINER_NAME = ?",
         whereArgs: [subCategoryName]);
 
+    List aList = [];
+    aList.add(data[0]["$PURCHASED"] == 1);
+
+    aList.add(data[0]["$START_TIME"]);
+    aList.add(data[0]["$REMAINING_PLAY"]);
+
+//    aList.forEach((element) {print(element);});
+//    print(aList.length);
     //  print("Length:${data.length} data: ${data[0]["$PURCHASED"] == 1}");
 
-    return data[0]["$PURCHASED"] == 1;
+    return aList;
   }
 
   static Future<void> replaceCurrency(String currency, int num) async {
