@@ -51,7 +51,7 @@ abstract class DatabaseHelper {
       "$COIN": 100,
       "$DIAMOND": 5,
       "id": CURRENCY_ID,
-      "$TOTAL_WINS" : 0,
+      "$TOTAL_WINS": 0,
       "$TOTAL_LOSES": 0,
     });
 
@@ -72,6 +72,7 @@ abstract class DatabaseHelper {
           "$PURCHASED": temp.purchased == true ? 1 : 0,
           //        "START_TIME": "Nothing yet",
           "$CONTAINER_NAME": temp.subCategoryName,
+          "$REMAINING_PLAY": 0
         });
       }
     }
@@ -98,14 +99,10 @@ abstract class DatabaseHelper {
     sql.Database database = await databaseInit();
 
     List<Map<String, Object>> data = await database.query(PURCHASE_DATA_TABLE,
-        columns: [
-          PURCHASED,
-          START_TIME,
-          REMAINING_PLAY,
-        ],
+        columns: [PURCHASED, START_TIME, REMAINING_PLAY, CONTAINER_NAME],
         where: "$CONTAINER_NAME = ?",
         whereArgs: [subCategoryName]);
-
+    print("data00 $data");
     List aList = [];
     aList.add(data[0]["$PURCHASED"] == 1);
 
@@ -118,6 +115,19 @@ abstract class DatabaseHelper {
 
     return aList;
   }
+
+//  static Future<List> getPurchasedDataFor2() async {
+//    sql.Database database = await databaseInit();
+//
+//    return await database.query(PURCHASE_DATA_TABLE,
+//        columns: [
+//          PURCHASED,
+//          START_TIME,
+//          REMAINING_PLAY,
+//          CONTAINER_NAME
+//        ],);
+//
+//  }
 
   static Future<void> replaceCurrency(String currency, int num) async {
     sql.Database database = await databaseInit();

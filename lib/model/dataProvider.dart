@@ -15,7 +15,6 @@ class DataKeeper extends ChangeNotifier {
   int _totalWin = 0;
   int _totalLoses = 0;
 
-
   int get getCoin {
     return _coin;
   }
@@ -23,6 +22,7 @@ class DataKeeper extends ChangeNotifier {
   int get totalWins {
     return _totalWin;
   }
+
   int get totalLoses {
     return _totalLoses;
   }
@@ -68,16 +68,21 @@ class DataKeeper extends ChangeNotifier {
     return Colors.grey[400];
   }
 
-  Duration getDuration(SubCategory currentSubCategory) {
-    DateTime endTime = currentSubCategory.startTime.add(Duration(hours: 2));
-
-    if (DateTime.now().isBefore(endTime)) {
-      //print(DateTime.now().difference(currentSubCategory.startTime));
-
-      return endTime.difference(DateTime.now());
-    }
-    return Duration(seconds: 10);
-  }
+//  Duration getDuration(SubCategory currentSubCategory) {
+////
+////    if (currentSubCategory.startTime == null){
+////      return Duration(hours: 2);
+////    }
+////
+////    DateTime endTime = currentSubCategory.startTime.add(Duration(hours: 2));
+////
+////    if (DateTime.now().isBefore(endTime)) {
+////      //print(DateTime.now().difference(currentSubCategory.startTime));
+////
+////      return endTime.difference(DateTime.now());
+////    }
+////    return Duration(seconds: 10);
+////  }
 
   Future<void> updatePurchaseDatabase(String subcategoryName) async {
     await DatabaseHelper.updateOnSuccessfulPurchase(subcategoryName);
@@ -126,24 +131,43 @@ class DataKeeper extends ChangeNotifier {
     if (gameData.length == 0) {
       DatabaseHelper.createNewRow();
       notifyListeners();
-
     } else {
       print("data not null fetching row...");
       _coin = gameData[0]["${DatabaseHelper.COIN}"];
       _diamond = gameData[0]["${DatabaseHelper.DIAMOND}"];
       //getting purchased data from database
+//      List<Map<String, Object>> getPurchasedDataFor2 =
+//          await DatabaseHelper.getPurchasedDataFor2();
+      //  print("getPurchasedDataFor2();$getPurchasedDataFor2();");
+      //  notifyListeners();
+
+//      int outer = 0;
+//      int inter = 0;
+//      getPurchasedDataFor2.forEach((e) {
+//        print("eee$e");
+//
+//        categories.data[outer][inter].purchased =
+//            e["${DatabaseHelper.PURCHASED}"];
+//        inter++;
+//        if (inter > categories.data[outer].length) {
+//          outer++;
+//          inter = 0;
+//        }
+//      });
+
+      // Problem: await doesn't work in for in loop like this
       for (int outer = 0; outer < categories.data.length; outer++) {
         int tempLength = categories.data[outer].length;
         for (int j = 0; j < tempLength; j++) {
           SubCategory temp = categories.data[outer][j];
-
+        //  print("HHS${temp.subCategoryName}");
           List listOfData =
               await DatabaseHelper.getPurchasedDataFor(temp.subCategoryName);
 
-
-          categories.data[outer][j].purchased =  listOfData[0];
-          categories.data[outer][j].startTime =  DateTime.parse(listOfData[1]);
-          categories.data[outer][j].remainingPlay =  listOfData[2];
+          categories.data[outer][j].purchased = listOfData[0];
+          categories.data[outer][j].startTime =
+              listOfData[1] != null ? DateTime.parse(listOfData[1]) : null;
+          categories.data[outer][j].remainingPlay = listOfData[2];
           // print("working on setting up purchased to true or false ");
           print("List OF List $listOfData");
         }
@@ -158,7 +182,7 @@ class DataKeeper extends ChangeNotifier {
 //        }
 //      });
 
-    //  notifyListeners();
+      //  notifyListeners();
     }
   }
 }
