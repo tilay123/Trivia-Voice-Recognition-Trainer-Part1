@@ -18,6 +18,7 @@ class TriviaVoice extends StatefulWidget {
 }
 
 class _TriviaVoiceState extends State<TriviaVoice> {
+
   // int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,8 @@ class _TriviaVoiceState extends State<TriviaVoice> {
       HomeBottomNavigation(),
       ShopBottomNavigation(),
     ];
+
+
 
     return MaterialApp(
       theme: ThemeData(
@@ -68,8 +71,8 @@ class _TriviaVoiceState extends State<TriviaVoice> {
         ),
         floatingActionButton: GestureDetector(
           onTap: () {
-            Provider.of<DataKeeper>(context,listen: false).addCoin(50);
-          //  Provider.of<DataKeeper>(context, listen: false).addDiamond(1);
+            Provider.of<DataKeeper>(context, listen: false).addCoin(50);
+            //  Provider.of<DataKeeper>(context, listen: false).addDiamond(1);
           },
           child: Container(
             height: 50,
@@ -77,7 +80,7 @@ class _TriviaVoiceState extends State<TriviaVoice> {
             decoration:
                 BoxDecoration(color: Colors.green, shape: BoxShape.circle),
             child: Center(child: Text("+50 Coin")),
-           // child: Center(child: Text("+1 Diamond")),
+            // child: Center(child: Text("+1 Diamond")),
           ),
         ),
       ),
