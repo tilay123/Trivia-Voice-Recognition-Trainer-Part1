@@ -332,8 +332,8 @@ class HelperText extends StatelessWidget {
           duration: duration,
           builder: (BuildContext context, String remaining) {
             //print( "currentSubCategory.startTime${currentSubCategory.startTime}");
-            DateTime endTime =
-                currentSubCategory.startTime.add(Duration(seconds: 15)); //hours: 2
+            DateTime endTime = currentSubCategory.startTime
+                .add(Duration(seconds: 15)); //hours: 2
             if (DateTime.now().isBefore(endTime)) {
               //print(DateTime.now().difference(currentSubCategory.startTime));
 
@@ -347,11 +347,11 @@ class HelperText extends StatelessWidget {
           },
         );
       } else {
-
-        print("currentSubCategory.remainingPlay ${currentSubCategory.remainingPlay}");
+        print(
+            "currentSubCategory.remainingPlay ${currentSubCategory.remainingPlay}");
 
         return Text(
-          "Completed:${5- currentSubCategory.remainingPlay}/5, Left: ${currentSubCategory.remainingPlay}",
+          "Completed:${5 - currentSubCategory.remainingPlay}/5, Left: ${currentSubCategory.remainingPlay}",
           style: TextStyle(color: Colors.white),
         );
       }
@@ -398,6 +398,12 @@ class _BuyButtonState extends State<BuyButton> {
             //  data.purchased = true; // can't change the copy of the original data.
             categories.data[widget.indexes[0]][widget.indexes[1]].purchased =
                 true;
+            categories
+                .data[widget.indexes[0]][widget.indexes[1]].remainingPlay = 4;
+            Provider.of<DataKeeper>(context,listen: false).updateRemainingPlay(
+                categories
+                    .data[widget.indexes[0]][widget.indexes[1]].remainingPlay,
+                widget.currentSubCategory.subCategoryName);
           });
         });
       },

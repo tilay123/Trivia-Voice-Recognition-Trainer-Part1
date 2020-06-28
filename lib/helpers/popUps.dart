@@ -107,6 +107,8 @@ void showValidatorPopup(
                       Provider.of<DataKeeper>(context, listen: false)
                           .updateStartTime(DateTime.now(),
                               currentSubCategory.subCategoryName);
+
+
                     }
 
                     Navigator.pop(context);
@@ -119,9 +121,9 @@ void showValidatorPopup(
                     int index = random.nextInt(categories.data.length);
 
                     // todo update database
-                    categories.data[indexes[0]][indexes[1]].remainingPlay = 4;
+                    // todo increment remainder play using set state
 
-                    Provider.of<DataKeeper>(context).updateRemainingPlay(categories.data[indexes[0]][indexes[1]].remainingPlay, currentSubCategory.subCategoryName);
+
 
                     Navigator.push(
                         context,
