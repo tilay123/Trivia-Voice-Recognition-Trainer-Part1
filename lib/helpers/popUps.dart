@@ -64,8 +64,10 @@ void showValidatorPopup(
                       return Container(
                         margin: EdgeInsets.all(5),
                         width: 200,
-
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Theme.of(context).scaffoldBackgroundColor,),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                        ),
                       );
                     },
                     itemCount: 3,
@@ -73,7 +75,8 @@ void showValidatorPopup(
             ],
           ),
         )).show();
-  } else {  // if can purchase
+  } else {
+    // if can purchase
     AwesomeDialog(
         context: context,
         dialogType: DialogType.WARNING,
@@ -97,11 +100,13 @@ void showValidatorPopup(
                             .addDiamond(-currentSubCategory.price);
                   }
 
-                  if (successPurchase){
+                  if (successPurchase) {
                     if (setStateFunction != null) {
                       setStateFunction();
 
-                      Provider.of<DataKeeper>(context,listen: false).updateStartTime(DateTime.now(), currentSubCategory.subCategoryName);
+                      Provider.of<DataKeeper>(context, listen: false)
+                          .updateStartTime(DateTime.now(),
+                              currentSubCategory.subCategoryName);
                     }
 
                     Navigator.pop(context);
@@ -112,6 +117,11 @@ void showValidatorPopup(
                     Random random = Random();
 
                     int index = random.nextInt(categories.data.length);
+
+                    // todo update database
+                    categories.data[indexes[0]][indexes[1]].remainingPlay = 4;
+
+                    Provider.of<DataKeeper>(context).updateRemainingPlay(categories.data[indexes[0]][indexes[1]].remainingPlay, currentSubCategory.subCategoryName);
 
                     Navigator.push(
                         context,

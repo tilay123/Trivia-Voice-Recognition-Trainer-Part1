@@ -70,7 +70,6 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     stopAudio();
   }
@@ -368,7 +367,6 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             AnimatedButton(
-              // todo change questionsList price
               color: Provider.of<DataKeeper>(context).getColor(
                   context: context, currentSubCategory: widget.questionsList),
               onPressed: () {},
@@ -388,7 +386,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                       ),
                     ],
                   ),
-                  Price(Currency.COIN,400),
+                  Price(Currency.COIN, 400),
                 ],
               ),
               width: 100,
@@ -416,7 +414,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                       ),
                     ],
                   ),
-                  Price(Currency.DIAMOND,1),
+                  Price(Currency.DIAMOND, 1),
                 ],
               ),
               width: 100,
@@ -432,7 +430,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
 }
 
 class Price extends StatelessWidget {
-  const Price(this.currency,this.price);
+  const Price(this.currency, this.price);
 
   final currency;
   final price;
@@ -452,7 +450,8 @@ class Price extends StatelessWidget {
           Image(
             height: 20,
             width: 20,
-            image: AssetImage(currency == Currency.COIN? "asset/coin-01.png"
+            image: AssetImage(currency == Currency.COIN
+                ? "asset/coin-01.png"
                 : "asset/diamond-04.png"),
             fit: BoxFit.cover,
           ),

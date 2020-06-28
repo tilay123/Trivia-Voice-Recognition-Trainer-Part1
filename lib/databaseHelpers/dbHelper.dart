@@ -148,12 +148,21 @@ abstract class DatabaseHelper {
     }
   }
 
-  static Future<void> updateStartTime(DateTime time, String subCategoryName)async {
+  static Future<void> updateStartTime(
+      DateTime time, String subCategoryName) async {
     sql.Database database = await databaseInit();
 
-    Map<String, Object> newMap = {"$START_TIME":time.toIso8601String()};
+    Map<String, Object> newMap = {"$START_TIME": time.toIso8601String()};
 
-    await database.update("$PURCHASE_DATA_TABLE", newMap, where: "$CONTAINER_NAME = ?", whereArgs: [subCategoryName]);
+    await database.update("$PURCHASE_DATA_TABLE", newMap,
+        where: "$CONTAINER_NAME = ?", whereArgs: [subCategoryName]);
+  }
 
+  static Future<void> updateRemainingPlay(
+      int num, String subCategoryName) async {
+    sql.Database database = await databaseInit();
+    Map<String, Object> newMap = {"$REMAINING_PLAY": num};
+    await database.update("$PURCHASE_DATA_TABLE", newMap,
+        where: "$CONTAINER_NAME = ?", whereArgs: [subCategoryName]);
   }
 }

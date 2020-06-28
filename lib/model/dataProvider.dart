@@ -160,7 +160,7 @@ class DataKeeper extends ChangeNotifier {
         int tempLength = categories.data[outer].length;
         for (int j = 0; j < tempLength; j++) {
           SubCategory temp = categories.data[outer][j];
-        //  print("HHS${temp.subCategoryName}");
+          //  print("HHS${temp.subCategoryName}");
           List listOfData =
               await DatabaseHelper.getPurchasedDataFor(temp.subCategoryName);
 
@@ -169,7 +169,7 @@ class DataKeeper extends ChangeNotifier {
               listOfData[1] != null ? DateTime.parse(listOfData[1]) : null;
           categories.data[outer][j].remainingPlay = listOfData[2];
           // print("working on setting up purchased to true or false ");
-          print("List OF List $listOfData");
+          // print("List OF List $listOfData");
         }
       }
 
@@ -187,11 +187,10 @@ class DataKeeper extends ChangeNotifier {
   }
 
   Future<void> updateStartTime(DateTime time, String subCategoryName) async {
-   await DatabaseHelper.updateStartTime(time, subCategoryName);
-
+    await DatabaseHelper.updateStartTime(time, subCategoryName);
   }
 
-
-
-
+  Future<void> updateRemainingPlay(int num, String subCategoryName) async {
+    await DatabaseHelper.updateRemainingPlay(num, subCategoryName);
+  }
 }

@@ -320,7 +320,8 @@ class HelperText extends StatelessWidget {
       );
     } else if (currentSubCategory.startTime != null) {
       // && categories.data[indexes[0]][indexes[1]].remainingPlay < 5
-      DateTime endTime = currentSubCategory.startTime.add(Duration(hours: 2));
+      DateTime endTime =
+          currentSubCategory.startTime.add(Duration(seconds: 15)); // hours: 2
 
       if (DateTime.now().isBefore(endTime)) {
         //print(DateTime.now().difference(currentSubCategory.startTime));
@@ -330,25 +331,27 @@ class HelperText extends StatelessWidget {
         return CountdownFormatted(
           duration: duration,
           builder: (BuildContext context, String remaining) {
-            print(
-                "currentSubCategory .startTime${currentSubCategory.startTime}");
+            //print( "currentSubCategory.startTime${currentSubCategory.startTime}");
             DateTime endTime =
-                currentSubCategory.startTime.add(Duration(hours: 2));
+                currentSubCategory.startTime.add(Duration(seconds: 15)); //hours: 2
             if (DateTime.now().isBefore(endTime)) {
               //print(DateTime.now().difference(currentSubCategory.startTime));
 
               return Text("${endTime.difference(DateTime.now())}",
                   style: TextStyle(color: Colors.white));
-            } // todo change remaining time vv
+            } // todo change remaining time vv if DateTime.now().isAfter(endTime)
             return Text(
-              "Unknown Remaining Time",
+              " ${currentSubCategory.remainingPlay} Hello",
               style: TextStyle(color: Colors.white),
             );
           },
         );
       } else {
+
+        print("currentSubCategory.remainingPlay ${currentSubCategory.remainingPlay}");
+
         return Text(
-          "Unknown Remaining Time",
+          "Completed:${5- currentSubCategory.remainingPlay}/5, Left: ${currentSubCategory.remainingPlay}",
           style: TextStyle(color: Colors.white),
         );
       }
