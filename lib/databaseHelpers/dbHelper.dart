@@ -18,6 +18,7 @@ abstract class DatabaseHelper {
   static const REMAINING_PLAY = "canPlayThisManyTimes";
   static const TOTAL_WINS = "totalWins";
   static const TOTAL_LOSES = "totalLoses";
+  static const IS_WAITING = "isWaiting";
 
   static Future<sql.Database> databaseInit() async {
     final dbPath = await sql.getDatabasesPath();
@@ -31,7 +32,7 @@ abstract class DatabaseHelper {
 
       await database.execute(// 0 FOR FALSE AND 1 FOR TRUE
           "CREATE TABLE $PURCHASE_DATA_TABLE(id INTEGER PRIMARY KEY AUTOINCREMENT"
-          ",$CONTAINER_NAME TEXT, $PURCHASED INT, $START_TIME TEXT, $REMAINING_PLAY INT)");
+          ",$CONTAINER_NAME TEXT, $PURCHASED INT, $START_TIME TEXT, $REMAINING_PLAY INT, $IS_WAITING INT)");
 
       return database;
     }, version: 1);
@@ -72,7 +73,8 @@ abstract class DatabaseHelper {
           "$PURCHASED": temp.purchased == true ? 1 : 0,
           //        "START_TIME": "Nothing yet",
           "$CONTAINER_NAME": temp.subCategoryName,
-          "$REMAINING_PLAY": 0
+          "$REMAINING_PLAY": 0,
+          "$IS_WAITING": temp.isWaiting == true ? 1 : 0,
         });
       }
     }
@@ -99,7 +101,7 @@ abstract class DatabaseHelper {
     sql.Database database = await databaseInit();
 
     List<Map<String, Object>> data = await database.query(PURCHASE_DATA_TABLE,
-        columns: [PURCHASED, START_TIME, REMAINING_PLAY, CONTAINER_NAME],
+        columns: [PURCHASED, START_TIME, REMAINING_PLAY, CONTAINER_NAME,IS_WAITING],
         where: "$CONTAINER_NAME = ?",
         whereArgs: [subCategoryName]);
     print("data00 $data");
@@ -108,6 +110,7 @@ abstract class DatabaseHelper {
 
     aList.add(data[0]["$START_TIME"]);
     aList.add(data[0]["$REMAINING_PLAY"]);
+    aList.add(data[0]["$IS_WAITING"] == 1);
 
 //    aList.forEach((element) {print(element);});
 //    print(aList.length);

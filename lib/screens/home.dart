@@ -193,11 +193,16 @@ class BigCategoryText extends StatelessWidget {
 }
 
 // Horizontal scrollable view
-class ScrollableRow extends StatelessWidget {
+class ScrollableRow extends StatefulWidget {
   ScrollableRow({this.subCategories, this.parentIndex});
   final List<SubCategory> subCategories;
   final parentIndex;
 
+  @override
+  _ScrollableRowState createState() => _ScrollableRowState();
+}
+
+class _ScrollableRowState extends State<ScrollableRow> {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -207,13 +212,13 @@ class ScrollableRow extends StatelessWidget {
         child: ListView.builder(
 
             // row can't be greater than 5
-            itemCount: subCategories?.length == null
+            itemCount: widget.subCategories?.length == null
                 ? 5
-                : (subCategories.length > 5 ? 5 : subCategories.length),
+                : (widget.subCategories.length > 5 ? 5 : widget.subCategories.length),
             scrollDirection: Axis.horizontal,
             physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) {
-              SubCategory currentSubCategory = subCategories[index];
+              SubCategory currentSubCategory = widget.subCategories[index];
               return Container(
                 margin: EdgeInsets.symmetric(horizontal: 10),
                 padding:
@@ -227,13 +232,13 @@ class ScrollableRow extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
 
-                child: subCategories?.length == 0
+                child: widget.subCategories?.length == 0
                     ? null
                     : Center(
                         child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          if (parentIndex > 0)
+                          if (widget.parentIndex > 0)
                             Text(
                               "Identify characters from:",
                               style: TextStyle(color: Colors.white),
@@ -265,11 +270,32 @@ class ScrollableRow extends StatelessWidget {
                           ),
                           HelperText(
                             currentSubCategory: currentSubCategory,
-                            indexes: [parentIndex, index],
+                            indexes: [widget.parentIndex, index],
                           ),
-                          currentSubCategory.purchased == true
+                          (currentSubCategory.purchased == true && currentSubCategory.remainingPlay < 5)
                               ? AnimatedButton(
                                   onPressed: () {
+
+                                    if(currentSubCategory.remainingPlay != null) {
+
+                                      setState(() {
+                                        categories.data[widget.parentIndex][index]
+                                            .remainingPlay--;
+                                      });
+
+                                    }
+
+                                    if (categories.data[widget.parentIndex][index].remainingPlay <= 0){
+                                      setState(() {
+                                       // categories.data[widget.parentIndex][index].remainingPlay = 5;
+                                        categories.data[widget.parentIndex][index].isWaiting = false;
+                                      });
+                                    }
+
+
+
+
+
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -289,7 +315,7 @@ class ScrollableRow extends StatelessWidget {
                                 )
                               : BuyButton(
                                   currentSubCategory: currentSubCategory,
-                                  indexes: [parentIndex, index]),
+                                  indexes: [widget.parentIndex, index]),
                         ],
                       )),
               );

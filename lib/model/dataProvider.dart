@@ -168,6 +168,7 @@ class DataKeeper extends ChangeNotifier {
           categories.data[outer][j].startTime =
               listOfData[1] != null ? DateTime.parse(listOfData[1]) : null;
           categories.data[outer][j].remainingPlay = listOfData[2];
+          categories.data[outer][j].isWaiting = listOfData[3];
           // print("working on setting up purchased to true or false ");
           // print("List OF List $listOfData");
         }

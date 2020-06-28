@@ -6,15 +6,16 @@ import 'subCategoryType.dart';
 import 'dart:math';
 
 class SubCategory {
-  SubCategory(
-      {@required this.subCategoryName,
-      @required this.questionList,
-      @required this.price,
-      @required this.currency,
-      this.purchased,
-      this.startTime,
-      this.remainingPlay
-      });
+  SubCategory({
+    @required this.subCategoryName,
+    @required this.questionList,
+    @required this.price,
+    @required this.currency,
+    this.purchased,
+    this.startTime,
+    this.remainingPlay,
+    this.isWaiting,
+  });
   String subCategoryName; // Singer, Movie names,
   List<Question> questionList;
   bool purchased = false;
@@ -22,6 +23,7 @@ class SubCategory {
   Currency currency = Currency.COIN;
   DateTime startTime;
   int remainingPlay;
+  bool isWaiting = false;
 
   List<Question> shuffle() {
     var random = new Random();
