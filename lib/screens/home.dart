@@ -281,6 +281,9 @@ class _ScrollableRowState extends State<ScrollableRow> {
                                       setState(() {
                                         categories.data[widget.parentIndex][index]
                                             .remainingPlay--;
+
+                                        Provider.of<DataKeeper>(context,listen: false).updateRemainingPlay(categories.data[widget.parentIndex][index]
+                                            .remainingPlay, currentSubCategory.subCategoryName);
                                       });
 
                                     }
