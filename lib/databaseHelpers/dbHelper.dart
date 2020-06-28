@@ -89,15 +89,6 @@ abstract class DatabaseHelper {
         where: "$CONTAINER_NAME = ?", whereArgs: [subCategoryName]);
   }
 
-  static Future<void> updateIsWaiting(bool isWaiting,String subCategoryName) async {
-    sql.Database database = await databaseInit();
-
-    Map<String, Object> dataToUpdate = {"$IS_WAITING": isWaiting == true ? 1 : 0};
-
-    await database.update(PURCHASE_DATA_TABLE, dataToUpdate,
-        where: "$IS_WAITING = ?", whereArgs: [subCategoryName]);
-  }
-
   static Future<List<Map<String, Object>>> getCurrencyData() async {
     sql.Database database = await databaseInit();
 
@@ -110,7 +101,13 @@ abstract class DatabaseHelper {
     sql.Database database = await databaseInit();
 
     List<Map<String, Object>> data = await database.query(PURCHASE_DATA_TABLE,
-        columns: [PURCHASED, START_TIME, REMAINING_PLAY, CONTAINER_NAME,IS_WAITING],
+        columns: [
+          PURCHASED,
+          START_TIME,
+          REMAINING_PLAY,
+          CONTAINER_NAME,
+          IS_WAITING
+        ],
         where: "$CONTAINER_NAME = ?",
         whereArgs: [subCategoryName]);
     print("data00 $data");
@@ -175,6 +172,17 @@ abstract class DatabaseHelper {
     sql.Database database = await databaseInit();
     Map<String, Object> newMap = {"$REMAINING_PLAY": num};
     await database.update("$PURCHASE_DATA_TABLE", newMap,
+        where: "$CONTAINER_NAME = ?", whereArgs: [subCategoryName]);
+  }
+
+  static Future<void> updateIsWaiting(
+      bool isWaiting, String subCategoryName) async {
+    sql.Database database = await databaseInit();
+
+    int num = isWaiting == true ? 1 : 0;
+    Map<String, Object> dataToUpdate = {"$IS_WAITING": num};
+
+    var app = await database.update(PURCHASE_DATA_TABLE, dataToUpdate,
         where: "$CONTAINER_NAME = ?", whereArgs: [subCategoryName]);
   }
 }

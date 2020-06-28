@@ -89,11 +89,6 @@ class DataKeeper extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateIsWaiting(bool isWaiting,String subcategoryName) async {
-    await DatabaseHelper.updateIsWaiting(isWaiting,subcategoryName);
-    notifyListeners();
-  }
-
   Future<bool> addDiamond(int amount) async {
     if (_diamond + amount < 0) {
       return false;
@@ -128,7 +123,7 @@ class DataKeeper extends ChangeNotifier {
   Future<void> fetchAndSetGameCurrency() async {
     List<Map<String, Object>> gameData = await DatabaseHelper.getCurrencyData();
 
-    print("Game data  $gameData ${gameData.length}");
+ //   print("Game data  $gameData ${gameData.length}");
 //    print(   gameData.map((element) {
 //
 //    }).toList());
@@ -197,5 +192,9 @@ class DataKeeper extends ChangeNotifier {
 
   Future<void> updateRemainingPlay(int num, String subCategoryName) async {
     await DatabaseHelper.updateRemainingPlay(num, subCategoryName);
+  }
+
+  Future<void> updateIsWaiting(bool isWaiting, String subcategoryName) async {
+    await DatabaseHelper.updateIsWaiting(isWaiting, subcategoryName);
   }
 }

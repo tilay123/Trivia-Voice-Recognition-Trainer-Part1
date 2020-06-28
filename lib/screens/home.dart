@@ -214,7 +214,9 @@ class _ScrollableRowState extends State<ScrollableRow> {
             // row can't be greater than 5
             itemCount: widget.subCategories?.length == null
                 ? 5
-                : (widget.subCategories.length > 5 ? 5 : widget.subCategories.length),
+                : (widget.subCategories.length > 5
+                    ? 5
+                    : widget.subCategories.length),
             scrollDirection: Axis.horizontal,
             physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) {
@@ -272,29 +274,55 @@ class _ScrollableRowState extends State<ScrollableRow> {
                             currentSubCategory: currentSubCategory,
                             indexes: [widget.parentIndex, index],
                           ),
-                          (currentSubCategory.purchased == true && currentSubCategory.remainingPlay < 5)
+                          (currentSubCategory.purchased == true &&
+                                  currentSubCategory.remainingPlay < 5)
                               ? AnimatedButton(
-                                  onPressed: () {
-
-                                    if(currentSubCategory.remainingPlay != null) {
-
+                                  onPressed: () async {
+                                    if (currentSubCategory.remainingPlay !=
+                                        null) {
                                       setState(() {
-                                        categories.data[widget.parentIndex][index]
-                                            .remainingPlay--;
+//                                        categories
+//                                            .data[widget.parentIndex][index]
+//                                            .remainingPlay--;
+                                      currentSubCategory.remainingPlay--;
 
-                                        Provider.of<DataKeeper>(context,listen: false).updateRemainingPlay(categories.data[widget.parentIndex][index]
-                                            .remainingPlay, currentSubCategory.subCategoryName);
-                                      });
 
+                                        Provider.of<DataKeeper>(context,
+                                                listen: false)
+                                            .updateRemainingPlay(
+                                            currentSubCategory.remainingPlay,
+                                                currentSubCategory
+                                                    .subCategoryName);
+
+
+
+                                        if (currentSubCategory
+                                                .remainingPlay <=
+                                            0) {
+                                            // categories.data[widget.parentIndex][index].remainingPlay = 5;
+                                          print("remainingPlay is neg ${currentSubCategory
+                                              .remainingPlay}");
+                                      //    currentSubCategory.isWaiting = true;
+                                                                                  categories
+                                            .data[widget.parentIndex][index]
+                                            .isWaiting = true;
+
+                                          print("currentSubCategory.isWaiting = true;${currentSubCategory.isWaiting = true}");
+
+                                          Provider.of<DataKeeper>(context,
+                                              listen: false)
+                                              .updateIsWaiting(
+                                              currentSubCategory.isWaiting,
+                                              currentSubCategory
+                                                  .subCategoryName);
+
+                                        }
+
+
+                                      }
+
+                                      );
                                     }
-
-                                    if (categories.data[widget.parentIndex][index].remainingPlay <= 0){
-                                      setState(() {
-                                       // categories.data[widget.parentIndex][index].remainingPlay = 5;
-                                        categories.data[widget.parentIndex][index].isWaiting = false;
-                                      });
-                                    }
-
 
 
 
@@ -429,7 +457,7 @@ class _BuyButtonState extends State<BuyButton> {
                 true;
             categories
                 .data[widget.indexes[0]][widget.indexes[1]].remainingPlay = 4;
-            Provider.of<DataKeeper>(context,listen: false).updateRemainingPlay(
+            Provider.of<DataKeeper>(context, listen: false).updateRemainingPlay(
                 categories
                     .data[widget.indexes[0]][widget.indexes[1]].remainingPlay,
                 widget.currentSubCategory.subCategoryName);
