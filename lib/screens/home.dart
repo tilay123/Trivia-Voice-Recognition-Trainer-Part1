@@ -311,7 +311,7 @@ class HelperText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("CAT${categories.data[indexes[0]][indexes[1]].remainingPlay}");
+    //print("CAT${categories.data[indexes[0]][indexes[1]].remainingPlay}");
 
     if (currentSubCategory.purchased == false) {
       return Text(

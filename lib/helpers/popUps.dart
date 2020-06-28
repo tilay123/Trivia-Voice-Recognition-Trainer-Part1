@@ -101,7 +101,7 @@ void showValidatorPopup(
                     if (setStateFunction != null) {
                       setStateFunction();
 
-                      await Provider.of<DataKeeper>(context).updateStartTime(DateTime.now(), currentSubCategory.subCategoryName);
+                      Provider.of<DataKeeper>(context,listen: false).updateStartTime(DateTime.now(), currentSubCategory.subCategoryName);
                     }
 
                     Navigator.pop(context);
