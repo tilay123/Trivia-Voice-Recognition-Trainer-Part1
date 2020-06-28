@@ -26,9 +26,9 @@ class HomeBottomNavigation extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-  Future<void> fetchData(BuildContext context) async {
-    await Provider.of<DataKeeper>(context).fetchAndSetGameCurrency();
-  }
+//  Future<void> fetchData(BuildContext context) async {
+//    await Provider.of<DataKeeper>(context).fetchAndSetGameCurrency();
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,98 +46,103 @@ class HomeBottomNavigation extends StatelessWidget {
 //
 //      print(element.runtimeType);});
 
-     fetchData(context);
+    //    fetchData(context);
 
-    return CustomScrollView(
-      slivers: <Widget>[
-        SliverAppBar(
-          // expandedHeight: 100,
-          backgroundColor: Color(0xff4281A4),
+    return FutureBuilder(
+      future: Provider.of<DataKeeper>(context).fetchAndSetGameCurrency(),
+      builder: (context, snapshot) {
+        return CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              // expandedHeight: 100,
+              backgroundColor: Color(0xff4281A4),
 //          title: Text("Home"),
 
-          actions: <Widget>[
-            CoinHolder(),
-            DiamondHolder(),
-          ],
-        ),
-        //  SliverToBoxAdapter(child: SizedBox(height: 10,),),
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-            child: Center(
-              child: AnimatedButton(
+              actions: <Widget>[
+                CoinHolder(),
+                DiamondHolder(),
+              ],
+            ),
+            //  SliverToBoxAdapter(child: SizedBox(height: 10,),),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                child: Center(
+                  child: AnimatedButton(
 //              height: 30,
-                width: 300,
-                color: Colors.green,
-                child: Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    "Play Randomly",
-                    style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                    width: 300,
+                    color: Colors.green,
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        "Play Randomly",
+                        style: TextStyle(
+                            fontSize: 30,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    onPressed: () {
+                      Random random = Random();
+
+                      int index = random.nextInt(categories.data.length);
+
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AnswerSelectionPage(
+                                  categories.data[index][random.nextInt(
+                                      categories.data[index].length)])));
+                    },
                   ),
                 ),
-                onPressed: () {
-                  Random random = Random();
-
-                  int index = random.nextInt(categories.data.length);
-
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AnswerSelectionPage(categories
-                                  .data[index][
-                              random.nextInt(categories.data[index].length)])));
-                },
               ),
             ),
-          ),
-        ),
 
-        BigCategoryText(
-          title: "Celebrities",
-          forViewAllPage: categories.data[0],
-          parentIndex: 0,
-        ),
-        ScrollableRow(
-          subCategories: celebrities,
-          parentIndex: 0,
-        ),
-        BigCategoryText(
-          title: "TV Shows",
-          forViewAllPage: categories.data[1],
-          parentIndex: 1,
-        ),
-        ScrollableRow(
-          subCategories: tvShows,
-          parentIndex: 1,
-        ),
-        BigCategoryText(
-          title: "Animated TV Shows",
-          forViewAllPage: categories.data[2],
-          parentIndex: 2,
-        ),
-        ScrollableRow(
-          subCategories: animatedTvShows,
-          parentIndex: 2,
-        ),
-        BigCategoryText(
-          title: "Movies",
-          forViewAllPage: categories.data[3],
-          parentIndex: 3,
-        ),
-        ScrollableRow(
-          subCategories: movies,
-          parentIndex: 3,
-        ),
-        SliverToBoxAdapter(
-          child: SizedBox(
-            height: 10,
-          ),
-        )
-      ],
+            BigCategoryText(
+              title: "Celebrities",
+              forViewAllPage: categories.data[0],
+              parentIndex: 0,
+            ),
+            ScrollableRow(
+              subCategories: celebrities,
+              parentIndex: 0,
+            ),
+            BigCategoryText(
+              title: "TV Shows",
+              forViewAllPage: categories.data[1],
+              parentIndex: 1,
+            ),
+            ScrollableRow(
+              subCategories: tvShows,
+              parentIndex: 1,
+            ),
+            BigCategoryText(
+              title: "Animated TV Shows",
+              forViewAllPage: categories.data[2],
+              parentIndex: 2,
+            ),
+            ScrollableRow(
+              subCategories: animatedTvShows,
+              parentIndex: 2,
+            ),
+            BigCategoryText(
+              title: "Movies",
+              forViewAllPage: categories.data[3],
+              parentIndex: 3,
+            ),
+            ScrollableRow(
+              subCategories: movies,
+              parentIndex: 3,
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(
+                height: 10,
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 }
@@ -258,10 +263,10 @@ class ScrollableRow extends StatelessWidget {
                               ),
                             ),
                           ),
-
-
-                          HelperText(currentSubCategory: currentSubCategory, indexes: [parentIndex,index],),
-
+                          HelperText(
+                            currentSubCategory: currentSubCategory,
+                            indexes: [parentIndex, index],
+                          ),
                           currentSubCategory.purchased == true
                               ? AnimatedButton(
                                   onPressed: () {
@@ -308,12 +313,13 @@ class HelperText extends StatelessWidget {
   Widget build(BuildContext context) {
     print("CAT${categories.data[indexes[0]][indexes[1]].remainingPlay}");
 
-    if (currentSubCategory.purchased == false){
+    if (currentSubCategory.purchased == false) {
       return Text(
         "Purchase for",
         style: TextStyle(color: Colors.white),
       );
-    } else if (currentSubCategory.startTime != null ) { // && categories.data[indexes[0]][indexes[1]].remainingPlay < 5
+    } else if (currentSubCategory.startTime != null) {
+      // && categories.data[indexes[0]][indexes[1]].remainingPlay < 5
       DateTime endTime = currentSubCategory.startTime.add(Duration(hours: 2));
 
       if (DateTime.now().isBefore(endTime)) {
@@ -321,21 +327,18 @@ class HelperText extends StatelessWidget {
 
         Duration duration = endTime.difference(DateTime.now());
 
-
         return CountdownFormatted(
           duration: duration,
-          builder:
-              (BuildContext context, String remaining) {
-            DateTime endTime = currentSubCategory
-                .startTime
-                .add(Duration(hours: 2));
+          builder: (BuildContext context, String remaining) {
+            print(
+                "currentSubCategory .startTime${currentSubCategory.startTime}");
+            DateTime endTime =
+                currentSubCategory.startTime.add(Duration(hours: 2));
             if (DateTime.now().isBefore(endTime)) {
               //print(DateTime.now().difference(currentSubCategory.startTime));
 
-              return Text(
-                  "${endTime.difference(DateTime.now())}",
-                  style:
-                  TextStyle(color: Colors.white));
+              return Text("${endTime.difference(DateTime.now())}",
+                  style: TextStyle(color: Colors.white));
             } // todo change remaining time vv
             return Text(
               "Unknown Remaining Time",
@@ -352,7 +355,6 @@ class HelperText extends StatelessWidget {
     }
 
     return Text("OH Shit");
-
   }
 }
 

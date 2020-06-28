@@ -10,7 +10,7 @@ import 'package:voicelytrivia/model/subCategory.dart';
 import 'package:voicelytrivia/helpers/helperCurrencyUI.dart';
 
 class ViewAllPage extends StatefulWidget {
-  ViewAllPage(this.subCategoryList,{this.parentIndex});
+  ViewAllPage(this.subCategoryList, {this.parentIndex});
   final List<SubCategory> subCategoryList;
   final parentIndex;
 
@@ -49,13 +49,14 @@ class _ViewAllPageState extends State<ViewAllPage> {
                     AnimatedButton(
                       height: 50,
                       width: 90,
-
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
                             "${currentSubCategory.price == null ? 500 : currentSubCategory.price}",
-                            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
                           ),
                           Image(
                             height: 25,
@@ -67,14 +68,16 @@ class _ViewAllPageState extends State<ViewAllPage> {
                           ),
                         ],
                       ),
-                      color: Provider.of<DataKeeper>(context).getColor(context: context, currentSubCategory: currentSubCategory),
+                      color: Provider.of<DataKeeper>(context).getColor(
+                          context: context,
+                          currentSubCategory: currentSubCategory),
                       onPressed: () {
-
-                        showValidatorPopup(context, currentSubCategory, [widget.parentIndex,index], setStateFunction: (){
+                        showValidatorPopup(context, currentSubCategory,
+                            [widget.parentIndex, index], setStateFunction: () {
                           setState(() {
                             //  data.purchased = true; // can't change the copy of the original data.
-                            categories.data[widget.parentIndex][index].purchased =
-                            true;
+                            categories.data[widget.parentIndex][index]
+                                .purchased = true;
                           });
                         });
                       },

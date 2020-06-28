@@ -185,4 +185,13 @@ class DataKeeper extends ChangeNotifier {
       //  notifyListeners();
     }
   }
+
+  Future<void> updateStartTime(DateTime time, String subCategoryName) async {
+   await DatabaseHelper.updateStartTime(time, subCategoryName);
+
+  }
+
+
+
+
 }

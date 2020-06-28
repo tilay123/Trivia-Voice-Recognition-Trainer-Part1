@@ -73,7 +73,7 @@ void showValidatorPopup(
             ],
           ),
         )).show();
-  } else {
+  } else {  // if can purchase
     AwesomeDialog(
         context: context,
         dialogType: DialogType.WARNING,
@@ -97,9 +97,11 @@ void showValidatorPopup(
                             .addDiamond(-currentSubCategory.price);
                   }
 
-                  if (successPurchase) {
+                  if (successPurchase){
                     if (setStateFunction != null) {
                       setStateFunction();
+
+                      await Provider.of<DataKeeper>(context).updateStartTime(DateTime.now(), currentSubCategory.subCategoryName);
                     }
 
                     Navigator.pop(context);

@@ -147,4 +147,13 @@ abstract class DatabaseHelper {
           where: "id = ?", whereArgs: [CURRENCY_ID]);
     }
   }
+
+  static Future<void> updateStartTime(DateTime time, String subCategoryName)async {
+    sql.Database database = await databaseInit();
+
+    Map<String, Object> newMap = {"$START_TIME":time.toIso8601String()};
+
+    await database.update("$PURCHASE_DATA_TABLE", newMap, where: "$CONTAINER_NAME = ?", whereArgs: [subCategoryName]);
+
+  }
 }
