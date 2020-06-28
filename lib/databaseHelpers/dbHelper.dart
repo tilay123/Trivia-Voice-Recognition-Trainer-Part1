@@ -89,6 +89,15 @@ abstract class DatabaseHelper {
         where: "$CONTAINER_NAME = ?", whereArgs: [subCategoryName]);
   }
 
+  static Future<void> updateIsWaiting(bool isWaiting,String subCategoryName) async {
+    sql.Database database = await databaseInit();
+
+    Map<String, Object> dataToUpdate = {"$IS_WAITING": isWaiting == true ? 1 : 0};
+
+    await database.update(PURCHASE_DATA_TABLE, dataToUpdate,
+        where: "$IS_WAITING = ?", whereArgs: [subCategoryName]);
+  }
+
   static Future<List<Map<String, Object>>> getCurrencyData() async {
     sql.Database database = await databaseInit();
 

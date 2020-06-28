@@ -89,6 +89,11 @@ class DataKeeper extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateIsWaiting(bool isWaiting,String subcategoryName) async {
+    await DatabaseHelper.updateIsWaiting(isWaiting,subcategoryName);
+    notifyListeners();
+  }
+
   Future<bool> addDiamond(int amount) async {
     if (_diamond + amount < 0) {
       return false;
@@ -182,7 +187,6 @@ class DataKeeper extends ChangeNotifier {
 //          _diamond = value;
 //        }
 //      });
-
       //  notifyListeners();
     }
   }
