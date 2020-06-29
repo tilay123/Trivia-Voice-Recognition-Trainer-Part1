@@ -13,7 +13,7 @@ class SubCategory {
     @required this.currency,
     this.purchased,
     this.startTime,
-    this.remainingPlay,
+    this.playedThisManyTimes,
     this.isWaiting,
   });
   String subCategoryName; // Singer, Movie names,
@@ -22,7 +22,7 @@ class SubCategory {
   int price = 500;
   Currency currency = Currency.COIN;
   DateTime startTime;
-  int remainingPlay;
+  int playedThisManyTimes;
   bool isWaiting = false;
 
   List<Question> shuffle() {

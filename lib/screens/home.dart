@@ -275,33 +275,32 @@ class _ScrollableRowState extends State<ScrollableRow> {
                             indexes: [widget.parentIndex, index],
                           ),
                           (currentSubCategory.purchased == true &&
-                                  currentSubCategory.remainingPlay < 5)
+                                  currentSubCategory.playedThisManyTimes < 5)
                               ? AnimatedButton(
                                   onPressed: () async {
-                                    if (currentSubCategory.remainingPlay !=
-                                        null) {
+//                                    if (currentSubCategory.remainingPlay !=
+//                                        null) {
                                       setState(() {
 //                                        categories
 //                                            .data[widget.parentIndex][index]
 //                                            .remainingPlay--;
-                                      currentSubCategory.remainingPlay--;
-
+                                      currentSubCategory.playedThisManyTimes++;
 
                                         Provider.of<DataKeeper>(context,
                                                 listen: false)
                                             .updateRemainingPlay(
-                                            currentSubCategory.remainingPlay,
+                                            currentSubCategory.playedThisManyTimes,
                                                 currentSubCategory
                                                     .subCategoryName);
 
 
 
                                         if (currentSubCategory
-                                                .remainingPlay <=
-                                            0) {
+                                                .playedThisManyTimes >=
+                                            5) {
                                             // categories.data[widget.parentIndex][index].remainingPlay = 5;
-                                          print("remainingPlay is neg ${currentSubCategory
-                                              .remainingPlay}");
+                                          print("remainingPlay is bigger than 5 ${currentSubCategory
+                                              .playedThisManyTimes}");
                                       //    currentSubCategory.isWaiting = true;
                                                                                   categories
                                             .data[widget.parentIndex][index]
@@ -322,9 +321,6 @@ class _ScrollableRowState extends State<ScrollableRow> {
                                       }
 
                                       );
-                                    }
-
-
 
 
                                     Navigator.push(
@@ -369,13 +365,13 @@ class HelperText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //print("CAT${categories.data[indexes[0]][indexes[1]].remainingPlay}");
-
     if (currentSubCategory.purchased == false) {
       return Text(
         "Purchase for",
         style: TextStyle(color: Colors.white),
       );
-    } else if (currentSubCategory.startTime != null) {
+    } else if (currentSubCategory.isWaiting == true) {
+
       // && categories.data[indexes[0]][indexes[1]].remainingPlay < 5
       DateTime endTime =
           currentSubCategory.startTime.add(Duration(seconds: 15)); // hours: 2
@@ -384,6 +380,7 @@ class HelperText extends StatelessWidget {
         //print(DateTime.now().difference(currentSubCategory.startTime));
 
         Duration duration = endTime.difference(DateTime.now());
+
 
         return CountdownFormatted(
           duration: duration,
@@ -398,23 +395,30 @@ class HelperText extends StatelessWidget {
                   style: TextStyle(color: Colors.white));
             } // todo change remaining time vv if DateTime.now().isAfter(endTime)
             return Text(
-              " ${currentSubCategory.remainingPlay} Hello",
+              " ${currentSubCategory.playedThisManyTimes} /5",
               style: TextStyle(color: Colors.white),
             );
           },
         );
       } else {
         print(
-            "currentSubCategory.remainingPlay ${currentSubCategory.remainingPlay}");
+            "currentSubCategory.remainingPlay ${currentSubCategory.playedThisManyTimes}");
 
         return Text(
-          "Completed:${5 - currentSubCategory.remainingPlay}/5, Left: ${currentSubCategory.remainingPlay}",
+          "Completed:${currentSubCategory.playedThisManyTimes}/5",
           style: TextStyle(color: Colors.white),
         );
       }
     }
+//    return Text(
+//      "Completed:${5 - currentSubCategory.remainingPlay}/5, Left: ${currentSubCategory.remainingPlay}",
+//      style: TextStyle(color: Colors.white),
+//    );
+    print(
+        "currentSubCategory.remainingPlay ${currentSubCategory.playedThisManyTimes}");
 
-    return Text("OH Shit");
+
+   return Text("Completed:${currentSubCategory.playedThisManyTimes}/5");
   }
 }
 
@@ -456,10 +460,10 @@ class _BuyButtonState extends State<BuyButton> {
             categories.data[widget.indexes[0]][widget.indexes[1]].purchased =
                 true;
             categories
-                .data[widget.indexes[0]][widget.indexes[1]].remainingPlay = 4;
+                .data[widget.indexes[0]][widget.indexes[1]].playedThisManyTimes = 0;
             Provider.of<DataKeeper>(context, listen: false).updateRemainingPlay(
                 categories
-                    .data[widget.indexes[0]][widget.indexes[1]].remainingPlay,
+                    .data[widget.indexes[0]][widget.indexes[1]].playedThisManyTimes,
                 widget.currentSubCategory.subCategoryName);
           });
         });
