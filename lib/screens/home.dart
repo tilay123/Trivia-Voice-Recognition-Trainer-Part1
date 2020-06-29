@@ -434,6 +434,60 @@ class _BuyButtonState extends State<BuyButton> {
     int currentDiamonds =
         Provider.of<DataKeeper>(context, listen: false).getDiamond;
 
+
+    if (widget.currentSubCategory.isWaiting == true){
+      return AnimatedButton(
+        // will br great disabled button color 0xff82c4c3
+        //  color: currentSubCategory.currency == Currency.COIN? Color(0xff53b8b8): Color(0xff22a1e0),
+        color: Provider.of<DataKeeper>(context).getColor(
+            context: context, currentSubCategory: widget.currentSubCategory),
+        width: 180,
+        height: 40,
+        onPressed: () {
+          //  showVPopup(context, widget.currentSubCategory, widget.indexes,);
+
+
+                setState(() {
+
+                  categories.data[widget.indexes[0]][widget.indexes[1]]
+                      .playedThisManyTimes = 0;
+
+
+                  Provider.of<DataKeeper>(context, listen: false).updatePlayedThisManyTimes(
+                      categories.data[widget.indexes[0]][widget.indexes[1]]
+                          .playedThisManyTimes,
+                      widget.currentSubCategory.subCategoryName);
+
+                  widget.currentSubCategory.isWaiting = false;
+
+                  Provider.of<DataKeeper>(context, listen: false).updateIsWaiting(
+                      false,
+                      widget.currentSubCategory.subCategoryName);
+
+                  Provider.of<DataKeeper>(context,listen: false).addDiamond(-1);
+
+                });
+
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "${1}",
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+            Image(
+              height: 30,
+              width: 30,
+              image: AssetImage(
+                  "asset/diamond-04.png"),
+            ),
+          ],
+        ),
+      );
+    }
+
+
     return AnimatedButton(
       // will br great disabled button color 0xff82c4c3
       //  color: currentSubCategory.currency == Currency.COIN? Color(0xff53b8b8): Color(0xff22a1e0),
