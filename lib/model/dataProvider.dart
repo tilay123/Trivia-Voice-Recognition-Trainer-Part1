@@ -190,8 +190,8 @@ class DataKeeper extends ChangeNotifier {
     await DatabaseHelper.updateStartTime(time, subCategoryName);
   }
 
-  Future<void> updateRemainingPlay(int num, String subCategoryName) async {
-    await DatabaseHelper.updateRemainingPlay(num, subCategoryName);
+  Future<void> updatePlayedThisManyTimes(int num, String subCategoryName) async {
+    await DatabaseHelper.updatePlayedThisManyTimes(num, subCategoryName);
   }
 
   Future<void> updateIsWaiting(bool isWaiting, String subcategoryName) async {

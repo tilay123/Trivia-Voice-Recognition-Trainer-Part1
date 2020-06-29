@@ -109,8 +109,6 @@ void showValidatorPopup(
                               currentSubCategory.subCategoryName);
 
 
-
-
                     }
 
                     Navigator.pop(context);
@@ -118,6 +116,10 @@ void showValidatorPopup(
                     await Provider.of<DataKeeper>(context, listen: false)
                         .updatePurchaseDatabase(
                             currentSubCategory.subCategoryName);
+                    Provider.of<DataKeeper>(context, listen: false)
+                        .updatePlayedThisManyTimes(1, currentSubCategory.subCategoryName);
+
+
                     Random random = Random();
 
                     int index = random.nextInt(categories.data.length);

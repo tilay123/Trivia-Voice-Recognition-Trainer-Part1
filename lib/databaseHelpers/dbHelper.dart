@@ -167,7 +167,7 @@ abstract class DatabaseHelper {
         where: "$CONTAINER_NAME = ?", whereArgs: [subCategoryName]);
   }
 
-  static Future<void> updateRemainingPlay(
+  static Future<void> updatePlayedThisManyTimes(
       int num, String subCategoryName) async {
     sql.Database database = await databaseInit();
     Map<String, Object> newMap = {"$REMAINING_PLAY": num};

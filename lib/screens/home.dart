@@ -280,48 +280,42 @@ class _ScrollableRowState extends State<ScrollableRow> {
                                   onPressed: () async {
 //                                    if (currentSubCategory.remainingPlay !=
 //                                        null) {
-                                      setState(() {
+                                    setState(() {
 //                                        categories
 //                                            .data[widget.parentIndex][index]
 //                                            .remainingPlay--;
                                       currentSubCategory.playedThisManyTimes++;
 
-                                        Provider.of<DataKeeper>(context,
-                                                listen: false)
-                                            .updateRemainingPlay(
-                                            currentSubCategory.playedThisManyTimes,
-                                                currentSubCategory
-                                                    .subCategoryName);
-
-
-
-                                        if (currentSubCategory
-                                                .playedThisManyTimes >=
-                                            5) {
-                                            // categories.data[widget.parentIndex][index].remainingPlay = 5;
-                                          print("remainingPlay is bigger than 5 ${currentSubCategory
-                                              .playedThisManyTimes}");
-                                      //    currentSubCategory.isWaiting = true;
-                                                                                  categories
-                                            .data[widget.parentIndex][index]
-                                            .isWaiting = true;
-
-                                          print("currentSubCategory.isWaiting = true;${currentSubCategory.isWaiting = true}");
-
-                                          Provider.of<DataKeeper>(context,
+                                      Provider.of<DataKeeper>(context,
                                               listen: false)
-                                              .updateIsWaiting(
-                                              currentSubCategory.isWaiting,
+                                          .updatePlayedThisManyTimes(
+                                              currentSubCategory
+                                                  .playedThisManyTimes,
                                               currentSubCategory
                                                   .subCategoryName);
 
-                                        }
+                                      if (currentSubCategory
+                                              .playedThisManyTimes >=
+                                          5) {
+                                        // categories.data[widget.parentIndex][index].remainingPlay = 5;
+                                        print(
+                                            "remainingPlay is bigger than 5 ${currentSubCategory.playedThisManyTimes}");
+                                        //    currentSubCategory.isWaiting = true;
+                                        categories
+                                            .data[widget.parentIndex][index]
+                                            .isWaiting = true;
 
+                                        print(
+                                            "currentSubCategory.isWaiting = true;${currentSubCategory.isWaiting = true}");
 
+                                        Provider.of<DataKeeper>(context,
+                                                listen: false)
+                                            .updateIsWaiting(
+                                                currentSubCategory.isWaiting,
+                                                currentSubCategory
+                                                    .subCategoryName);
                                       }
-
-                                      );
-
+                                    });
 
                                     Navigator.push(
                                         context,
@@ -371,7 +365,6 @@ class HelperText extends StatelessWidget {
         style: TextStyle(color: Colors.white),
       );
     } else if (currentSubCategory.isWaiting == true) {
-
       // && categories.data[indexes[0]][indexes[1]].remainingPlay < 5
       DateTime endTime =
           currentSubCategory.startTime.add(Duration(seconds: 15)); // hours: 2
@@ -380,7 +373,6 @@ class HelperText extends StatelessWidget {
         //print(DateTime.now().difference(currentSubCategory.startTime));
 
         Duration duration = endTime.difference(DateTime.now());
-
 
         return CountdownFormatted(
           duration: duration,
@@ -417,8 +409,7 @@ class HelperText extends StatelessWidget {
     print(
         "currentSubCategory.remainingPlay ${currentSubCategory.playedThisManyTimes}");
 
-
-   return Text("Completed:${currentSubCategory.playedThisManyTimes}/5");
+    return Text("Completed:${currentSubCategory.playedThisManyTimes}/5");
   }
 }
 
@@ -459,11 +450,11 @@ class _BuyButtonState extends State<BuyButton> {
             //  data.purchased = true; // can't change the copy of the original data.
             categories.data[widget.indexes[0]][widget.indexes[1]].purchased =
                 true;
-            categories
-                .data[widget.indexes[0]][widget.indexes[1]].playedThisManyTimes = 0;
-            Provider.of<DataKeeper>(context, listen: false).updateRemainingPlay(
-                categories
-                    .data[widget.indexes[0]][widget.indexes[1]].playedThisManyTimes,
+            categories.data[widget.indexes[0]][widget.indexes[1]]
+                .playedThisManyTimes = 0;
+            Provider.of<DataKeeper>(context, listen: false).updatePlayedThisManyTimes(
+                categories.data[widget.indexes[0]][widget.indexes[1]]
+                    .playedThisManyTimes,
                 widget.currentSubCategory.subCategoryName);
           });
         });
