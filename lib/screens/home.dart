@@ -295,11 +295,11 @@ class _ScrollableRowState extends State<ScrollableRow> {
                                                   .subCategoryName);
 
                                       if (currentSubCategory
-                                              .playedThisManyTimes >=
+                                              .playedThisManyTimes ==
                                           5) {
                                         // categories.data[widget.parentIndex][index].remainingPlay = 5;
                                         print(
-                                            "remainingPlay is bigger than 5 ${currentSubCategory.playedThisManyTimes}");
+                                            "remainingPlay is five 5 ${currentSubCategory.playedThisManyTimes}");
                                         //    currentSubCategory.isWaiting = true;
                                         categories
                                             .data[widget.parentIndex][index]
@@ -314,6 +314,19 @@ class _ScrollableRowState extends State<ScrollableRow> {
                                                 currentSubCategory.isWaiting,
                                                 currentSubCategory
                                                     .subCategoryName);
+
+                                        setState(() {
+                                          currentSubCategory.startTime = DateTime.now();
+                                          Provider.of<DataKeeper>(context,
+                                              listen: false)
+                                              .updateStartTime(
+                                              currentSubCategory.startTime,
+                                              currentSubCategory
+                                                  .subCategoryName);
+                                        });
+
+
+
                                       }
                                     });
 
