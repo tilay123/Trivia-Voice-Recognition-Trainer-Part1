@@ -270,86 +270,10 @@ class _ScrollableRowState extends State<ScrollableRow> {
                               ),
                             ),
                           ),
-                          HelperText(
+                          HelperTextAndButton(
                             currentSubCategory: currentSubCategory,
                             indexes: [widget.parentIndex, index],
                           ),
-                          (currentSubCategory.purchased == true &&
-                                  currentSubCategory.playedThisManyTimes < 5)
-                              ? AnimatedButton(
-                                  onPressed: () async {
-//                                    if (currentSubCategory.remainingPlay !=
-//                                        null) {
-                                    setState(() {
-//                                        categories
-//                                            .data[widget.parentIndex][index]
-//                                            .remainingPlay--;
-                                      currentSubCategory.playedThisManyTimes++;
-
-                                      Provider.of<DataKeeper>(context,
-                                              listen: false)
-                                          .updatePlayedThisManyTimes(
-                                              currentSubCategory
-                                                  .playedThisManyTimes,
-                                              currentSubCategory
-                                                  .subCategoryName);
-
-                                      if (currentSubCategory
-                                              .playedThisManyTimes ==
-                                          5) {
-                                        // categories.data[widget.parentIndex][index].remainingPlay = 5;
-                                        print(
-                                            "remainingPlay is five 5 ${currentSubCategory.playedThisManyTimes}");
-                                        //    currentSubCategory.isWaiting = true;
-                                        categories
-                                            .data[widget.parentIndex][index]
-                                            .isWaiting = true;
-
-                                        print(
-                                            "currentSubCategory.isWaiting = true;${currentSubCategory.isWaiting = true}");
-
-                                        Provider.of<DataKeeper>(context,
-                                                listen: false)
-                                            .updateIsWaiting(
-                                                currentSubCategory.isWaiting,
-                                                currentSubCategory
-                                                    .subCategoryName);
-
-                                        setState(() {
-                                          currentSubCategory.startTime = DateTime.now();
-                                          Provider.of<DataKeeper>(context,
-                                              listen: false)
-                                              .updateStartTime(
-                                              currentSubCategory.startTime,
-                                              currentSubCategory
-                                                  .subCategoryName);
-                                        });
-
-
-
-                                      }
-                                    });
-
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                AnswerSelectionPage(
-                                                    currentSubCategory)));
-                                  },
-                                  color: Colors.green[500],
-                                  width: 180,
-                                  height: 40,
-                                  child: Text(
-                                    "PLAY",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                )
-                              : BuyButton(
-                                  currentSubCategory: currentSubCategory,
-                                  indexes: [widget.parentIndex, index]),
                         ],
                       )),
               );
@@ -359,8 +283,8 @@ class _ScrollableRowState extends State<ScrollableRow> {
   }
 }
 
-class HelperText extends StatelessWidget {
-  const HelperText({
+class HelperTextAndButton extends StatefulWidget {
+  const HelperTextAndButton({
     Key key,
     @required this.currentSubCategory,
     @required this.indexes,
@@ -370,17 +294,29 @@ class HelperText extends StatelessWidget {
   final List indexes;
 
   @override
+  _HelperTextAndButtonState createState() => _HelperTextAndButtonState();
+}
+
+class _HelperTextAndButtonState extends State<HelperTextAndButton> {
+  @override
   Widget build(BuildContext context) {
     //print("CAT${categories.data[indexes[0]][indexes[1]].remainingPlay}");
-    if (currentSubCategory.purchased == false) {
-      return Text(
-        "Purchase for",
-        style: TextStyle(color: Colors.white),
+    if (widget.currentSubCategory.purchased == false) {
+      return Column(
+        children: <Widget>[
+          Text(
+            "Purchase for",
+            style: TextStyle(color: Colors.white),
+          ),
+          BuyButton(
+              currentSubCategory: widget.currentSubCategory,
+              indexes: [widget.indexes[0], widget.indexes[1]]),
+        ],
       );
-    } else if (currentSubCategory.isWaiting == true) {
+    } else if (widget.currentSubCategory.isWaiting == true) {
       // && categories.data[indexes[0]][indexes[1]].remainingPlay < 5
-      DateTime endTime =
-          currentSubCategory.startTime.add(Duration(seconds: 15)); // hours: 2
+      DateTime endTime = widget.currentSubCategory.startTime
+          .add(Duration(seconds: 15)); // hours: 2
 
       if (DateTime.now().isBefore(endTime)) {
         //print(DateTime.now().difference(currentSubCategory.startTime));
@@ -391,27 +327,44 @@ class HelperText extends StatelessWidget {
           duration: duration,
           builder: (BuildContext context, String remaining) {
             //print( "currentSubCategory.startTime${currentSubCategory.startTime}");
-            DateTime endTime = currentSubCategory.startTime
+            DateTime endTime = widget.currentSubCategory.startTime
                 .add(Duration(seconds: 15)); //hours: 2
             if (DateTime.now().isBefore(endTime)) {
               //print(DateTime.now().difference(currentSubCategory.startTime));
 
-              return Text("${endTime.difference(DateTime.now())}",
-                  style: TextStyle(color: Colors.white));
+              return Column(
+                children: <Widget>[
+                  Text("${endTime.difference(DateTime.now())}",
+                      style: TextStyle(color: Colors.white)),
+                  BuyButton(
+                      currentSubCategory: widget.currentSubCategory,
+                      indexes: [widget.indexes[0], widget.indexes[1]]),
+                ],
+              );
             } // todo change remaining time vv if DateTime.now().isAfter(endTime)
-            return Text(
-              " ${currentSubCategory.playedThisManyTimes} /5",
-              style: TextStyle(color: Colors.white),
+            return Column(
+              children: <Widget>[
+                Text(
+                  " ${widget.currentSubCategory.playedThisManyTimes} /5 buy button gold", // after timer sets to 0
+                  style: TextStyle(color: Colors.white),
+                ),
+                playButtonMethod(context)
+              ],
             );
           },
         );
       } else {
         print(
-            "currentSubCategory.remainingPlay ${currentSubCategory.playedThisManyTimes}");
+            "currentSubCategory.remainingPlay ${widget.currentSubCategory.playedThisManyTimes}");
 
-        return Text(
-          "Completed:${currentSubCategory.playedThisManyTimes}/5",
-          style: TextStyle(color: Colors.white),
+        return Column(
+          children: <Widget>[
+            Text(
+              "Completed:${widget.currentSubCategory.playedThisManyTimes}/5", // if playable
+              style: TextStyle(color: Colors.white),
+            ),
+            playButtonMethod(context)
+          ],
         );
       }
     }
@@ -420,9 +373,70 @@ class HelperText extends StatelessWidget {
 //      style: TextStyle(color: Colors.white),
 //    );
     print(
-        "currentSubCategory.remainingPlay ${currentSubCategory.playedThisManyTimes}");
+        "currentSubCategory.remainingPlay ${widget.currentSubCategory.playedThisManyTimes}");
 
-    return Text("Completed:${currentSubCategory.playedThisManyTimes}/5");
+    return Column(
+      children: <Widget>[
+        Text("Completed:${widget.currentSubCategory.playedThisManyTimes}/5"),
+        playButtonMethod(context)
+      ],
+    );
+  }
+
+  AnimatedButton playButtonMethod(BuildContext context) {
+    return AnimatedButton(
+      onPressed: () async {
+//                                    if (currentSubCategory.remainingPlay !=
+//                                        null) {
+        setState(() {
+//                                        categories
+//                                            .data[widget.parentIndex][index]
+//                                            .remainingPlay--;
+          widget.currentSubCategory.playedThisManyTimes++;
+
+          Provider.of<DataKeeper>(context, listen: false)
+              .updatePlayedThisManyTimes(
+                  widget.currentSubCategory.playedThisManyTimes,
+                  widget.currentSubCategory.subCategoryName);
+
+          if (widget.currentSubCategory.playedThisManyTimes == 5) {
+            // categories.data[widget.parentIndex][index].remainingPlay = 5;
+            print(
+                "remainingPlay is five 5 ${widget.currentSubCategory.playedThisManyTimes}");
+            //    currentSubCategory.isWaiting = true;
+            categories.data[widget.indexes[0]][widget.indexes[1]].isWaiting =
+                true;
+
+            print(
+                "currentSubCategory.isWaiting = true;${widget.currentSubCategory.isWaiting = true}");
+
+            Provider.of<DataKeeper>(context, listen: false).updateIsWaiting(
+                widget.currentSubCategory.isWaiting,
+                widget.currentSubCategory.subCategoryName);
+
+            setState(() {
+              widget.currentSubCategory.startTime = DateTime.now();
+              Provider.of<DataKeeper>(context, listen: false).updateStartTime(
+                  widget.currentSubCategory.startTime,
+                  widget.currentSubCategory.subCategoryName);
+            });
+          }
+        });
+
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    AnswerSelectionPage(widget.currentSubCategory)));
+      },
+      color: Colors.green[500],
+      width: 180,
+      height: 40,
+      child: Text(
+        "PLAY",
+        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      ),
+    );
   }
 }
 
@@ -447,8 +461,7 @@ class _BuyButtonState extends State<BuyButton> {
     int currentDiamonds =
         Provider.of<DataKeeper>(context, listen: false).getDiamond;
 
-
-    if (widget.currentSubCategory.isWaiting == true){
+    if (widget.currentSubCategory.isWaiting == true) {
       return AnimatedButton(
         // will br great disabled button color 0xff82c4c3
         //  color: currentSubCategory.currency == Currency.COIN? Color(0xff53b8b8): Color(0xff22a1e0),
@@ -459,48 +472,43 @@ class _BuyButtonState extends State<BuyButton> {
         onPressed: () {
           //  showVPopup(context, widget.currentSubCategory, widget.indexes,);
 
+          setState(() {
+            categories.data[widget.indexes[0]][widget.indexes[1]]
+                .playedThisManyTimes = 0;
 
-                setState(() {
+            Provider.of<DataKeeper>(context, listen: false)
+                .updatePlayedThisManyTimes(
+                    categories.data[widget.indexes[0]][widget.indexes[1]]
+                        .playedThisManyTimes,
+                    widget.currentSubCategory.subCategoryName);
 
-                  categories.data[widget.indexes[0]][widget.indexes[1]]
-                      .playedThisManyTimes = 0;
+            widget.currentSubCategory.isWaiting = false;
 
+            Provider.of<DataKeeper>(context, listen: false).updateIsWaiting(
+                false, widget.currentSubCategory.subCategoryName);
 
-                  Provider.of<DataKeeper>(context, listen: false).updatePlayedThisManyTimes(
-                      categories.data[widget.indexes[0]][widget.indexes[1]]
-                          .playedThisManyTimes,
-                      widget.currentSubCategory.subCategoryName);
-
-                  widget.currentSubCategory.isWaiting = false;
-
-                  Provider.of<DataKeeper>(context, listen: false).updateIsWaiting(
-                      false,
-                      widget.currentSubCategory.subCategoryName);
-
-                  Provider.of<DataKeeper>(context,listen: false).addDiamond(-1);
-
-                });
-
+            Provider.of<DataKeeper>(context, listen: false).addDiamond(-1);
+          });
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               "${1}",
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
             Image(
               height: 30,
               width: 30,
-              image: AssetImage(
-                  "asset/diamond-04.png"),
+              image: AssetImage("asset/diamond-04.png"),
             ),
           ],
         ),
       );
     }
 
-
+// else
     return AnimatedButton(
       // will br great disabled button color 0xff82c4c3
       //  color: currentSubCategory.currency == Currency.COIN? Color(0xff53b8b8): Color(0xff22a1e0),
@@ -519,10 +527,11 @@ class _BuyButtonState extends State<BuyButton> {
                 true;
             categories.data[widget.indexes[0]][widget.indexes[1]]
                 .playedThisManyTimes = 0;
-            Provider.of<DataKeeper>(context, listen: false).updatePlayedThisManyTimes(
-                categories.data[widget.indexes[0]][widget.indexes[1]]
-                    .playedThisManyTimes,
-                widget.currentSubCategory.subCategoryName);
+            Provider.of<DataKeeper>(context, listen: false)
+                .updatePlayedThisManyTimes(
+                    categories.data[widget.indexes[0]][widget.indexes[1]]
+                        .playedThisManyTimes,
+                    widget.currentSubCategory.subCategoryName);
           });
         });
       },
