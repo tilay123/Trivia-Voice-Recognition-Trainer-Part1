@@ -341,16 +341,40 @@ class _HelperTextAndButtonState extends State<HelperTextAndButton> {
                       indexes: [widget.indexes[0], widget.indexes[1]]),
                 ],
               );
-            } // todo change remaining time vv if DateTime.now().isAfter(endTime)
-            return Column(
-              children: <Widget>[
-                Text(
-                  " ${widget.currentSubCategory.playedThisManyTimes} /5 buy button gold", // after timer sets to 0
-                  style: TextStyle(color: Colors.white),
-                ),
-                playButtonMethod(context)
-              ],
-            );
+            } else { // after timer sets to 0
+
+
+                //  data.purchased = true; // can't change the copy of the original data.
+                categories.data[widget.indexes[0]][widget.indexes[1]].isWaiting =
+                false;
+                Provider.of<DataKeeper>(context, listen: false)
+                    .updateIsWaiting(
+                    false,
+                    widget.currentSubCategory.subCategoryName);
+
+                categories.data[widget.indexes[0]][widget.indexes[1]]
+                    .playedThisManyTimes = 0;
+                Provider.of<DataKeeper>(context, listen: false)
+                    .updatePlayedThisManyTimes(
+                    categories.data[widget.indexes[0]][widget.indexes[1]]
+                        .playedThisManyTimes,
+                    widget.currentSubCategory.subCategoryName);
+
+
+              // todo change remaining time vv if DateTime.now().isAfter(endTime)
+              return Column(
+                children: <Widget>[
+                  Text(
+                    " ${widget.currentSubCategory.playedThisManyTimes} /5 buy button gold", // after timer sets to 0
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  playButtonMethod(context)
+                ],
+              );
+
+            }
+
+
           },
         );
       } else {
