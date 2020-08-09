@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:animated_button/animated_button.dart';
 import 'package:flutter/material.dart';
-import 'package:voicelytrivia/model/constants.dart';
 import 'package:voicelytrivia/helpers/helperCurrencyUI.dart';
 
 class ShopBottomNavigation extends StatelessWidget {
@@ -54,7 +53,7 @@ class ShopBottomNavigation extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Container(
               decoration: BoxDecoration(
-                  color: color4, borderRadius: BorderRadius.circular(15)),
+                  color: Color(0xffD4B483), borderRadius: BorderRadius.circular(15)),
               child: Container(
                 margin: EdgeInsets.all(20),
                 child: Row(

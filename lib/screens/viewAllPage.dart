@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:voicelytrivia/data/parentData.dart';
 import 'package:voicelytrivia/helpers/popUps.dart';
-import 'package:voicelytrivia/model/constants.dart';
 import 'package:voicelytrivia/model/currency.dart';
 import 'package:voicelytrivia/model/dataProvider.dart';
 import 'package:voicelytrivia/model/subCategory.dart';
@@ -34,7 +33,7 @@ class _ViewAllPageState extends State<ViewAllPage> {
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             child: Container(
               decoration: BoxDecoration(
-                  color: color4, borderRadius: BorderRadius.circular(15)),
+                  color: Color(0xffD4B483), borderRadius: BorderRadius.circular(15)),
               child: Container(
                 margin: EdgeInsets.all(20),
                 child: Row(

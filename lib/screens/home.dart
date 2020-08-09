@@ -9,7 +9,6 @@ import 'package:voicelytrivia/data/movies.dart';
 
 import 'package:voicelytrivia/data/parentData.dart';
 import 'package:voicelytrivia/data/tvShows.dart';
-import 'package:voicelytrivia/model/constants.dart';
 import 'package:animated_button/animated_button.dart';
 import 'package:voicelytrivia/model/currency.dart';
 import 'package:voicelytrivia/model/subCategory.dart';
@@ -83,7 +82,7 @@ class HomeBottomNavigation extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      Random random = Random();
+                      Random random = new Random();
 
                       int index = random.nextInt(categories.data.length);
 
@@ -153,6 +152,14 @@ class BigCategoryText extends StatelessWidget {
   final parentIndex;
   final List<SubCategory> forViewAllPage;
 
+//  // #4281A4,  #48A9A6, #E4DFDA, D4B483, C1666B
+//  final Color color1 = Color(0xff4281A4);
+//  final Color color2 = Color(0xff48A9A6);
+//  final Color color3 = Color(0xffE4DFDA);
+//  final Color color4 = Color(0xffD4B483);
+//  final Color color5 = Color(0xffC1666B);
+//  final Color color6 = Colors.red;
+
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -164,12 +171,14 @@ class BigCategoryText extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                  fontSize: 20, color: color2, fontWeight: FontWeight.bold),
+                  fontSize: 20,
+                  color: Color(0xff48A9A6),
+                  fontWeight: FontWeight.bold),
             ),
             AnimatedButton(
               height: 30,
               width: 80,
-              color: color1,
+              color: Theme.of(context).primaryColor,
               child: Text(
                 "View All",
                 style: TextStyle(fontSize: 15, color: Colors.white),
@@ -341,40 +350,34 @@ class _HelperTextAndButtonState extends State<HelperTextAndButton> {
                       indexes: [widget.indexes[0], widget.indexes[1]]),
                 ],
               );
-            } else { // after timer sets to 0
+            } else {
+              // after timer sets to 0
 
+              //  data.purchased = true; // can't change the copy of the original data.
+              categories.data[widget.indexes[0]][widget.indexes[1]].isWaiting =
+                  false;
+              Provider.of<DataKeeper>(context, listen: false).updateIsWaiting(
+                  false, widget.currentSubCategory.subCategoryName);
 
-                //  data.purchased = true; // can't change the copy of the original data.
-                categories.data[widget.indexes[0]][widget.indexes[1]].isWaiting =
-                false;
-                Provider.of<DataKeeper>(context, listen: false)
-                    .updateIsWaiting(
-                    false,
-                    widget.currentSubCategory.subCategoryName);
-
-                categories.data[widget.indexes[0]][widget.indexes[1]]
-                    .playedThisManyTimes = 0;
-                Provider.of<DataKeeper>(context, listen: false)
-                    .updatePlayedThisManyTimes(
-                    categories.data[widget.indexes[0]][widget.indexes[1]]
-                        .playedThisManyTimes,
-                    widget.currentSubCategory.subCategoryName);
-
+              categories.data[widget.indexes[0]][widget.indexes[1]]
+                  .playedThisManyTimes = 0;
+              Provider.of<DataKeeper>(context, listen: false)
+                  .updatePlayedThisManyTimes(
+                      categories.data[widget.indexes[0]][widget.indexes[1]]
+                          .playedThisManyTimes,
+                      widget.currentSubCategory.subCategoryName);
 
               // todo change remaining time vv if DateTime.now().isAfter(endTime)
               return Column(
                 children: <Widget>[
                   Text(
-                    " ${widget.currentSubCategory.playedThisManyTimes} /5 buy button gold", // after timer sets to 0
+                    "Completed: ${widget.currentSubCategory.playedThisManyTimes} /5", // after timer sets to 0
                     style: TextStyle(color: Colors.white),
                   ),
                   playButtonMethod(context)
                 ],
               );
-
             }
-
-
           },
         );
       } else {

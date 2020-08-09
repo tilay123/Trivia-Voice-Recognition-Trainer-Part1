@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/shop.dart';
-
 import 'model/dataProvider.dart';
-
-import 'model/constants.dart';
 import 'screens/home.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +15,6 @@ class TriviaVoice extends StatefulWidget {
 }
 
 class _TriviaVoiceState extends State<TriviaVoice> {
-
   // int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -26,10 +22,6 @@ class _TriviaVoiceState extends State<TriviaVoice> {
       HomeBottomNavigation(),
       ShopBottomNavigation(),
     ];
-
-
-
-
 
     return MaterialApp(
       theme: ThemeData(
@@ -42,7 +34,7 @@ class _TriviaVoiceState extends State<TriviaVoice> {
         body: bodies.elementAt(
             Provider.of<DataKeeper>(context).getHomePageCurrentIndex),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: color1,
+          backgroundColor: Theme.of(context).primaryColor,
           currentIndex:
               Provider.of<DataKeeper>(context).getHomePageCurrentIndex,
           onTap: (index) {
@@ -73,16 +65,16 @@ class _TriviaVoiceState extends State<TriviaVoice> {
         ),
         floatingActionButton: GestureDetector(
           onTap: () {
-            Provider.of<DataKeeper>(context, listen: false).addCoin(50);
-            //  Provider.of<DataKeeper>(context, listen: false).addDiamond(1);
+            // Provider.of<DataKeeper>(context, listen: false).addCoin(50);
+            Provider.of<DataKeeper>(context, listen: false).addDiamond(1);
           },
           child: Container(
             height: 50,
             width: 50,
             decoration:
                 BoxDecoration(color: Colors.green, shape: BoxShape.circle),
-            child: Center(child: Text("+50 Coin")),
-            // child: Center(child: Text("+1 Diamond")),
+            //child: Center(child: Text("+50 Coin")),
+            child: Center(child: Text("+1 Diamond")),
           ),
         ),
       ),
