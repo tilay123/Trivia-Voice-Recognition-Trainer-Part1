@@ -1,8 +1,6 @@
 import 'package:voicelytrivia/model/currency.dart';
 import 'package:voicelytrivia/model/question.dart';
-import 'package:voicelytrivia/model/category.dart';
 import 'package:voicelytrivia/model/subCategory.dart';
-import 'package:voicelytrivia/model/subCategoryType.dart';
 
 //List<String> celebrities = [];
 List<SubCategory> celebrities = [
@@ -10,7 +8,6 @@ List<SubCategory> celebrities = [
   motivators,
   billionaire,
   presidents,
-
   actorsOrActresses,
 ];
 
@@ -21,8 +18,7 @@ final SubCategory singer = new SubCategory(
     currency: Currency.COIN,
     questionList: [
       Question(
-        questionUrl:
-            "https://firebasestorage.googleapis.com/v0/b/voicely-trivia.appspot.com/o/Celebraties%2FSingers%2FjustinBieber.m4a?alt=media&token=339a1e21-49af-45ec-af52-9c49b80ef9ea",
+        questionUrl: "asset/audios/celeb/singers/justinBieber.m4a",
         correctAnswer: "Justin Bieber",
         wrongAnswer1: "Drake",
         wrongAnswer2: "Shawn Mendes",
@@ -30,29 +26,27 @@ final SubCategory singer = new SubCategory(
       ),
 
       Question(
-        questionUrl:
-            "https://firebasestorage.googleapis.com/v0/b/voicely-trivia.appspot.com/o/Celebraties%2FSingers%2FBeyonce%CC%81.m4a?alt=media&token=858612e2-453e-441e-b7e9-7370ea8f8515",
-        correctAnswer: "Beyoncé",
+        questionUrl: "asset/audios/celeb/singers/SelenaGomez.mp3",
+        wrongAnswer3: "Beyoncé",
         wrongAnswer1: "Lady Gaga",
         wrongAnswer2: "Ariana Grande",
-        wrongAnswer3: "Selena Gomez",
+        correctAnswer: "Selena Gomez",
       ),
       Question(
-        questionUrl:
-            "https://firebasestorage.googleapis.com/v0/b/voicely-trivia.appspot.com/o/Celebraties%2FSingers%2FMariah%20Carey-Fe.m4a?alt=media&token=b3542f18-bf9e-404b-be52-893b38633583",
-        correctAnswer: "Micah Carey",
+        questionUrl: "asset/audios/celeb/singers/CardiB.mp3",
+        correctAnswer: "Cardi B",
         wrongAnswer3: "Beyoncé",
         wrongAnswer1: "Lady Gaga",
         wrongAnswer2: "Ariana Grande",
       ),
-      Question(
-        questionUrl:
-            "https://firebasestorage.googleapis.com/v0/b/voicely-trivia.appspot.com/o/Celebraties%2FSingers%2FMichael%20Jackson.m4a?alt=media&token=210a742d-e548-4058-84d5-3aa7464b8696",
-        correctAnswer: "Michael Jackson",
-        wrongAnswer1: "Rick Ross",
-        wrongAnswer2: "Ed Sheeran",
-        wrongAnswer3: "Lil Wayne",
-      ),
+//      Question(     // Link not working
+//        questionUrl:
+//            "https://firebasestorage.googleapis.com/v0/b/voicely-trivia.appspot.com/o/Celebraties%2FSingers%2FMichael%20Jackson.m4a?alt=media&token=210a742d-e548-4058-84d5-3aa7464b8696",
+//        correctAnswer: "Michael Jackson",
+//        wrongAnswer1: "Rick Ross",
+//        wrongAnswer2: "Ed Sheeran",
+//        wrongAnswer3: "Lil Wayne",
+//      ),
 //      Question(
 //        questionUrl: "Question URL",
 //        correctAnswer: "Correct Answer",

@@ -110,7 +110,7 @@ abstract class DatabaseHelper {
         ],
         where: "$CONTAINER_NAME = ?",
         whereArgs: [subCategoryName]);
-    print("data00 $data");
+   // print("data00 $data");
     List aList = [];
     aList.add(data[0]["$PURCHASED"] == 1);
 

@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'dart:math';
 
-//import 'package:awesome_dialog/awesome_dialog.dart' hide AnimatedButton;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:voicelytrivia/data/animatedTvShows.dart';
@@ -216,7 +214,7 @@ class _ScrollableRowState extends State<ScrollableRow> {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Container(
-        height: 160,
+        height: 175,
         // color: Colors.red,
         child: ListView.builder(
 
@@ -381,8 +379,7 @@ class _HelperTextAndButtonState extends State<HelperTextAndButton> {
           },
         );
       } else {
-        print(
-            "currentSubCategory.remainingPlay ${widget.currentSubCategory.playedThisManyTimes}");
+        //  print( "currentSubCategory.remainingPlay ${widget.currentSubCategory.playedThisManyTimes}");
 
         return Column(
           children: <Widget>[
@@ -399,8 +396,7 @@ class _HelperTextAndButtonState extends State<HelperTextAndButton> {
 //      "Completed:${5 - currentSubCategory.remainingPlay}/5, Left: ${currentSubCategory.remainingPlay}",
 //      style: TextStyle(color: Colors.white),
 //    );
-    print(
-        "currentSubCategory.remainingPlay ${widget.currentSubCategory.playedThisManyTimes}");
+  //  print("currentSubCategory.remainingPlay ${widget.currentSubCategory.playedThisManyTimes}");
 
     return Column(
       children: <Widget>[
@@ -428,14 +424,12 @@ class _HelperTextAndButtonState extends State<HelperTextAndButton> {
 
           if (widget.currentSubCategory.playedThisManyTimes == 5) {
             // categories.data[widget.parentIndex][index].remainingPlay = 5;
-            print(
-                "remainingPlay is five 5 ${widget.currentSubCategory.playedThisManyTimes}");
+           // print("remainingPlay is five 5 ${widget.currentSubCategory.playedThisManyTimes}");
             //    currentSubCategory.isWaiting = true;
             categories.data[widget.indexes[0]][widget.indexes[1]].isWaiting =
                 true;
 
-            print(
-                "currentSubCategory.isWaiting = true;${widget.currentSubCategory.isWaiting = true}");
+        //    print("currentSubCategory.isWaiting = true;${widget.currentSubCategory.isWaiting = true}");
 
             Provider.of<DataKeeper>(context, listen: false).updateIsWaiting(
                 widget.currentSubCategory.isWaiting,

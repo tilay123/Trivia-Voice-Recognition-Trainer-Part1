@@ -174,7 +174,7 @@ class DataKeeper extends ChangeNotifier {
         }
       }
 
-      print("GAME_DATA: $gameData");
+      print("GAME_DATA_FETCHED: $gameData");
 //      gameData[0].forEach((key, value) {
 //        if (key == DatabaseHelper.COIN) {
 //          _coin = value;

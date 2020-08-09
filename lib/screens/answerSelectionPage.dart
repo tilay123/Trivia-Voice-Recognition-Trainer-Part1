@@ -46,9 +46,19 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
 
   void play() async {
     try {
+//      await assetsAudioPlayer.open(
+//        Audio.network(_question.questionUrl),
+//      );
+
       await assetsAudioPlayer.open(
-        Audio.network(_question.questionUrl),
+        Audio(_question.questionUrl),
       );
+
+
+
+
+
+
     } catch (t) {
       //mp3 unreachable
     }
@@ -284,7 +294,7 @@ class _AnswerSelectionPageState extends State<AnswerSelectionPage> {
                     child: Container(
                         padding: EdgeInsets.all(10),
                         child: Text(
-                          "Listen to the audio clip and determine who the speaker is.",
+                          "Listen to the audio clip then determine who the speaker is.",
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w700),
                         ))),
