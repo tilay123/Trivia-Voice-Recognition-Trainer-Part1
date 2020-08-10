@@ -1,6 +1,6 @@
 # Trivia: Recognize Voice
 
-An interactive game that test your vocal recognition abilities.
+An interactive trivia game that test your vocal recognition abilities.
 
 Bugs/fixes can be submitted to til.baniya@gmail.com.
 
